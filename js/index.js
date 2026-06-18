@@ -47,3 +47,4 @@ tarjeta.querySelector(".recipe-title").innerHTML = platillo.nombre;
 tarjeta.querySelector(".recipe-price").innerHTML = platillo.Precio;
 
 }
+
