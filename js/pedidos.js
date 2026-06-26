@@ -1,8 +1,29 @@
-let contenidoLista = '';
+document.addEventListener('DOMContentLoaded', function() {
+const menus = document.querySelectorAll('.side-menu');
+M.Sidenav.init(menus, {edge: 'right'});
+const forms = document.querySelectorAll('.side-form');
+M.Sidenav.init(forms, {edge: 'left'});
+});
 
-function agregarALista(platillo, id) { 
-    contenidoLista = `<option value=''>
-    ${platillo.nombre}
-</option>`;
-document.getElementById('listaplatillos').innerHTML = contenidoLista;
+
+let contenidoLista = ''
+
+
+db.collection("platillos").onSnapshot((datos) => {
+  datos.docChanges().forEach((registro) => {
+    if (registro.type === "added") {
+        agregarALista(registro.doc.data(), registro.doc.id);
+    }
+  });
+});
+
+  var elems = document.querySelectorAll('select');
+  M.FormSelect.init(elems);
+
+
+function agregarALista(platillo, id){
+    contenidoLista += `<option value='${id}'>${platillo.nombre}</option>`;
+    document.querySelector('#platillo').innerHTML = contenidoLista;
 }
+
+M.AutoInit();

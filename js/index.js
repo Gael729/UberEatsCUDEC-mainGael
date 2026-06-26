@@ -1,16 +1,14 @@
+const btnAgregarPlatillo = document.querySelector('btnAgregarPlatillo');
+
 let contenido = '';
 
 document.addEventListener('DOMContentLoaded', function() {
-// nav menu
-const menus = document.querySelectorAll('.side-menu');
-M.Sidenav.init(menus, {edge: 'right'});
-// add recipe form
-const forms = document.querySelectorAll('.side-form');
-M.Sidenav.init(forms, {edge: 'left'});
-});
 
-btnAgregarPlatillo.addEventListener('click', function(){
-alert('Platillo agregado')
+    const menus = document.querySelectorAll('.side-menu');
+    M.Sidenav.init(menus, {edge: 'right'});
+    
+    const forms = document.querySelectorAll('.side-form');
+    M.Sidenav.init(forms, {edge: 'left'});
 });
 
 function mostrarPlatillo(Platillo, id){
@@ -29,12 +27,10 @@ ${Platillo.ingredientes}
 <div class = "recipe-price">
 ${Platillo.Precio}
 </div>
-
-
 </div>
 <div class = "recipe-delete">
-<i class = "material-icons"  data-id="${id}">delete_outline</i>
-
+    <i class = "material-icons"  data-id="${id}">delete_outline</i>
+</div>
 </div>`;
 document.querySelector('.recipes').innerHTML = contenido;
 
