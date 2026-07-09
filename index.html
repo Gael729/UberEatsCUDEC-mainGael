@@ -1,81 +1,208 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>meche</title>
-  <!-- materialize icons, css & js -->
-  <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" href="/css/styles.css" rel="stylesheet">
-  <script type="text/javascript" src="/js/materialize.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meche</title>
+
+    <!-- MATERIALIZE CSS -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- ICONOS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- CSS PROPIO -->
+    <link rel="stylesheet" href="/css/styles.css">
+
 </head>
+
 <body class="grey lighten-4">
 
-  <!-- Menu superior -->
-  <nav class="z-depth-0">
+<nav class="z-depth-0">
+
     <div class="nav-wrapper container">
-      <a href="/">meche</span></a>
-      <span class="right grey-text text-darken-1">
-        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
-      </span>
+
+        <a href="index.html" class="brand-logo">
+            Meche
+        </a>
+
+        <a href="#"
+           class="sidenav-trigger right"
+           data-target="side-menu">
+
+            <i class="material-icons">
+                menu
+            </i>
+
+        </a>
+
     </div>
-  </nav>
 
-  <!-- Menu lateral -->
-  <ul id="side-menu" class="sidenav side-menu">
-    <li><a class="subheader">meche</a></li>
-    <li><a href="/" class="waves-effect">Inicio</a></li>
-    <li><a href="/pages/about.html" class="waves-effect">Acerca</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="/pages/contact.html" class="waves-effect">
-      <i class="material-icons">mail_outline</i>Contacto</a>
+</nav>
+
+<ul id="side-menu" class="sidenav">
+
+    <li>
+
+        <a class="subheader">
+            MECHE
+        </a>
+
     </li>
-  </ul>
 
-  <!-- Lista de platillos -->
-  <div class="recipes container grey-text text-darken-1">
-    <form>
-      <select id="listaPlatillos"></select>
-    </form>
-  </div>
+    <li>
 
-  <div class="center">
-    <a class="btn-floating btn-small btn-large add-btn sidenav-trigger" data-target="side-form">
-      <i class="material-icons">add</i>
+        <a href="index.html">
+
+            <i class="material-icons">
+                home
+            </i>
+
+            Inicio
+
+        </a>
+
+    </li>
+
+    <li>
+
+        <a href="pedidos.html">
+
+            <i class="material-icons">
+                shopping_cart
+            </i>
+
+            Pedidos
+
+        </a>
+
+    </li>
+
+</ul>
+
+<div class="container">
+
+    <h4 class="center grey-text text-darken-2">
+
+        Platillos
+
+    </h4>
+
+    <div class="recipes">
+
+    </div>
+
+</div>
+
+<div class="fixed-action-btn">
+
+    <a class="btn-floating btn-large red sidenav-trigger"
+       data-target="side-form">
+
+        <i class="material-icons">
+
+            add
+
+        </i>
+
     </a>
-  </div>
 
-  <!-- Agregar platillo -->
-  <div id="side-form" class="sidenav side-form">
-    <form class="add-recipe container section">
-      <h6 >Nuevo platillo</h6>
-      <div class="divider"></div>
-      <div class="input-field">
-        <input placeholder="ejemplo: Pizza" id="title" type="text" class="validate">
-        <label for="title">Nombre</label>
-      </div>
-      <div class="input-field">
-        <input placeholder="e.g. Tofu, mushroom, garlic" id="ingredients" type="text" class="validate">
-        <label for="ingredients">Ingredientes</label>
-      </div>
-      <div class="input-field center">
-        <button id = "btnAgregarPlatillo" class="btn-small">Agregar</button>
-      </div>
-    </form>
-  </div>
+</div>
 
-  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
- </script>
-  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
- </script>
+<div id="side-form" class="sidenav">
+
+<form class="add-recipe container section">
+
+<h5 class="center">
+
+Nuevo Platillo
+
+</h5>
+
+<div class="divider"></div>
+
+<div class="input-field">
+
+<input
+id="title"
+name="title"
+type="text"
+required>
+
+<label for="title">
+
+Nombre del platillo
+
+</label>
+
+</div>
+
+<div class="input-field">
+
+<input
+id="ingredients"
+name="ingredients"
+type="text"
+required>
+
+<label for="ingredients">
+
+Ingredientes
+
+</label>
+
+</div>
+
+<div class="input-field">
+
+<input
+id="price"
+name="price"
+type="number"
+required>
+
+<label for="price">
+
+Precio
+
+</label>
+
+</div>
+
+<div class="center">
+
+<button
+id="btnAgregarPlatillo"
+type="submit"
+class="btn green waves-effect waves-light">
+
+Agregar Platillo
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
 
 
-<script>
-</script>
-  <script src= "/js/firebase.js"></script>
-  <script src="/js/index.js"></script>
-  <script src="/js/db.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script src="/js/firebase.js"></script>
+
+<script src="/js/index.js"></script>
+
+<script src="/js/db.js"></script>
 
 </body>
+
 </html>

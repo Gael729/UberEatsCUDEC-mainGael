@@ -1,62 +1,202 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // nav menu
-  const menus = document.querySelectorAll('.side-menu');
-  M.Sidenav.init(menus, {edge: 'right'});
-  // add recipe form
+document.addEventListener("DOMContentLoaded", () => {
 
-});
-
-let contenidoLista = '';
-
-db.collection("platillos").onSnapshot((datos) => {
-    datos.docChanges().forEach((registro)=> {
-        if (registro.type === "added") {
-            agregarALista(registro.doc.data(), registro.doc.id);
-        }
+    const menus = document.querySelectorAll(".side-menu");
+    M.Sidenav.init(menus, {
+        edge: "right"
     });
-    var elems = document.querySelectorAll('select');
-    M.FormSelect.init(elems);
+
+    const selects = document.querySelectorAll("select");
+    M.FormSelect.init(selects);
 
 });
 
-function agregarALista(platillo, id){
-    contenidoLista += `<option value='${id}'>
-    ${platillo.nombre}
-    </option>`;
-    document.getElementById("listaPlatillos").innerHTML = contenidoLista;
-    
-}
-M.AutoInit();
-document.getElementById("btnUbicacion").addEventListener("click|",function(){
-    if(navigator.geolocation){
-        navigatior.geolocation.getCurrentPosition(exito,error);
+
+
+const listaPlatillos = document.getElementById("listaPlatillos");
+const formularioPedido = document.getElementById("formPedido");
+const listaPedidos = document.getElementById("listaPedidos");
+
+
+
+db.collection("platillos").onSnapshot((snapshot) => {
+
+    let opciones = `
+        <option value="" disabled selected>
+            Selecciona un platillo
+        </option>
+    `;
+
+    snapshot.forEach((doc) => {
+
+        const platillo = doc.data();
+
+        opciones += `
+            <option value="${doc.id}">
+                ${platillo.nombre}
+            </option>
+        `;
+
+    });
+
+    listaPlatillos.innerHTML = opciones;
+
+    M.FormSelect.init(document.querySelectorAll("select"));
+
+});
+
+
+formularioPedido.addEventListener("submit", (e) => {
+
+    e.preventDefault();
+
+    const cliente = document.getElementById("cliente").value.trim();
+    const direccion = document.getElementById("direccion").value.trim();
+
+    const opcion =
+        listaPlatillos.options[listaPlatillos.selectedIndex];
+
+    if (
+        cliente === "" ||
+        direccion === "" ||
+        listaPlatillos.value === ""
+    ) {
+
+        M.toast({
+            html: "Completa todos los campos",
+            classes: "orange"
+        });
+
+        return;
+
     }
+
+    const pedido = {
+
+        cliente: cliente,
+        direccion: direccion,
+        platillo: opcion.text,
+        idPlatillo: listaPlatillos.value,
+        estado: "Pendiente",
+        fecha: firebase.firestore.Timestamp.now()
+
+    };
+
+    db.collection("pedidos")
+        .add(pedido)
+        .then(() => {
+
+            formularioPedido.reset();
+
+            M.updateTextFields();
+
+            M.FormSelect.init(document.querySelectorAll("select"));
+
+            M.toast({
+                html: "Pedido registrado",
+                classes: "green"
+            });
+
+        })
+        .catch((error) => {
+
+            console.error(error);
+
+            M.toast({
+                html: "Error al guardar",
+                classes: "red"
+            });
+
+        });
+
 });
 
-function exito(posicion) {
-    let  latitud = posicion.coords-latitude;
-    let longitud = posicion.coords.longitude;
-    fetonch = `https://nominatim.openstreetmap.org/reverselat=${latitud}`
-    
-}
 
-const formularioAgregar = document. querySelector("form");
-formularioAgregar. addEventListener("submit", (e) => {
-   e.preventDefault();
-const platilloNuevo = {
-    nombre: formularioAgregar.title.value,
-    ingredientes: formularioAgregar.ingredients.value,
-    precio: formularioAgregar.price.value
-}
+db.collection("pedidos")
+.onSnapshot((snapshot) => {
 
-db.collection("platillos").add(platilloNuevo)
-.catch((error) => {
-    console.log(error);
-    alert("Error al agregar platillo");
- }
- );
- formularioAgregar.title.value = "";
- formularioAgregar.ingredients.value = "";
- formularioAgregar.price.value = "";
- alert("Platillo agregado");
+    listaPedidos.innerHTML = "";
+
+    snapshot.forEach((doc) => {
+
+        const pedido = doc.data();
+
+        listaPedidos.innerHTML += `
+
+        <div class="card-panel white" id="${doc.id}">
+
+            <h6>
+                <strong>${pedido.cliente}</strong>
+            </h6>
+
+            <p>
+
+                <b>Dirección:</b><br>
+                ${pedido.direccion}
+
+            </p>
+
+            <p>
+
+                <b>Platillo:</b><br>
+                ${pedido.platillo}
+
+            </p>
+
+            <div class="right">
+
+                <button
+                    class="btn red btnEliminar"
+                    data-id="${doc.id}">
+
+                    Eliminar
+
+                </button>
+
+            </div>
+
+            <div style="clear:both"></div>
+
+        </div>
+
+        `;
+
+    });
+
+});
+
+
+document.addEventListener("click", (e) => {
+
+    if (e.target.classList.contains("btnEliminar")) {
+
+        const id = e.target.dataset.id;
+
+        if (confirm("¿Eliminar pedido?")) {
+
+            db.collection("pedidos")
+            .doc(id)
+            .delete()
+            .then(() => {
+
+                M.toast({
+                    html: "Pedido eliminado",
+                    classes: "green"
+                });
+
+            })
+            .catch((error) => {
+
+                console.error(error);
+
+                M.toast({
+                    html: "Error al eliminar",
+                    classes: "red"
+                });
+
+            });
+
+        }
+
+    }
+
 });

@@ -1,82 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Food Ninja</title>
+<html lang="es">
 
-  <!-- Materialize Icons, CSS & JS -->
-  <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" href="/css/styles.css" rel="stylesheet">
-  <script type="text/javascript" src="/js/materialize.min.js"></script>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pedidos</title>
+
+    <link rel="stylesheet" href="/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <script src="/js/materialize.min.js"></script>
+
 </head>
 
 <body class="grey lighten-4">
 
-  <!-- Top Nav -->
-  <nav class="z-depth-0">
-    <div class="nav-wrapper container">
-      <a href="/">Food<span>Ninja</span></a>
+    <!-- NAV -->
+    <nav>
 
-      <span class="right grey-text text-darken-1">
-        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
-      </span>
-    </div>
-  </nav>
+        <div class="nav-wrapper container">
 
-  <!-- Side Nav -->
-  <ul id="side-menu" class="sidenav side-menu">
-    <li>
-      <a class="subheader">FOODNINJA</a>
-    </li>
+            <a href="/index.html" class="brand-logo">
+                Meche
+            </a>
 
-    <li>
-      <a href="/" class="waves-effect">Home</a>
-    </li>
+            <a href="#" class="sidenav-trigger right" data-target="side-menu">
+                <i class="material-icons">menu</i>
+            </a>
 
-    <li>
-      <a href="/pages/about.html" class="waves-effect">About</a>
-    </li>
+        </div>
 
-    <li>
-      <div class="divider"></div>
-    </li>
+    </nav>
 
-    <li>
-      <a href="/pages/contact.html" class="waves-effect">
-        <i class="material-icons">mail_outline</i>Contact
-      </a>
-    </li>
-  </ul>
+    <!-- MENÚ -->
+    <ul id="side-menu" class="sidenav side-menu">
 
-  <!-- Content -->
-  <div class="container grey-text">
+        <li>
+            <a href="/index.html">
+                <i class="material-icons">home</i>
+                Inicio
+            </a>
+        </li>
 
-    <h5 class="center">Contact Us</h5>
+        <li class="active">
+            <a href="/pedidos.html">
+                <i class="material-icons">shopping_cart</i>
+                Pedidos
+            </a>
+        </li>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-      Ducimus, porro voluptatum illum veniam eaque sunt sit labore
-      provident eligendi! Voluptate amet suscipit inventore unde
-      maxime atque impedit officia nobis laboriosam!
-    </p>
-
-    <div class="divider"></div>
-
-    <h6>Find us at:</h6>
-
-    <ul>
-      <li>123 Spicy Noodle Road</li>
-      <li>Manchester, UK</li>
     </ul>
 
-  </div>
+    <div class="container">
 
-  <!-- Scripts -->
-  <script src="/js/db.js"></script>
-  <script src="/js/pedidos.js"></script>
+        <h4 class="center">
+            Nuevo Pedido
+        </h4>
+
+        <!-- FORMULARIO -->
+        <form id="formPedido">
+
+            <div class="input-field">
+
+                <input
+                    id="cliente"
+                    type="text"
+                    required>
+
+                <label for="cliente">
+                    Nombre del cliente
+                </label>
+
+            </div>
+
+            <div class="input-field">
+
+                <input
+                    id="direccion"
+                    type="text"
+                    required>
+
+                <label for="direccion">
+                    Dirección
+                </label>
+
+            </div>
+
+            <div class="input-field">
+
+                <select id="listaPlatillos" required>
+
+                    <option value="" disabled selected>
+                        Selecciona un platillo
+                    </option>
+
+                </select>
+
+                <label>Platillo</label>
+
+            </div>
+
+            <div class="center">
+
+                <button class="btn green">
+
+                    Guardar Pedido
+
+                </button>
+
+            </div>
+
+        </form>
+
+        <br><br>
+
+        <h5 class="center">
+
+            Lista de pedidos
+
+        </h5>
+
+        <div id="listaPedidos"></div>
+
+    </div>
+
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
+
+    <script src="/js/firebase.js"></script>
+    <script src="/js/pedidos.js"></script>
 
 </body>
+
 </html>

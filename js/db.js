@@ -1,43 +1,216 @@
-db.collection("platillos").onSnapshot((datos) => {
+const formularioAgregar = document.querySelector(".add-recipe");
 
-    datos.docChanges().forEach((registro) => {
+db.collection("platillos").onSnapshot((snapshot) => {
 
-        if (registro.type === "added") {
-            mostrarPlatillo(registro.doc.data(), registro.doc.id);
+
+    snapshot.docChanges().forEach((cambio) => {
+
+
+
+        if (cambio.type === "added") {
+
+
+            mostrarPlatillo(
+                cambio.doc.data(),
+                cambio.doc.id
+            );
+
+
         }
 
-        if (registro.type === "modified") {
-            actualizarPlatillo(registro.doc.data(), registro.doc.id);
+
+
+        if (cambio.type === "modified") {
+
+
+            actualizarPlatillo(
+                cambio.doc.data(),
+                cambio.doc.id
+            );
+
+
         }
+
+
+
+
+        if (cambio.type === "removed") {
+
+
+            eliminarPlatillo(
+                cambio.doc.id
+            );
+
+
+        }
+
+
 
     });
 
-});
 
-const formularioAgregar = document.querySelector(".add-recipe");
 
-formularioAgregar.addEventListener("submit", (e) => {
+}, (error)=>{
 
-    e.preventDefault();
 
-    const platilloNuevo = {
-        nombre: formularioAgregar.title.value,
-        ingredientes: formularioAgregar.ingredients.value
-    };
+    console.error(
+        "Error Firebase:",
+        error
+    );
 
-    db.collection("platillos")
-        .add(platilloNuevo)
-        .then(() => {
-
-            formularioAgregar.title.value = "";
-            formularioAgregar.ingredients.value = "";
-
-            alert("Platillo agregado");
-
-        })
-        .catch((error) => {
-            console.log(error);
-            alert("Error al agregar platillo");
-        });
 
 });
+
+if(formularioAgregar){
+
+
+
+formularioAgregar.addEventListener(
+"submit",
+(e)=>{
+
+
+e.preventDefault();
+
+
+
+const nombre =
+formularioAgregar.title.value.trim();
+
+
+
+const ingredientes =
+formularioAgregar.ingredients.value.trim();
+
+
+
+const precio =
+formularioAgregar.price.value.trim();
+
+
+
+
+
+if(
+nombre === "" ||
+ingredientes === "" ||
+precio === ""
+){
+
+
+M.toast({
+
+html:"Completa todos los campos",
+
+classes:"orange"
+
+});
+
+
+return;
+
+
+}
+
+
+
+
+const nuevoPlatillo = {
+
+
+nombre:nombre,
+
+
+ingredientes:ingredientes,
+
+
+Precio:Number(precio)
+
+
+};
+
+
+
+
+
+db.collection("platillos")
+.add(nuevoPlatillo)
+
+
+
+.then(()=>{
+
+
+
+formularioAgregar.reset();
+
+
+
+M.updateTextFields();
+
+
+
+
+const sidenav =
+document.querySelector("#side-form");
+
+
+
+const instancia =
+M.Sidenav.getInstance(sidenav);
+
+
+
+if(instancia){
+
+instancia.close();
+
+}
+
+
+
+
+
+M.toast({
+
+html:"Platillo agregado",
+
+classes:"green"
+
+});
+
+
+
+
+
+})
+
+
+
+.catch((error)=>{
+
+
+
+console.error(error);
+
+
+
+M.toast({
+
+html:"Error al guardar platillo",
+
+classes:"red"
+
+});
+
+
+
+});
+
+
+
+});
+
+
+
+}
