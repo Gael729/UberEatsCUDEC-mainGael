@@ -1,4 +1,8 @@
-const firebaseConfig = {
+// ==========================================
+// CONFIGURACIÓN DE FIREBASE - MECHE
+// ==========================================
+
+var firebaseConfig = {
   apiKey: "AIzaSyC4VvL-JcyFpqCNTH0CFuYI_DYoHthKKCk",
   authDomain: "uber-eats-cudec.firebaseapp.com",
   projectId: "uber-eats-cudec",
@@ -8,8 +12,8 @@ const firebaseConfig = {
   measurementId: "G-BWZ6KMKFZQ"
 };
 
-
+// Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
 
-
+// Base de datos Firestore
 const db = firebase.firestore();

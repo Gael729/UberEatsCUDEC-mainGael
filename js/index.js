@@ -1,201 +1,113 @@
-document.addEventListener("DOMContentLoaded", () => {
+// ==========================================
+// INICIALIZAR MATERIALIZE
+// ==========================================
 
-    const menus = document.querySelectorAll(".side-menu");
+document.addEventListener("DOMContentLoaded", function () {
 
-    M.Sidenav.init(menus, {
-        edge: "right"
-    });
-
-
-    const forms = document.querySelectorAll(".side-form");
-
-    M.Sidenav.init(forms, {
-        edge: "left"
-    });
-
+    const menus = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(menus);
 
 });
 
+// ==========================================
+// MOSTRAR PLATILLOS
+// ==========================================
 
-const recipes = document.querySelector(".recipes");
+function mostrarPlatillos(platillo, id) {
 
-function mostrarPlatillo(platillo, id) {
+    const contenedor = document.querySelector(".recipes");
 
-    if (!recipes) return;
+    if (!contenedor) return;
 
+    const div = document.createElement("div");
 
-    const html = `
+    div.classList.add("card-panel", "row");
+    div.id = id;
 
-    <div class="card-panel recipe white row"
-         id="${id}">
-
-
-        <div class="recipe-details">
-
-
-            <div class="recipe-title">
-
-                <strong>
-                    ${platillo.nombre}
-                </strong>
-
-            </div>
-
-
-
-            <div class="recipe-ingredients">
-
-                ${platillo.ingredientes}
-
-            </div>
-
-
-
-            <div class="recipe-price">
-
-                Precio: $${platillo.Precio || 0}
-
-            </div>
-
-
+    div.innerHTML = `
+        <div class="col s10">
+            <h6>${platillo.nombre}</h6>
+            <p>${platillo.ingredientes}</p>
+            <p>$${platillo.precio}</p>
         </div>
 
-
-
-        <div class="recipe-delete">
-
-
-            <i class="material-icons delete red-text"
-               data-id="${id}">
-
-                delete
-
-            </i>
-
-
+        <div class="col s2 right-align">
+            <button class="btn red delete-btn" data-id="${id}">
+                <i class="material-icons">delete</i>
+            </button>
         </div>
-
-
-    </div>
-
     `;
 
+    contenedor.appendChild(div);
 
-    recipes.insertAdjacentHTML(
-        "beforeend",
-        html
-    );
-
+    activarEliminar();
 
 }
+
+// ==========================================
+// ACTUALIZAR PLATILLO
+// ==========================================
 
 function actualizarPlatillo(platillo, id) {
 
-
-    const tarjeta =
-        document.getElementById(id);
-
+    const tarjeta = document.getElementById(id);
 
     if (!tarjeta) return;
 
+    tarjeta.innerHTML = `
+        <div class="col s10">
+            <h6>${platillo.nombre}</h6>
+            <p>${platillo.ingredientes}</p>
+            <p>$${platillo.precio}</p>
+        </div>
 
+        <div class="col s2 right-align">
+            <button class="btn red delete-btn" data-id="${id}">
+                <i class="material-icons">delete</i>
+            </button>
+        </div>
+    `;
 
-    tarjeta.querySelector(".recipe-title")
-        .innerHTML =
-        `<strong>${platillo.nombre}</strong>`;
-
-
-
-    tarjeta.querySelector(".recipe-ingredients")
-        .textContent =
-        platillo.ingredientes;
-
-
-
-    tarjeta.querySelector(".recipe-price")
-        .textContent =
-        "Precio: $" + (platillo.Precio || 0);
-
-
+    activarEliminar();
 
 }
 
-function eliminarPlatillo(id) {
+// ==========================================
+// ELIMINAR PLATILLO
+// ==========================================
 
+function activarEliminar() {
 
-    const tarjeta =
-        document.getElementById(id);
+    document.querySelectorAll(".delete-btn").forEach(btn => {
 
+        btn.onclick = () => {
 
-    if (tarjeta) {
-
-        tarjeta.remove();
-
-    }
-
-
-}
-
-document.addEventListener("click", (e)=>{
-
-
-    if(
-        e.target.classList.contains("delete")
-    ){
-
-
-        const id =
-            e.target.dataset.id;
-
-
-
-        if(!id) return;
-
-
-
-        if(confirm("¿Eliminar platillo?")){
-
+            const id = btn.getAttribute("data-id");
 
             db.collection("platillos")
-            .doc(id)
-            .delete()
-            .then(()=>{
+                .doc(id)
+                .delete()
+                .then(() => {
 
+                    M.toast({
+                        html: "Platillo eliminado",
+                        classes: "green"
+                    });
 
-                M.toast({
+                })
+                .catch((error) => {
 
-                    html:"Platillo eliminado",
+                    console.error(error);
 
-                    classes:"green"
-
-                });
-
-
-            })
-            .catch((error)=>{
-
-
-                console.error(error);
-
-
-                M.toast({
-
-                    html:"Error al eliminar",
-
-                    classes:"red"
+                    M.toast({
+                        html: "Error al eliminar",
+                        classes: "red"
+                    });
 
                 });
 
+        };
 
+    });
 
-            });
-
-
-        }
-
-
-    }
-
-
-
-});
+}

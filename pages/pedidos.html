@@ -6,19 +6,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pedidos</title>
+    <title>Meche | Pedidos</title>
 
+    <!-- Materialize -->
     <link rel="stylesheet" href="/css/materialize.min.css">
+
+    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Estilos -->
     <link rel="stylesheet" href="/css/styles.css">
 
-    <script src="/js/materialize.min.js"></script>
+    <style>
+
+        body{
+            padding-bottom:50px;
+        }
+
+        .container{
+            margin-top:30px;
+        }
+
+        #btnUbicacion{
+            margin-top:15px;
+            margin-bottom:20px;
+        }
+
+        #mapa{
+            width:100%;
+            height:350px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+
+    </style>
 
 </head>
 
 <body class="grey lighten-4">
 
-    <!-- NAV -->
+    <!-- NAVBAR -->
+
     <nav>
 
         <div class="nav-wrapper container">
@@ -27,54 +61,78 @@
                 Meche
             </a>
 
-            <a href="#" class="sidenav-trigger right" data-target="side-menu">
+            <a href="#"
+               class="sidenav-trigger right"
+               data-target="side-menu">
+
                 <i class="material-icons">menu</i>
+
             </a>
 
         </div>
 
     </nav>
 
-    <!-- MENÚ -->
+    <!-- MENÚ LATERAL -->
+
     <ul id="side-menu" class="sidenav side-menu">
 
         <li>
+
             <a href="/index.html">
+
                 <i class="material-icons">home</i>
+
                 Inicio
+
             </a>
+
         </li>
 
         <li class="active">
+
             <a href="/pedidos.html">
+
                 <i class="material-icons">shopping_cart</i>
+
                 Pedidos
+
             </a>
+
         </li>
 
     </ul>
 
+    <!-- CONTENIDO -->
+
     <div class="container">
 
         <h4 class="center">
+
             Nuevo Pedido
+
         </h4>
 
-        <!-- FORMULARIO -->
         <form id="formPedido">
+
+            <!-- Cliente -->
 
             <div class="input-field">
 
                 <input
-                    id="cliente"
+                    id="nombre"
                     type="text"
                     required>
 
-                <label for="cliente">
+                <label for="nombre">
+
                     Nombre del cliente
+
                 </label>
 
             </div>
+
+            <!-- Dirección -->
 
             <div class="input-field">
 
@@ -84,28 +142,78 @@
                     required>
 
                 <label for="direccion">
+
                     Dirección
+
                 </label>
 
             </div>
 
+            <!-- Platillo -->
+
             <div class="input-field">
 
-                <select id="listaPlatillos" required>
+                <select id="platillo" required>
 
-                    <option value="" disabled selected>
+                    <option
+                        value=""
+                        disabled
+                        selected>
+
                         Selecciona un platillo
+
                     </option>
 
                 </select>
 
-                <label>Platillo</label>
+                <label>
+
+                    Platillo
+
+                </label>
 
             </div>
 
+            <!-- Coordenadas -->
+
+            <input type="hidden" id="latitud">
+
+            <input type="hidden" id="longitud">
+
+            <!-- Botón ubicación -->
+
+            <button
+                type="button"
+                id="btnUbicacion"
+                class="btn blue">
+
+                <i class="material-icons left">
+
+                    location_on
+
+                </i>
+
+                Obtener ubicación
+
+            </button>
+
+            <!-- MAPA -->
+
+            <div id="mapa"></div>
+
+            <!-- BOTÓN GUARDAR -->
+
             <div class="center">
 
-                <button class="btn green">
+                <button
+                    type="submit"
+                    class="btn green">
+
+                    <i class="material-icons left">
+
+                        save
+
+                    </i>
 
                     Guardar Pedido
 
@@ -119,19 +227,29 @@
 
         <h5 class="center">
 
-            Lista de pedidos
+            Lista de Pedidos
 
         </h5>
 
-        <div id="listaPedidos"></div>
+        <div id="listaPedidos">
+                </div>
 
     </div>
 
-    <!-- FIREBASE -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
 
+    <!-- Firebase Config -->
     <script src="/js/firebase.js"></script>
+
+    <!-- Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Materialize -->
+    <script src="/js/materialize.min.js"></script>
+
+    <!-- Pedidos -->
     <script src="/js/pedidos.js"></script>
 
 </body>

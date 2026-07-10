@@ -1,64 +1,236 @@
+// ==========================================
+// INICIALIZAR MATERIALIZE
+// ==========================================
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    const menus = document.querySelectorAll(".side-menu");
-    M.Sidenav.init(menus, {
-        edge: "right"
-    });
-
-    const selects = document.querySelectorAll("select");
-    M.FormSelect.init(selects);
-
-});
-
-
-
-const listaPlatillos = document.getElementById("listaPlatillos");
-const formularioPedido = document.getElementById("formPedido");
-const listaPedidos = document.getElementById("listaPedidos");
-
-
-
-db.collection("platillos").onSnapshot((snapshot) => {
-
-    let opciones = `
-        <option value="" disabled selected>
-            Selecciona un platillo
-        </option>
-    `;
-
-    snapshot.forEach((doc) => {
-
-        const platillo = doc.data();
-
-        opciones += `
-            <option value="${doc.id}">
-                ${platillo.nombre}
-            </option>
-        `;
-
-    });
-
-    listaPlatillos.innerHTML = opciones;
+    const menus = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(menus);
 
     M.FormSelect.init(document.querySelectorAll("select"));
 
+    cargarPlatillos();
+    cargarPedidos();
+
+    const btnUbicacion = document.getElementById("btnUbicacion");
+
+    if (btnUbicacion) {
+        btnUbicacion.addEventListener("click", obtenerUbicacion);
+    }
+
 });
 
+// ==========================================
+// VARIABLES GLOBALES
+// ==========================================
+
+let map = null;
+let marker = null;
+
+const listaPedidos = document.getElementById("listaPedidos");
+
+// ==========================================
+// CARGAR PLATILLOS
+// ==========================================
+
+function cargarPlatillos() {
+
+    db.collection("platillos").onSnapshot((snapshot) => {
+
+        let opciones = `
+            <option value="" disabled selected>
+                Selecciona un platillo
+            </option>
+        `;
+
+        snapshot.forEach((doc) => {
+
+            const platillo = doc.data();
+
+            opciones += `
+                <option value="${platillo.nombre}">
+                    ${platillo.nombre}
+                </option>
+            `;
+
+        });
+
+        const select = document.getElementById("platillo");
+
+        select.innerHTML = opciones;
+
+        M.FormSelect.init(select);
+
+    });
+
+}
+
+// ==========================================
+// OBTENER UBICACIÓN
+// ==========================================
+
+function obtenerUbicacion() {
+
+    if (!navigator.geolocation) {
+
+        M.toast({
+            html: "Tu navegador no soporta geolocalización",
+            classes: "red"
+        });
+
+        return;
+
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        exito,
+        errorUbicacion,
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        }
+    );
+
+}
+
+// ==========================================
+// UBICACIÓN CORRECTA
+// ==========================================
+
+function exito(posicion) {
+
+    const latitud = posicion.coords.latitude;
+    const longitud = posicion.coords.longitude;
+
+    document.getElementById("latitud").value = latitud;
+    document.getElementById("longitud").value = longitud;
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitud}&lon=${longitud}`)
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+
+            if (datos.display_name) {
+
+                document.getElementById("direccion").value = datos.display_name;
+
+                M.updateTextFields();
+
+            }
+
+            if (!map) {
+
+                map = L.map("mapa").setView([latitud, longitud], 16);
+
+                L.tileLayer(
+                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    {
+                        maxZoom: 19,
+                        attribution: "&copy; OpenStreetMap contributors"
+                    }
+                ).addTo(map);
+
+            } else {
+
+                map.setView([latitud, longitud], 16);
+
+            }
+
+            if (marker) {
+
+                map.removeLayer(marker);
+
+            }
+
+            marker = L.marker([latitud, longitud])
+                .addTo(map)
+                .bindPopup("Ubicación del cliente")
+                .openPopup();
+
+            M.toast({
+                html: "Ubicación obtenida",
+                classes: "green"
+            });
+
+        })
+        .catch((error) => {
+
+            console.error(error);
+
+            M.toast({
+                html: "No fue posible obtener la dirección",
+                classes: "orange"
+            });
+
+        });
+
+}
+// ==========================================
+// ERROR AL OBTENER UBICACIÓN
+// ==========================================
+
+function errorUbicacion(error) {
+
+    switch (error.code) {
+
+        case error.PERMISSION_DENIED:
+
+            M.toast({
+                html: "Debes permitir el acceso a la ubicación",
+                classes: "red"
+            });
+
+            break;
+
+        case error.POSITION_UNAVAILABLE:
+
+            M.toast({
+                html: "Ubicación no disponible",
+                classes: "orange"
+            });
+
+            break;
+
+        case error.TIMEOUT:
+
+            M.toast({
+                html: "Tiempo de espera agotado",
+                classes: "orange"
+            });
+
+            break;
+
+        default:
+
+            M.toast({
+                html: "Error al obtener la ubicación",
+                classes: "red"
+            });
+
+    }
+
+}
+
+// ==========================================
+// GUARDAR PEDIDO
+// ==========================================
+
+const formularioPedido = document.getElementById("formPedido");
 
 formularioPedido.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
-    const cliente = document.getElementById("cliente").value.trim();
+    const nombre = document.getElementById("nombre").value.trim();
     const direccion = document.getElementById("direccion").value.trim();
-
-    const opcion =
-        listaPlatillos.options[listaPlatillos.selectedIndex];
+    const platillo = document.getElementById("platillo").value;
+    const latitud = document.getElementById("latitud").value;
+    const longitud = document.getElementById("longitud").value;
 
     if (
-        cliente === "" ||
+        nombre === "" ||
         direccion === "" ||
-        listaPlatillos.value === ""
+        platillo === ""
     ) {
 
         M.toast({
@@ -72,10 +244,11 @@ formularioPedido.addEventListener("submit", (e) => {
 
     const pedido = {
 
-        cliente: cliente,
-        direccion: direccion,
-        platillo: opcion.text,
-        idPlatillo: listaPlatillos.value,
+        nombre,
+        direccion,
+        platillo,
+        latitud,
+        longitud,
         estado: "Pendiente",
         fecha: firebase.firestore.Timestamp.now()
 
@@ -87,12 +260,21 @@ formularioPedido.addEventListener("submit", (e) => {
 
             formularioPedido.reset();
 
-            M.updateTextFields();
+            document.getElementById("latitud").value = "";
+            document.getElementById("longitud").value = "";
 
+            M.updateTextFields();
             M.FormSelect.init(document.querySelectorAll("select"));
 
+            if (marker) {
+
+                map.removeLayer(marker);
+                marker = null;
+
+            }
+
             M.toast({
-                html: "Pedido registrado",
+                html: "Pedido registrado correctamente",
                 classes: "green"
             });
 
@@ -102,7 +284,7 @@ formularioPedido.addEventListener("submit", (e) => {
             console.error(error);
 
             M.toast({
-                html: "Error al guardar",
+                html: "Error al guardar el pedido",
                 classes: "red"
             });
 
@@ -110,93 +292,99 @@ formularioPedido.addEventListener("submit", (e) => {
 
 });
 
+// ==========================================
+// LISTAR PEDIDOS
+// ==========================================
 
-db.collection("pedidos")
-.onSnapshot((snapshot) => {
+function cargarPedidos() {
 
-    listaPedidos.innerHTML = "";
+    db.collection("pedidos").onSnapshot((snapshot) => {
 
-    snapshot.forEach((doc) => {
+        listaPedidos.innerHTML = "";
 
-        const pedido = doc.data();
+        snapshot.forEach((doc) => {
 
-        listaPedidos.innerHTML += `
+            const pedido = doc.data();
 
-        <div class="card-panel white" id="${doc.id}">
+            listaPedidos.innerHTML += `
 
-            <h6>
-                <strong>${pedido.cliente}</strong>
-            </h6>
+                <div class="card-panel white" id="${doc.id}">
 
-            <p>
+                    <h6>
+                        <strong>${pedido.nombre}</strong>
+                    </h6>
 
-                <b>Dirección:</b><br>
-                ${pedido.direccion}
+                    <p>
+                        <b>Dirección:</b><br>
+                        ${pedido.direccion}
+                    </p>
 
-            </p>
+                    <p>
+                        <b>Platillo:</b><br>
+                        ${pedido.platillo}
+                    </p>
 
-            <p>
+                    <p>
+                        <b>Estado:</b>
+                        ${pedido.estado}
+                    </p>
 
-                <b>Platillo:</b><br>
-                ${pedido.platillo}
+                    <div class="right">
 
-            </p>
+                        <button
+                            class="btn red btnEliminar"
+                            data-id="${doc.id}">
 
-            <div class="right">
+                            Eliminar
 
-                <button
-                    class="btn red btnEliminar"
-                    data-id="${doc.id}">
+                        </button>
 
-                    Eliminar
+                    </div>
 
-                </button>
+                    <div style="clear:both"></div>
 
-            </div>
+                </div>
 
-            <div style="clear:both"></div>
+            `;
 
-        </div>
-
-        `;
+        });
 
     });
 
-});
+}
 
+// ==========================================
+// ELIMINAR PEDIDOS
+// ==========================================
 
 document.addEventListener("click", (e) => {
 
-    if (e.target.classList.contains("btnEliminar")) {
+    if (!e.target.classList.contains("btnEliminar")) return;
 
-        const id = e.target.dataset.id;
+    const id = e.target.dataset.id;
 
-        if (confirm("¿Eliminar pedido?")) {
+    if (!confirm("¿Eliminar este pedido?")) return;
 
-            db.collection("pedidos")
-            .doc(id)
-            .delete()
-            .then(() => {
+    db.collection("pedidos")
+        .doc(id)
+        .delete()
+        .then(() => {
 
-                M.toast({
-                    html: "Pedido eliminado",
-                    classes: "green"
-                });
-
-            })
-            .catch((error) => {
-
-                console.error(error);
-
-                M.toast({
-                    html: "Error al eliminar",
-                    classes: "red"
-                });
-
+            M.toast({
+                html: "Pedido eliminado",
+                classes: "green"
             });
 
-        }
+        })
+        .catch((error) => {
 
-    }
+            console.error(error);
+
+            M.toast({
+                html: "Error al eliminar el pedido",
+                classes: "red"
+            });
+
+        });
 
 });
