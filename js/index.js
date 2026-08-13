@@ -1,113 +1,77 @@
-// ==========================================
-// INICIALIZAR MATERIALIZE
-// ==========================================
+document.addEventListener('DOMContentLoaded', function () {
 
-document.addEventListener("DOMContentLoaded", function () {
+    // =====================================
+    // MENÚ DE LAS 3 RAYAS
+    // =====================================
 
-    const menus = document.querySelectorAll(".sidenav");
-    M.Sidenav.init(menus);
+    const sideMenu = document.getElementById('side-menu');
+
+    if (sideMenu) {
+
+        M.Sidenav.init(sideMenu, {
+            edge: 'right'
+        });
+
+    }
+
+
+    // =====================================
+    // FORMULARIO DEL BOTÓN +
+    // =====================================
+
+    const sideForm = document.getElementById('side-form');
+
+    if (sideForm) {
+
+        M.Sidenav.init(sideForm, {
+            edge: 'right'
+        });
+
+    }
+
+
+    // =====================================
+    // AGREGAR PLATILLO
+    // =====================================
+
+    const formPlatillo = document.getElementById('formPlatillo');
+
+    if (formPlatillo) {
+
+        formPlatillo.addEventListener('submit', function (event) {
+
+            event.preventDefault();
+
+            const nombre = document.getElementById('title').value;
+            const ingredientes = document.getElementById('ingredients').value;
+            const precio = document.getElementById('price').value;
+
+            console.log('Platillo:', nombre);
+            console.log('Ingredientes:', ingredientes);
+            console.log('Precio:', precio);
+
+            alert(
+                'Platillo agregado:\n\n' +
+                nombre +
+                '\n$' +
+                precio
+            );
+
+            // Limpiar formulario
+            formPlatillo.reset();
+
+            // Actualizar labels de Materialize
+            M.updateTextFields();
+
+            // Cerrar formulario
+            const instancia = M.Sidenav.getInstance(sideForm);
+
+            if (instancia) {
+                instancia.close();
+            }
+
+        });
+
+    }
 
 });
-
-// ==========================================
-// MOSTRAR PLATILLOS
-// ==========================================
-
-function mostrarPlatillos(platillo, id) {
-
-    const contenedor = document.querySelector(".recipes");
-
-    if (!contenedor) return;
-
-    const div = document.createElement("div");
-
-    div.classList.add("card-panel", "row");
-    div.id = id;
-
-    div.innerHTML = `
-        <div class="col s10">
-            <h6>${platillo.nombre}</h6>
-            <p>${platillo.ingredientes}</p>
-            <p>$${platillo.precio}</p>
-        </div>
-
-        <div class="col s2 right-align">
-            <button class="btn red delete-btn" data-id="${id}">
-                <i class="material-icons">delete</i>
-            </button>
-        </div>
-    `;
-
-    contenedor.appendChild(div);
-
-    activarEliminar();
-
-}
-
-// ==========================================
-// ACTUALIZAR PLATILLO
-// ==========================================
-
-function actualizarPlatillo(platillo, id) {
-
-    const tarjeta = document.getElementById(id);
-
-    if (!tarjeta) return;
-
-    tarjeta.innerHTML = `
-        <div class="col s10">
-            <h6>${platillo.nombre}</h6>
-            <p>${platillo.ingredientes}</p>
-            <p>$${platillo.precio}</p>
-        </div>
-
-        <div class="col s2 right-align">
-            <button class="btn red delete-btn" data-id="${id}">
-                <i class="material-icons">delete</i>
-            </button>
-        </div>
-    `;
-
-    activarEliminar();
-
-}
-
-// ==========================================
-// ELIMINAR PLATILLO
-// ==========================================
-
-function activarEliminar() {
-
-    document.querySelectorAll(".delete-btn").forEach(btn => {
-
-        btn.onclick = () => {
-
-            const id = btn.getAttribute("data-id");
-
-            db.collection("platillos")
-                .doc(id)
-                .delete()
-                .then(() => {
-
-                    M.toast({
-                        html: "Platillo eliminado",
-                        classes: "green"
-                    });
-
-                })
-                .catch((error) => {
-
-                    console.error(error);
-
-                    M.toast({
-                        html: "Error al eliminar",
-                        classes: "red"
-                    });
-
-                });
-
-        };
-
-    });
-
-}

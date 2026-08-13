@@ -1,257 +1,103 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MECHE</title>
+  <!-- materialize icons, css & js -->
+  <link type="text/css" href="css/materialize.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" href="css/styles.css" rel="stylesheet">
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin="">
+     
+  </script>
+  
+  
+  <style>
+  #mapa {height:180px;}
+</style>
+<link rel="manifest" href="manifest.json">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="application-name" content="NinjaFood">
+<meta name="apple-mobile-web-app-title" content="NinjaFood">
+<meta name="theme-color" content="#c53df3">
+<meta name="msapplication-navbutton-color" content="#c53df3">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Meche | Pedidos</title>
+<link rel="manifest" href="manifest.json">
 
-    <!-- Materialize -->
-    <link rel="stylesheet" href="/css/materialize.min.css">
-
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Leaflet -->
-    <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-    <!-- Estilos -->
-    <link rel="stylesheet" href="/css/styles.css">
-
-    <style>
-
-        body{
-            padding-bottom:50px;
-        }
-
-        .container{
-            margin-top:30px;
-        }
-
-        #btnUbicacion{
-            margin-top:15px;
-            margin-bottom:20px;
-        }
-
-        #mapa{
-            width:100%;
-            height:350px;
-            border-radius:8px;
-            border:1px solid #ccc;
-            margin-top:20px;
-            margin-bottom:20px;
-        }
-
-    </style>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Parrivo Market">
+<meta name="apple-mobile-web-app-title" content="Parrivo Market">
+<meta name="theme-color" content="#970fea">
+<meta name="msapplication-navbutton-color" content="#970fea">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 </head>
-
 <body class="grey lighten-4">
 
-    <!-- NAVBAR -->
-
-    <nav>
-
-        <div class="nav-wrapper container">
-
-            <a href="/index.html" class="brand-logo">
-                Meche
-            </a>
-
-            <a href="#"
-               class="sidenav-trigger right"
-               data-target="side-menu">
-
-                <i class="material-icons">menu</i>
-
-            </a>
-
-        </div>
-
-    </nav>
-
-    <!-- MENÚ LATERAL -->
-
-    <ul id="side-menu" class="sidenav side-menu">
-
-        <li>
-
-            <a href="/index.html">
-
-                <i class="material-icons">home</i>
-
-                Inicio
-
-            </a>
-
-        </li>
-
-        <li class="active">
-
-            <a href="/pedidos.html">
-
-                <i class="material-icons">shopping_cart</i>
-
-                Pedidos
-
-            </a>
-
-        </li>
-
-    </ul>
-
-    <!-- CONTENIDO -->
-
-    <div class="container">
-
-        <h4 class="center">
-
-            Nuevo Pedido
-
-        </h4>
-
-        <form id="formPedido">
-
-            <!-- Cliente -->
-
-            <div class="input-field">
-
-                <input
-                    id="nombre"
-                    type="text"
-                    required>
-
-                <label for="nombre">
-
-                    Nombre del cliente
-
-                </label>
-
-            </div>
-
-            <!-- Dirección -->
-
-            <div class="input-field">
-
-                <input
-                    id="direccion"
-                    type="text"
-                    required>
-
-                <label for="direccion">
-
-                    Dirección
-
-                </label>
-
-            </div>
-
-            <!-- Platillo -->
-
-            <div class="input-field">
-
-                <select id="platillo" required>
-
-                    <option
-                        value=""
-                        disabled
-                        selected>
-
-                        Selecciona un platillo
-
-                    </option>
-
-                </select>
-
-                <label>
-
-                    Platillo
-
-                </label>
-
-            </div>
-
-            <!-- Coordenadas -->
-
-            <input type="hidden" id="latitud">
-
-            <input type="hidden" id="longitud">
-
-            <!-- Botón ubicación -->
-
-            <button
-                type="button"
-                id="btnUbicacion"
-                class="btn blue">
-
-                <i class="material-icons left">
-
-                    location_on
-
-                </i>
-
-                Obtener ubicación
-
-            </button>
-
-            <!-- MAPA -->
-
-            <div id="mapa"></div>
-
-            <!-- BOTÓN GUARDAR -->
-
-            <div class="center">
-
-                <button
-                    type="submit"
-                    class="btn green">
-
-                    <i class="material-icons left">
-
-                        save
-
-                    </i>
-
-                    Guardar Pedido
-
-                </button>
-
-            </div>
-
-        </form>
-
-        <br><br>
-
-        <h5 class="center">
-
-            Lista de Pedidos
-
-        </h5>
-
-        <div id="listaPedidos">
-                </div>
-
+  <!-- Menu superior -->
+  <nav class="z-depth-0">
+    <div class="nav-wrapper container">
+      <a href="../">MECHE</a>
+      <span class="right grey-text text-darken-1">
+        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
+      </span>
+    </div>
+  </nav>
+
+  <!-- Menu lateral -->
+  <ul id="side-menu" class="sidenav side-menu">
+    <li><a class="subheader"></a></li>
+
+    <li><a href="/" class="waves-effect">Inicio</a></li>
+    <li><a href="about.html" class="waves-effect">Acerca</a></li>
+    <li><a href="pedidos.html" class="waves-effect">Pedidos</a></li>
+
+    <li><div class="divider"></div></li>
+    <li><a href="contact.html" class="waves-effect">
+      <i class="material-icons">mail_outline</i>Contacto</a></li>
+  </ul>
+
+  <!-- content -->
+  <div class="container grey-text">
+    <h5 class="Left">Platillos</h5>
+
+    <div class="recipes container grey-text text-darken-1">
+      <label for="platillos">Selecciona un platillo:</label>
+      <select id="listaPlatillos" name="platillos" class="browser-default">
+      </select>
     </div>
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
+    <h5 class="Left">Direccion</h5>
+    <input placeholder="Direccion" id="title" type="text" class="validate">
+    <h5 class="Left">usuario</h5>
+    <input placeholder="usuario" id="usuario" type="text" class="validate">
 
-    <!-- Firebase Config -->
-    <script src="/js/firebase.js"></script>
+    <div class="input-field center">
+      <button id="btnCancelar" class="btn-small red">Cancelar</button>
+      <button id="btnGuardar" class="btn-small">Guardar</button>
+      <button id="btnUbicacion" class="btn-small">Ubicación</button>
+    </div>
+  </div>
 
-    <!-- Leaflet -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
 
-    <!-- Materialize -->
-    <script src="/js/materialize.min.js"></script>
-
-    <!-- Pedidos -->
-    <script src="/js/pedidos.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/pedidos.js"></script>
 
 </body>
-
 </html>
