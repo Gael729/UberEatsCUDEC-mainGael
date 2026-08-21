@@ -23,9 +23,8 @@
     ====================================================== -->
 
     <link
-        type="text/css"
-        href="css/materialize.min.css"
         rel="stylesheet"
+        href="css/materialize.min.css"
     >
 
     <link
@@ -35,23 +34,12 @@
 
 
     <!-- =====================================================
-         LEAFLET
-    ====================================================== -->
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
-
-
-    <!-- =====================================================
          CSS PROPIO
     ====================================================== -->
 
     <link
-        type="text/css"
-        href="css/styles.css"
         rel="stylesheet"
+        href="css/styles.css"
     >
 
 
@@ -91,29 +79,15 @@
 
     <style>
 
-        /* =================================================
-           GENERAL
-        ================================================= */
-
-        body {
-
-            background:
-                linear-gradient(
-                    180deg,
-                    #f4fbfd 0%,
-                    #f7f7f7 45%,
-                    #eeeeee 100%
-                );
-
-            min-height: 100vh;
-
+        * {
+            box-sizing: border-box;
         }
 
 
-        main {
-
-            padding-bottom: 80px;
-
+        body {
+            margin: 0;
+            background: #f5f7f9;
+            color: #333;
         }
 
 
@@ -122,56 +96,31 @@
         ================================================= */
 
         nav {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #4dc7e4,
-                    #26a6c5
-                ) !important;
-
-            height: 70px;
-
-            line-height: 70px;
-
+            background: #ffffff !important;
+            border-bottom: 1px solid #eeeeee;
         }
 
 
-        nav .nav-wrapper {
-
-            height: 70px;
-
+        nav .brand-logo {
+            color: #333333 !important;
+            font-weight: 700;
+            letter-spacing: .5px;
         }
 
 
-        .brand-logo {
-
-            font-weight: 800;
-
-            letter-spacing: 2px;
-
-            font-size: 26px !important;
-
+        nav .sidenav-trigger {
+            color: #333333;
         }
 
 
-        .menu-button {
+        /* =================================================
+           CONTENEDOR PRINCIPAL
+        ================================================= */
 
-            font-size: 30px;
-
-            cursor: pointer;
-
-            transition:
-                transform .2s ease;
-
-        }
-
-
-        .menu-button:hover {
-
-            transform:
-                scale(1.08);
-
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 100px;
         }
 
 
@@ -179,101 +128,63 @@
            ENCABEZADO
         ================================================= */
 
-        .hero {
-
+        .page-header {
             text-align: center;
-
-            padding:
-                35px 15px
-                25px;
-
+            margin-bottom: 30px;
         }
 
 
-        .hero-icon {
+        .page-header h4 {
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #333333;
+        }
 
-            width: 70px;
 
-            height: 70px;
+        .page-header p {
+            margin-top: 0;
+            color: #888888;
+        }
 
-            margin:
-                0 auto 15px;
 
-            border-radius: 50%;
+        .header-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #4dc7e4,
-                    #26a6c5
-                );
+            border-radius: 18px;
 
+            background: #4dc7e4;
             color: white;
 
             box-shadow:
-                0 8px 20px
-                rgba(38,166,197,.25);
-
+                0 8px 20px rgba(77,199,228,.25);
         }
 
 
-        .hero-icon i {
-
-            font-size: 38px;
-
-        }
-
-
-        .hero h4 {
-
-            margin:
-                0 0 8px;
-
-            font-weight: 800;
-
-            color: #263238;
-
-        }
-
-
-        .hero p {
-
-            margin: 0;
-
-            color: #78909c;
-
-            font-size: 16px;
-
+        .header-icon i {
+            font-size: 34px;
         }
 
 
         /* =================================================
-           CONTENEDOR DE PLATILLOS
+           RECETAS
         ================================================= */
 
         .recipes {
-
             display: grid;
 
             grid-template-columns:
                 repeat(
                     auto-fit,
-                    minmax(
-                        280px,
-                        1fr
-                    )
+                    minmax(300px, 1fr)
                 );
 
             gap: 20px;
-
-            margin-top: 15px;
-
         }
 
 
@@ -281,58 +192,66 @@
            TARJETAS
         ================================================= */
 
-        .recipes .card-panel {
+        .recipes .recipe {
+            margin: 0 !important;
 
-            margin: 0;
+            border-radius: 16px;
 
-            border-radius: 18px;
+            padding: 20px !important;
 
-            padding: 20px;
-
-            border:
-                1px solid
-                rgba(0,0,0,.05);
+            border: 1px solid #eeeeee;
 
             box-shadow:
-                0 8px 25px
-                rgba(0,0,0,.07);
+                0 5px 18px rgba(0,0,0,.06);
 
             transition:
                 transform .2s ease,
                 box-shadow .2s ease;
-
-            overflow: hidden;
-
         }
 
 
-        .recipes .card-panel:hover {
-
-            transform:
-                translateY(-4px);
+        .recipes .recipe:hover {
+            transform: translateY(-3px);
 
             box-shadow:
-                0 14px 30px
-                rgba(0,0,0,.12);
-
+                0 10px 25px rgba(0,0,0,.10);
         }
 
 
+        .recipes .card-panel {
+            border-radius: 16px;
+        }
+
+
+        /* =================================================
+           PLATILLO
+        ================================================= */
+
         .recipe-title {
+            color: #333333;
+        }
 
-            color: #263238;
 
-            font-weight: 800;
-
+        .recipe-ingredients {
+            color: #777777;
+            line-height: 1.5;
         }
 
 
         .recipe-price {
-
-            color: #26a6c5;
-
+            color: #4dc7e4;
             font-size: 18px;
+        }
 
+
+        /* =================================================
+           IMÁGENES DE PLATILLOS
+        ================================================= */
+
+        .platillo-directo img,
+        .pedido-directo img {
+            box-shadow:
+                0 4px 12px rgba(0,0,0,.10);
         }
 
 
@@ -341,53 +260,34 @@
         ================================================= */
 
         .btn {
-
             border-radius: 10px;
-
-            text-transform: none;
-
-            font-weight: 600;
-
             box-shadow: none;
-
+            text-transform: none;
+            font-weight: 600;
         }
 
 
         .btn:hover {
-
             box-shadow:
-                0 5px 15px
-                rgba(0,0,0,.12);
-
+                0 5px 12px rgba(0,0,0,.15);
         }
 
 
         /* =================================================
-           BOTÓN FLOTANTE
+           BOTÓN +
         ================================================= */
 
         .fixed-action-btn {
-
-            bottom: 25px;
-
-            right: 25px;
-
+            bottom: 30px;
+            right: 30px;
         }
 
 
         .fixed-action-btn .btn-floating {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ef5350,
-                    #e53935
-                );
+            background: #4dc7e4 !important;
 
             box-shadow:
-                0 7px 20px
-                rgba(229,57,53,.35);
-
+                0 8px 20px rgba(77,199,228,.35);
         }
 
 
@@ -396,137 +296,104 @@
         ================================================= */
 
         .side-menu {
-
-            width: 310px;
-
-            background:
-                #ffffff;
-
+            width: 300px;
         }
 
 
         .side-menu .subheader {
-
-            height: 100px;
-
-            line-height: 100px;
-
-            font-size: 22px;
-
-            font-weight: 800;
-
-            color: #26a6c5;
-
-            text-align: center;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #e8faff,
-                    #ffffff
-                );
-
+            color: #4dc7e4;
+            font-size: 18px;
+            font-weight: 700;
         }
 
 
-        .side-menu li > a {
-
-            border-radius: 10px;
-
-            margin:
-                5px 10px;
-
-            color: #455a64;
-
-            transition:
-                background .2s ease;
-
+        .side-menu li a {
+            color: #444444;
         }
 
 
-        .side-menu li > a:hover {
-
-            background:
-                #e8faff;
-
-        }
-
-
-        .side-menu li > a i {
-
-            color: #26a6c5;
-
+        .side-menu li a i {
+            color: #4dc7e4;
         }
 
 
         /* =================================================
-           FORMULARIO LATERAL
+           FORMULARIO
         ================================================= */
 
         .side-form {
-
             width: 430px;
-
             max-width: 100%;
-
-            background:
-                #ffffff;
-
+            background: #ffffff;
         }
 
 
         .form-header {
+            text-align: center;
+            padding: 10px 0 20px;
+        }
 
-            padding:
-                20px
-                20px
-                10px;
 
+        .form-header-icon {
+            width: 55px;
+            height: 55px;
+
+            margin: 0 auto 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background: #4dc7e4;
+            color: white;
+        }
+
+
+        .form-header-icon i {
+            font-size: 28px;
         }
 
 
         .form-header h5 {
+            margin: 5px 0;
+            font-weight: 700;
+        }
 
+
+        .form-header p {
+            color: #888888;
             margin: 0;
-
-            font-weight: 800;
-
-            color: #263238;
-
-        }
-
-
-        .form-subtitle {
-
-            color: #90a4ae;
-
             font-size: 14px;
-
         }
 
 
-        .input-field {
-
-            margin-top: 25px;
-
+        .form-content {
+            padding: 0 25px 30px;
         }
 
 
         .input-field input:focus {
-
             border-bottom:
-                2px solid #4dc7e4 !important;
+                1px solid #4dc7e4 !important;
 
             box-shadow:
                 0 1px 0 0 #4dc7e4 !important;
-
         }
 
 
         .input-field input:focus + label {
+            color: #4dc7e4 !important;
+        }
 
-            color: #26a6c5 !important;
 
+        #btnAgregarPlatillo {
+            width: 100%;
+            height: 48px;
+            line-height: 48px;
+            border-radius: 12px;
+            background: #4dc7e4 !important;
         }
 
 
@@ -535,34 +402,44 @@
         ================================================= */
 
         .camera-section {
+            margin: 20px 25px 30px;
 
-            padding:
-                20px;
+            padding: 20px;
 
+            border-radius: 16px;
+
+            background: #f7f9fa;
+
+            border: 1px solid #eeeeee;
         }
 
 
         .camera-title {
+            text-align: center;
+            margin-bottom: 15px;
+        }
 
-            display: flex;
 
-            align-items: center;
+        .camera-title i {
+            vertical-align: middle;
+            color: #4dc7e4;
+            margin-right: 5px;
+        }
 
-            justify-content: center;
 
-            gap: 8px;
-
-            font-size: 18px;
-
+        .camera-title h6 {
             font-weight: 700;
+            margin: 0;
+        }
 
-            color: #37474f;
 
+        .image-input {
+            width: 100%;
+            margin: 15px 0;
         }
 
 
         .camera-buttons {
-
             display: grid;
 
             grid-template-columns:
@@ -574,72 +451,39 @@
             gap: 8px;
 
             margin-top: 15px;
-
         }
 
 
         .camera-buttons button {
-
             width: 100%;
-
-            min-height: 45px;
-
-            padding:
-                0 8px;
-
-        }
-
-
-        .image-input {
-
-            width: 100%;
-
-            margin:
-                12px 0;
-
-            padding: 8px;
-
-            border:
-                1px dashed
-                #b0bec5;
-
+            min-height: 44px;
+            padding: 0 8px;
             border-radius: 10px;
-
-            background:
-                #fafafa;
-
         }
 
 
         #Video {
-
             display: block;
 
             width: 100%;
-
             max-width: 420px;
 
             min-height: 220px;
 
-            margin:
-                18px auto;
+            margin: 18px auto;
 
-            border-radius: 16px;
+            border-radius: 14px;
 
-            background:
-                #101010;
+            background: #111111;
 
             object-fit: cover;
 
             box-shadow:
-                0 5px 20px
-                rgba(0,0,0,.15);
-
+                0 5px 15px rgba(0,0,0,.12);
         }
 
 
         #foto {
-
             display: block;
 
             width: 100%;
@@ -648,156 +492,64 @@
 
             height: auto;
 
-            margin:
-                18px auto;
+            margin: 18px auto;
 
-            border-radius: 16px;
+            border-radius: 14px;
 
             object-fit: cover;
 
             box-shadow:
-                0 5px 20px
-                rgba(0,0,0,.12);
-
+                0 5px 15px rgba(0,0,0,.12);
         }
 
 
         #cameraStatus {
-
             margin-top: 12px;
-
-            font-size: 14px;
-
+            font-size: 13px;
+            color: #777777;
         }
 
 
         #cameraError {
-
             margin-top: 8px;
-
-            font-size: 14px;
-
+            font-size: 13px;
         }
 
 
         /* =================================================
-           PEDIDOS
+           ESTADO VACÍO
         ================================================= */
 
-        .pedido-section {
+        .empty-recipes {
+            grid-column: 1 / -1;
 
-            margin:
-                40px 0;
-
-        }
-
-
-        .pedido-card {
-
-            border-radius: 20px;
-
-            padding: 25px;
-
-            border:
-                1px solid
-                rgba(0,0,0,.05);
-
-            box-shadow:
-                0 10px 30px
-                rgba(0,0,0,.08);
-
-        }
-
-
-        .pedido-card h5 {
-
-            font-weight: 800;
-
-            color: #263238;
-
-        }
-
-
-        .pedido-info {
-
-            background:
-                #f7fbfc;
-
-            border-radius: 12px;
-
-            padding: 14px;
-
-            margin:
-                12px 0;
-
-            border-left:
-                4px solid #4dc7e4;
-
-        }
-
-
-        .pedido-info strong {
-
-            display: block;
-
-            color: #546e7a;
-
-            margin-bottom: 5px;
-
-        }
-
-
-        .pedido-info span {
-
-            color: #263238;
-
-        }
-
-
-        /* =================================================
-           MAPA
-        ================================================= */
-
-        #map {
-
-            width: 100%;
-
-            height: 320px;
-
-            margin:
-                20px 0;
+            background: white;
 
             border-radius: 16px;
 
-            overflow: hidden;
+            padding: 50px 20px;
+
+            text-align: center;
 
             box-shadow:
-                0 5px 20px
-                rgba(0,0,0,.1);
-
+                0 5px 18px rgba(0,0,0,.05);
         }
 
 
-        #estadoUbicacion {
-
-            min-height: 22px;
-
-            margin:
-                10px 0;
-
-            font-size: 14px;
-
+        .empty-recipes i {
+            font-size: 60px;
+            color: #cccccc;
         }
 
 
-        /* =================================================
-           SELECT
-        ================================================= */
+        .empty-recipes h5 {
+            color: #555555;
+            margin-bottom: 5px;
+        }
 
-        .select-wrapper input.select-dropdown {
 
-            border-radius: 8px;
-
+        .empty-recipes p {
+            color: #999999;
         }
 
 
@@ -807,108 +559,102 @@
 
         @media only screen and (max-width: 700px) {
 
-            .container {
-
-                width: 92%;
-
+            .main-container {
+                padding:
+                    25px
+                    12px
+                    100px;
             }
 
 
-            .brand-logo {
-
-                font-size: 22px !important;
-
-            }
-
-
-            .hero {
-
-                padding-top: 25px;
-
-            }
-
-
-            .hero h4 {
-
-                font-size: 27px;
-
+            .page-header h4 {
+                font-size: 28px;
             }
 
 
             .recipes {
-
                 grid-template-columns: 1fr;
+            }
 
-                gap: 15px;
 
+            .recipes .recipe {
+                padding: 16px !important;
             }
 
 
             .side-form {
-
                 width: 100%;
+            }
 
+
+            .camera-section {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+
+
+            .form-content {
+                padding-left: 20px;
+                padding-right: 20px;
             }
 
 
             .camera-buttons {
-
                 grid-template-columns: 1fr;
-
             }
 
 
             .camera-buttons button {
-
-                height: 45px;
-
+                width: 100%;
             }
 
 
-            .pedido-card {
-
-                padding: 18px;
-
+            #Video {
+                min-height: 200px;
+                aspect-ratio: 4 / 3;
             }
 
 
-            #map {
-
-                height: 260px;
-
+            .fixed-action-btn {
+                right: 20px;
+                bottom: 20px;
             }
 
         }
 
 
-        @media only screen and (max-width: 400px) {
+        @media only screen and (max-width: 420px) {
 
-            .hero-icon {
+            .platillo-directo > div,
+            .pedido-directo > div {
+                flex-direction: column !important;
+            }
 
-                width: 60px;
 
-                height: 60px;
+            .platillo-directo img,
+            .pedido-directo img {
+
+                width: 100% !important;
+
+                height: 190px !important;
+
+                margin-right: 0 !important;
+
+                margin-bottom: 15px;
 
             }
 
 
-            .hero-icon i {
+            .platillo-directo > div > div:first-child,
+            .pedido-directo > div > div:first-child {
 
-                font-size: 32px;
+                width: 100% !important;
 
-            }
+                height: 190px !important;
 
+                margin-right: 0 !important;
 
-            .hero h4 {
-
-                font-size: 24px;
-
-            }
-
-
-            .recipes .card-panel {
-
-                padding: 15px;
+                margin-bottom: 15px;
 
             }
 
@@ -934,21 +680,18 @@
                 href="index.html"
                 class="brand-logo"
             >
-
                 MECHE
-
             </a>
 
 
             <span class="right">
 
                 <i
-                    class="material-icons sidenav-trigger menu-button"
+                    class="material-icons sidenav-trigger"
                     data-target="side-menu"
+                    style="cursor:pointer;"
                 >
-
                     menu
-
                 </i>
 
             </span>
@@ -970,11 +713,34 @@
 
         <li>
 
-            <a class="subheader">
+            <div
+                style="
+                    padding:25px 20px;
+                    background:#f7f9fa;
+                "
+            >
 
-                MECHE
+                <div
+                    style="
+                        font-size:22px;
+                        font-weight:bold;
+                        color:#4dc7e4;
+                    "
+                >
+                    MECHE
+                </div>
 
-            </a>
+                <div
+                    style="
+                        font-size:13px;
+                        color:#999;
+                        margin-top:4px;
+                    "
+                >
+                    Sistema de platillos y pedidos
+                </div>
+
+            </div>
 
         </li>
 
@@ -987,9 +753,7 @@
             >
 
                 <i class="material-icons">
-
                     home
-
                 </i>
 
                 Inicio
@@ -1007,9 +771,7 @@
             >
 
                 <i class="material-icons">
-
                     shopping_cart
-
                 </i>
 
                 Pedidos
@@ -1027,9 +789,7 @@
             >
 
                 <i class="material-icons">
-
                     info
-
                 </i>
 
                 Acerca
@@ -1047,9 +807,7 @@
             >
 
                 <i class="material-icons">
-
                     mail_outline
-
                 </i>
 
                 Contacto
@@ -1073,37 +831,31 @@
          CONTENIDO
     ====================================================== -->
 
-    <main>
+    <main class="main-container">
 
 
         <!-- =================================================
-             HERO
+             ENCABEZADO
         ================================================== -->
 
-        <section class="hero container">
+        <section class="page-header">
 
-            <div class="hero-icon">
+            <div class="header-icon">
 
                 <i class="material-icons">
-
-                    restaurant
-
+                    restaurant_menu
                 </i>
 
             </div>
 
 
             <h4>
-
                 Platillos
-
             </h4>
 
 
             <p>
-
                 Descubre nuestros platillos disponibles
-
             </p>
 
         </section>
@@ -1111,297 +863,15 @@
 
 
         <!-- =================================================
-             LISTA DE PLATILLOS
+             PLATILLOS
         ================================================== -->
 
-        <section class="container">
-
-            <div class="recipes">
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             PEDIDO
-        ================================================== -->
-
-        <section class="pedido-section container">
-
-            <div class="card-panel white pedido-card">
-
-                <h5 class="center">
-
-                    Realizar pedido
-
-                </h5>
-
-
-                <p class="center grey-text">
-
-                    Selecciona tu platillo y proporciona
-                    los datos de entrega.
-
-                </p>
-
-
-                <div class="divider"></div>
-
-                <br>
-
-
-                <!-- PLATILLO -->
-
-                <div class="input-field">
-
-                    <select id="listaplatillos">
-
-                        <option
-                            value=""
-                            selected
-                        >
-
-                            -- Selecciona un platillo --
-
-                        </option>
-
-                    </select>
-
-                    <label>
-
-                        Platillo
-
-                    </label>
-
-                </div>
-
-
-
-                <!-- INGREDIENTES -->
-
-                <div class="pedido-info">
-
-                    <strong>
-
-                        Ingredientes
-
-                    </strong>
-
-                    <span id="ingredientesVista">
-
-                        Selecciona un platillo
-
-                    </span>
-
-                </div>
-
-
-
-                <!-- COSTO -->
-
-                <div class="pedido-info">
-
-                    <strong>
-
-                        Costo
-
-                    </strong>
-
-                    <span id="costoVista">
-
-                        $0.00 MXN
-
-                    </span>
-
-                </div>
-
-
-
-                <!-- CAMPOS OCULTOS -->
-
-                <input
-                    type="hidden"
-                    id="txtIngredientes"
-                    value=""
-                >
-
-                <input
-                    type="hidden"
-                    id="txtCosto"
-                    value="$0.00 MXN"
-                >
-
-
-
-                <!-- NOMBRE -->
-
-                <div class="input-field">
-
-                    <input
-                        id="txtNombre"
-                        type="text"
-                        class="validate"
-                    >
-
-                    <label for="txtNombre">
-
-                        Nombre del cliente
-
-                    </label>
-
-                </div>
-
-
-
-                <!-- DIRECCIÓN -->
-
-                <div class="input-field">
-
-                    <input
-                        id="txtDireccion"
-                        type="text"
-                        class="validate"
-                    >
-
-                    <label for="txtDireccion">
-
-                        Dirección de entrega
-
-                    </label>
-
-                </div>
-
-
-
-                <!-- UBICACIÓN -->
-
-                <div class="center">
-
-                    <button
-                        id="btnUbicacion"
-                        type="button"
-                        class="btn blue waves-effect waves-light"
-                    >
-
-                        <i class="material-icons left">
-
-                            location_on
-
-                        </i>
-
-                        Obtener ubicación
-
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="estadoUbicacion"
-                    class="center"
-                ></div>
-
-
-
-                <!-- COORDENADAS -->
-
-                <div class="row">
-
-                    <div class="input-field col s12 m6">
-
-                        <input
-                            id="txtLatitud"
-                            type="text"
-                            readonly
-                        >
-
-                        <label for="txtLatitud">
-
-                            Latitud
-
-                        </label>
-
-                    </div>
-
-
-                    <div class="input-field col s12 m6">
-
-                        <input
-                            id="txtLongitud"
-                            type="text"
-                            readonly
-                        >
-
-                        <label for="txtLongitud">
-
-                            Longitud
-
-                        </label>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- MAPA -->
-
-                <div id="map"></div>
-
-
-
-                <!-- BOTONES -->
-
-                <div class="row">
-
-                    <div class="col s12 m6">
-
-                        <button
-                            id="btnGuardar"
-                            type="button"
-                            class="btn green waves-effect waves-light"
-                            style="width:100%;"
-                        >
-
-                            <i class="material-icons left">
-
-                                save
-
-                            </i>
-
-                            Guardar pedido
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="col s12 m6">
-
-                        <button
-                            id="btnCancelar"
-                            type="button"
-                            class="btn grey waves-effect waves-light"
-                            style="width:100%;"
-                        >
-
-                            <i class="material-icons left">
-
-                                clear
-
-                            </i>
-
-                            Cancelar
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
+        <section class="recipes">
+
+            <!--
+                Los platillos se agregan
+                automáticamente mediante index.js
+            -->
 
         </section>
 
@@ -1416,14 +886,16 @@
     <div class="fixed-action-btn">
 
         <a
-            class="btn-floating btn-large red sidenav-trigger"
+            class="
+                btn-floating
+                btn-large
+                sidenav-trigger
+            "
             data-target="side-form"
         >
 
             <i class="material-icons">
-
                 add
-
             </i>
 
         </a>
@@ -1433,7 +905,7 @@
 
 
     <!-- =====================================================
-         FORMULARIO NUEVO PLATILLO
+         FORMULARIO LATERAL
     ====================================================== -->
 
     <div
@@ -1441,25 +913,32 @@
         class="sidenav side-form"
     >
 
-        <form
-            id="formPlatillo"
-            class="add-recipe container section"
-        >
+
+        <div class="form-content">
 
 
-            <div class="form-header center">
+            <!-- =============================================
+                 CABECERA
+            ============================================== -->
+
+            <div class="form-header">
+
+                <div class="form-header-icon">
+
+                    <i class="material-icons">
+                        restaurant_menu
+                    </i>
+
+                </div>
+
 
                 <h5>
-
                     Nuevo Platillo
-
                 </h5>
 
 
-                <p class="form-subtitle">
-
+                <p>
                     Agrega un platillo al menú
-
                 </p>
 
             </div>
@@ -1468,108 +947,127 @@
             <div class="divider"></div>
 
 
+            <!-- =============================================
+                 FORMULARIO
+            ============================================== -->
 
-            <!-- NOMBRE -->
-
-            <div class="input-field">
-
-                <input
-                    id="title"
-                    name="title"
-                    type="text"
-                    class="validate"
-                    required
-                >
-
-                <label for="title">
-
-                    Nombre del platillo
-
-                </label>
-
-            </div>
-
-
-
-            <!-- INGREDIENTES -->
-
-            <div class="input-field">
-
-                <input
-                    id="ingredients"
-                    name="ingredients"
-                    type="text"
-                    class="validate"
-                    required
-                >
-
-                <label for="ingredients">
-
-                    Ingredientes
-
-                </label>
-
-            </div>
-
-
-
-            <!-- PRECIO -->
-
-            <div class="input-field">
-
-                <input
-                    id="price"
-                    name="price"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    class="validate"
-                    required
-                >
-
-                <label for="price">
-
-                    Precio
-
-                </label>
-
-            </div>
-
-
-
-            <!-- FOTO -->
-
-            <input
-                id="fotoInput"
-                type="hidden"
-                value=""
+            <form
+                id="formPlatillo"
+                class="add-recipe section"
             >
 
 
+                <!-- NOMBRE -->
 
-            <!-- AGREGAR -->
+                <div class="input-field">
 
-            <div class="center">
-
-                <button
-                    id="btnAgregarPlatillo"
-                    type="submit"
-                    class="btn green waves-effect waves-light"
-                >
-
-                    <i class="material-icons left">
-
-                        add
-
+                    <i class="material-icons prefix">
+                        restaurant
                     </i>
 
-                    Agregar Platillo
+                    <input
+                        id="title"
+                        name="title"
+                        type="text"
+                        class="validate"
+                        required
+                    >
 
-                </button>
+                    <label for="title">
+                        Nombre del platillo
+                    </label>
 
-            </div>
+                </div>
 
-        </form>
+
+                <!-- INGREDIENTES -->
+
+                <div class="input-field">
+
+                    <i class="material-icons prefix">
+                        list
+                    </i>
+
+                    <input
+                        id="ingredients"
+                        name="ingredients"
+                        type="text"
+                        class="validate"
+                        required
+                    >
+
+                    <label for="ingredients">
+                        Ingredientes
+                    </label>
+
+                </div>
+
+
+                <!-- PRECIO -->
+
+                <div class="input-field">
+
+                    <i class="material-icons prefix">
+                        attach_money
+                    </i>
+
+                    <input
+                        id="price"
+                        name="price"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        class="validate"
+                        required
+                    >
+
+                    <label for="price">
+                        Precio
+                    </label>
+
+                </div>
+
+
+                <!-- FOTO OCULTA -->
+
+                <input
+                    id="fotoInput"
+                    type="hidden"
+                    value=""
+                >
+
+
+                <!-- AGREGAR -->
+
+                <div
+                    style="
+                        margin-top:25px;
+                    "
+                >
+
+                    <button
+                        id="btnAgregarPlatillo"
+                        type="submit"
+                        class="
+                            btn
+                            waves-effect
+                            waves-light
+                        "
+                    >
+
+                        <i class="material-icons left">
+                            add
+                        </i>
+
+                        Agregar Platillo
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
 
 
@@ -1577,18 +1075,20 @@
              CÁMARA
         ================================================== -->
 
-        <div class="camera-section">
+        <section class="camera-section">
 
 
             <div class="camera-title">
 
-                <i class="material-icons">
+                <h6>
 
-                    camera_alt
+                    <i class="material-icons">
+                        camera_alt
+                    </i>
 
-                </i>
+                    Foto del platillo
 
-                Foto del platillo
+                </h6>
 
             </div>
 
@@ -1596,12 +1096,16 @@
             <div class="divider"></div>
 
 
-            <br>
+            <!-- SELECCIONAR IMAGEN -->
 
-
-            <!-- SELECCIONAR -->
-
-            <label for="btnFoto">
+            <label
+                for="btnFoto"
+                style="
+                    display:block;
+                    margin-top:15px;
+                    font-weight:500;
+                "
+            >
 
                 Seleccionar imagen
 
@@ -1616,7 +1120,6 @@
             >
 
 
-
             <!-- BOTONES -->
 
             <div class="camera-buttons">
@@ -1625,13 +1128,16 @@
                 <button
                     id="btnCamara"
                     type="button"
-                    class="btn green waves-effect waves-light"
+                    class="
+                        btn
+                        green
+                        waves-effect
+                        waves-light
+                    "
                 >
 
                     <i class="material-icons left">
-
                         camera_alt
-
                     </i>
 
                     Cámara
@@ -1642,13 +1148,16 @@
                 <button
                     id="btnCapturar"
                     type="button"
-                    class="btn blue waves-effect waves-light"
+                    class="
+                        btn
+                        blue
+                        waves-effect
+                        waves-light
+                    "
                 >
 
                     <i class="material-icons left">
-
                         photo_camera
-
                     </i>
 
                     Capturar
@@ -1659,13 +1168,16 @@
                 <button
                     id="btnLimpiar"
                     type="button"
-                    class="btn red waves-effect waves-light"
+                    class="
+                        btn
+                        red
+                        waves-effect
+                        waves-light
+                    "
                 >
 
                     <i class="material-icons left">
-
                         delete
-
                     </i>
 
                     Limpiar
@@ -1675,12 +1187,11 @@
             </div>
 
 
-
             <!-- ESTADO -->
 
             <div
                 id="cameraStatus"
-                class="center grey-text"
+                class="center"
             >
 
                 Cámara lista para tomar una foto.
@@ -1688,14 +1199,14 @@
             </div>
 
 
-
             <!-- ERROR -->
 
             <div
                 id="cameraError"
                 class="center red-text"
-            ></div>
+            >
 
+            </div>
 
 
             <!-- VIDEO -->
@@ -1719,14 +1230,12 @@
             </div>
 
 
-
             <!-- CANVAS -->
 
             <canvas
                 id="Canvas"
                 style="display:none;"
             ></canvas>
-
 
 
             <!-- FOTO -->
@@ -1745,7 +1254,7 @@
 
             </div>
 
-        </div>
+        </section>
 
     </div>
 
@@ -1756,28 +1265,18 @@
     ====================================================== -->
 
     <script
-        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
-    </script>
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"
+    ></script>
 
 
     <script
-        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
-    </script>
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"
+    ></script>
 
 
     <script
-        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-storage.js">
-    </script>
-
-
-
-    <!-- =====================================================
-         LEAFLET JS
-    ====================================================== -->
-
-    <script
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-    </script>
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-storage.js"
+    ></script>
 
 
 
@@ -1786,8 +1285,8 @@
     ====================================================== -->
 
     <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
-    </script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+    ></script>
 
 
 
@@ -1845,6 +1344,7 @@
         }
 
     </script>
+
 
 </body>
 
