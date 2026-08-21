@@ -51,6 +51,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =====================================================
+    // OBTENER UBICACIÓN AUTOMÁTICAMENTE
+    // =====================================================
+
+    setTimeout(function () {
+
+        console.log(
+            "Solicitando ubicación automáticamente..."
+        );
+
+        obtenerUbicacion();
+
+    }, 500);
+
+
+    // =====================================================
     // CARGAR PLATILLOS
     // =====================================================
 
@@ -288,10 +303,6 @@ function cargarPlatillos() {
     );
 
 
-    // =====================================================
-    // COMPROBAR FIREBASE
-    // =====================================================
-
     if (typeof db === "undefined") {
 
         console.error(
@@ -326,10 +337,6 @@ function cargarPlatillos() {
     }
 
 
-    // =====================================================
-    // LEER FIREBASE
-    // =====================================================
-
     db.collection("platillos").onSnapshot(
 
         function (coleccion) {
@@ -342,10 +349,6 @@ function cargarPlatillos() {
 
             select.innerHTML = "";
 
-
-            // =================================================
-            // OPCIÓN INICIAL
-            // =================================================
 
             const opcionInicial =
                 document.createElement("option");
@@ -366,16 +369,8 @@ function cargarPlatillos() {
             );
 
 
-            // =================================================
-            // REINICIAR MEMORIA
-            // =================================================
-
             platillos = {};
 
-
-            // =================================================
-            // SIN PLATILLOS
-            // =================================================
 
             if (coleccion.empty) {
 
@@ -399,10 +394,6 @@ function cargarPlatillos() {
 
             }
 
-
-            // =================================================
-            // RECORRER PLATILLOS
-            // =================================================
 
             coleccion.forEach(
                 function (documento) {
@@ -549,10 +540,6 @@ function mostrarInformacionPlatillo(id) {
         );
 
 
-    // =====================================================
-    // SIN SELECCIÓN
-    // =====================================================
-
     if (!id || !platillos[id]) {
 
         if (ingredientesVista) {
@@ -593,10 +580,6 @@ function mostrarInformacionPlatillo(id) {
     }
 
 
-    // =====================================================
-    // OBTENER PLATILLO
-    // =====================================================
-
     const platillo =
         platillos[id];
 
@@ -611,10 +594,6 @@ function mostrarInformacionPlatillo(id) {
             platillo.precio || 0
         );
 
-
-    // =====================================================
-    // MOSTRAR INFORMACIÓN
-    // =====================================================
 
     if (ingredientesVista) {
 
@@ -906,9 +885,6 @@ async function obtenerDireccion(
     longitud
 ) {
 
-    // IMPORTANTE:
-    // En tu HTML el campo correcto es #txtDireccion
-
     const direccion =
         document.getElementById(
             "txtDireccion"
@@ -1165,7 +1141,6 @@ async function iniciarCamara() {
             "No se encontraron los elementos de cámara."
         );
 
-
         return;
 
     }
@@ -1180,7 +1155,6 @@ async function iniciarCamara() {
             "Tu navegador no permite utilizar la cámara.",
             true
         );
-
 
         return;
 
@@ -1294,7 +1268,6 @@ function tomarFoto() {
             "No se encontraron video o canvas."
         );
 
-
         return;
 
     }
@@ -1310,15 +1283,10 @@ function tomarFoto() {
             true
         );
 
-
         return;
 
     }
 
-
-    // =====================================================
-    // TAMAÑO DEL CANVAS
-    // =====================================================
 
     canvas.width =
         video.videoWidth;
@@ -1327,10 +1295,6 @@ function tomarFoto() {
     canvas.height =
         video.videoHeight;
 
-
-    // =====================================================
-    // CAPTURAR
-    // =====================================================
 
     const contexto =
         canvas.getContext("2d");
@@ -1345,20 +1309,12 @@ function tomarFoto() {
     );
 
 
-    // =====================================================
-    // COMPRIMIR
-    // =====================================================
-
     fotoDataURL =
         canvas.toDataURL(
             "image/jpeg",
             0.7
         );
 
-
-    // =====================================================
-    // PREVIEW
-    // =====================================================
 
     if (preview) {
 
@@ -1375,10 +1331,6 @@ function tomarFoto() {
 
     }
 
-
-    // =====================================================
-    // DETENER CÁMARA
-    // =====================================================
 
     detenerCamara();
 
@@ -1480,17 +1432,11 @@ function guardarPedido() {
         );
 
 
-    // CORREGIDO:
-    // Tu HTML utiliza txtNombre
-
     const nombre =
         document.getElementById(
             "txtNombre"
         );
 
-
-    // CORREGIDO:
-    // Tu HTML utiliza txtDireccion
 
     const direccion =
         document.getElementById(
@@ -1675,12 +1621,9 @@ function guardarPedido() {
         precio:
             precio,
 
-        // CORREGIDO
-        // Antes se buscaba "usuario"
         nombre:
             nombre.value.trim(),
 
-        // También guardamos usuario por compatibilidad
         usuario:
             nombre.value.trim(),
 
@@ -1804,7 +1747,6 @@ function guardarPedido() {
                     pedidoId:
                         docRef.id,
 
-                    // Nombre del cliente
                     cliente:
                         nombre.value.trim(),
 
@@ -1945,20 +1887,12 @@ function guardarPedido() {
 
 function limpiarPedido() {
 
-    // =====================================================
-    // DETENER CÁMARA
-    // =====================================================
-
     detenerCamara();
 
 
     fotoDataURL =
         null;
 
-
-    // =====================================================
-    // CAMPOS
-    // =====================================================
 
     const lista =
         document.getElementById(
@@ -2058,10 +1992,6 @@ function limpiarPedido() {
     }
 
 
-    // =====================================================
-    // INFORMACIÓN VISUAL
-    // =====================================================
-
     const ingredientesVista =
         document.getElementById(
             "ingredientesVista"
@@ -2089,10 +2019,6 @@ function limpiarPedido() {
 
     }
 
-
-    // =====================================================
-    // COORDENADAS
-    // =====================================================
 
     const latitudVista =
         document.getElementById(
@@ -2122,10 +2048,6 @@ function limpiarPedido() {
     }
 
 
-    // =====================================================
-    // FOTO
-    // =====================================================
-
     const preview =
         document.getElementById(
             "contenedorPreview"
@@ -2153,10 +2075,6 @@ function limpiarPedido() {
 
     }
 
-
-    // =====================================================
-    // MAPA
-    // =====================================================
 
     const posicionInicial = [
         19.4326,
