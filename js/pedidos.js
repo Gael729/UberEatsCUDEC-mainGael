@@ -2,18 +2,12 @@
 // PEDIDOS.JS - MECHE
 // =========================================================
 
-console.log("=================================");
-console.log("PEDIDOS.JS CARGADO");
-console.log("=================================");
-
-
 // =========================================================
 // VARIABLES
 // =========================================================
 
 let map = null;
 let marcador = null;
-
 let platillos = {};
 
 let streamCamara = null;
@@ -26,57 +20,26 @@ let fotoDataURL = null;
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    console.log("Página de pedidos cargada");
+    console.log("=================================");
+    console.log("MECHE - PEDIDOS.JS");
+    console.log("=================================");
 
 
     // =====================================================
     // MENÚ LATERAL
     // =====================================================
 
-    const sideMenu =
-        document.getElementById("side-menu");
+    const menus =
+        document.querySelectorAll(".sidenav");
 
 
-    if (sideMenu) {
+    if (typeof M !== "undefined") {
 
-        if (typeof M !== "undefined") {
+        M.Sidenav.init(menus);
 
-            M.Sidenav.init(sideMenu, {
-                edge: "right"
-            });
-
-            console.log(
-                "Materialize: menú lateral iniciado"
-            );
-
-        } else {
-
-            console.warn(
-                "Materialize no está cargado."
-            );
-
-            // Menú manual
-            const botonMenu =
-                document.querySelector(
-                    ".sidenav-trigger"
-                );
-
-            if (botonMenu) {
-
-                botonMenu.addEventListener(
-                    "click",
-                    function () {
-
-                        sideMenu.classList.toggle(
-                            "mostrar-menu"
-                        );
-
-                    }
-                );
-
-            }
-
-        }
+        console.log(
+            "Menú lateral iniciado correctamente."
+        );
 
     }
 
@@ -147,46 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =====================================================
-    // BOTÓN CÁMARA
-    // =====================================================
-
-    const btnCamara =
-        document.getElementById(
-            "btnCamara"
-        );
-
-
-    if (btnCamara) {
-
-        btnCamara.addEventListener(
-            "click",
-            iniciarCamara
-        );
-
-    }
-
-
-    // =====================================================
-    // BOTÓN TOMAR FOTO
-    // =====================================================
-
-    const btnCapturar =
-        document.getElementById(
-            "btnCapturar"
-        );
-
-
-    if (btnCapturar) {
-
-        btnCapturar.addEventListener(
-            "click",
-            tomarFoto
-        );
-
-    }
-
-
-    // =====================================================
     // BOTÓN CANCELAR
     // =====================================================
 
@@ -226,8 +149,48 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    // =====================================================
+    // BOTÓN CÁMARA
+    // =====================================================
+
+    const btnCamara =
+        document.getElementById(
+            "btnCamara"
+        );
+
+
+    if (btnCamara) {
+
+        btnCamara.addEventListener(
+            "click",
+            iniciarCamara
+        );
+
+    }
+
+
+    // =====================================================
+    // BOTÓN CAPTURAR
+    // =====================================================
+
+    const btnCapturar =
+        document.getElementById(
+            "btnCapturar"
+        );
+
+
+    if (btnCapturar) {
+
+        btnCapturar.addEventListener(
+            "click",
+            tomarFoto
+        );
+
+    }
+
+
     console.log(
-        "Todos los eventos configurados."
+        "Eventos configurados correctamente."
     );
 
 });
@@ -240,13 +203,15 @@ document.addEventListener("DOMContentLoaded", function () {
 function iniciarMapa() {
 
     const mapaElemento =
-        document.getElementById("mapa");
+        document.getElementById(
+            "map"
+        );
 
 
     if (!mapaElemento) {
 
         console.warn(
-            "No existe #mapa"
+            "No existe el elemento #map."
         );
 
         return;
@@ -254,13 +219,9 @@ function iniciarMapa() {
     }
 
 
-    // =====================================================
-    // SI LEAFLET NO ESTÁ CARGADO
-    // =====================================================
-
     if (typeof L === "undefined") {
 
-        console.warn(
+        console.error(
             "Leaflet no está cargado."
         );
 
@@ -271,16 +232,14 @@ function iniciarMapa() {
                 background:#eeeeee;
                 border-radius:10px;
             ">
-
-                <i class="material-icons">
+                <i class="material-icons"
+                   style="font-size:40px;">
                     location_on
                 </i>
 
-                <br>
+                <br><br>
 
-                El mapa se mostrará cuando
-                obtengas tu ubicación.
-
+                El mapa no está disponible.
             </div>
         `;
 
@@ -289,10 +248,6 @@ function iniciarMapa() {
     }
 
 
-    // =====================================================
-    // POSICIÓN INICIAL
-    // =====================================================
-
     const posicionInicial = [
         19.4326,
         -99.1332
@@ -300,7 +255,7 @@ function iniciarMapa() {
 
 
     map =
-        L.map("mapa")
+        L.map("map")
         .setView(
             posicionInicial,
             12
@@ -314,12 +269,10 @@ function iniciarMapa() {
     L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
-
             maxZoom: 19,
 
             attribution:
                 "&copy; OpenStreetMap contributors"
-
         }
     ).addTo(map);
 
@@ -364,21 +317,18 @@ function cargarPlatillos() {
     if (typeof db === "undefined") {
 
         console.error(
-            "ERROR: db NO está definido."
+            "ERROR: db no está definido."
         );
+
 
         mostrarErrorPlatillos(
             "Firebase no está disponible."
         );
 
+
         return;
 
     }
-
-
-    console.log(
-        "Firebase encontrado correctamente."
-    );
 
 
     const select =
@@ -390,8 +340,9 @@ function cargarPlatillos() {
     if (!select) {
 
         console.error(
-            "No existe #listaPlatillos"
+            "No existe #listaPlatillos."
         );
+
 
         return;
 
@@ -399,7 +350,7 @@ function cargarPlatillos() {
 
 
     // =====================================================
-    // LEER PLATILLOS
+    // LEER FIREBASE
     // =====================================================
 
     db.collection("platillos")
@@ -408,20 +359,17 @@ function cargarPlatillos() {
             function (coleccion) {
 
                 console.log(
-                    "Colección platillos recibida."
-                );
-
-
-                console.log(
-                    "Cantidad:",
+                    "Platillos recibidos:",
                     coleccion.size
                 );
 
 
+                // Limpiar
+
                 select.innerHTML = "";
 
 
-                // OPCIÓN INICIAL
+                // Opción inicial
 
                 const opcionInicial =
                     document.createElement(
@@ -429,10 +377,12 @@ function cargarPlatillos() {
                     );
 
 
-                opcionInicial.value = "";
+                opcionInicial.value =
+                    "";
+
 
                 opcionInicial.textContent =
-                    "Selecciona un platillo";
+                    "-- Selecciona un platillo --";
 
 
                 opcionInicial.selected =
@@ -444,11 +394,13 @@ function cargarPlatillos() {
                 );
 
 
+                // Reiniciar memoria
+
                 platillos = {};
 
 
                 // =================================================
-                // SI NO HAY PLATILLOS
+                // SIN PLATILLOS
                 // =================================================
 
                 if (coleccion.empty) {
@@ -492,13 +444,6 @@ function cargarPlatillos() {
                             documento.id;
 
 
-                        console.log(
-                            "Platillo:",
-                            id,
-                            datos
-                        );
-
-
                         platillos[id] =
                             datos;
 
@@ -513,17 +458,28 @@ function cargarPlatillos() {
                             id;
 
 
+                        const precio =
+                            parseFloat(
+                                datos.precio || 0
+                            );
+
+
                         option.textContent =
                             (datos.nombre ||
                                 "Platillo sin nombre") +
                             " - $" +
-                            parseFloat(
-                                datos.precio || 0
-                            ).toFixed(2);
+                            precio.toFixed(2);
 
 
                         select.appendChild(
                             option
+                        );
+
+
+                        console.log(
+                            "Platillo:",
+                            id,
+                            datos
                         );
 
                     }
@@ -540,7 +496,7 @@ function cargarPlatillos() {
             function (error) {
 
                 console.error(
-                    "Error cargando platillos:",
+                    "Error leyendo platillos:",
                     error
                 );
 
@@ -557,7 +513,7 @@ function cargarPlatillos() {
 
 
 // =========================================================
-// ERROR DE PLATILLOS
+// MOSTRAR ERROR DE PLATILLOS
 // =========================================================
 
 function mostrarErrorPlatillos(
@@ -584,7 +540,9 @@ function mostrarErrorPlatillos(
         );
 
 
-    option.value = "";
+    option.value =
+        "";
+
 
     option.textContent =
         mensaje;
@@ -617,11 +575,6 @@ function mostrarInformacionPlatillo(
         );
 
 
-    // =====================================================
-    // EL HTML PRINCIPAL DE MECHE NO TIENE ESTOS CAMPOS
-    // PERO LOS BUSCAMOS POR SI LOS AGREGAS
-    // =====================================================
-
     const ingredientesInput =
         document.getElementById(
             "txtIngredientes"
@@ -633,6 +586,10 @@ function mostrarInformacionPlatillo(
             "txtCosto"
         );
 
+
+    // =====================================================
+    // SIN SELECCIÓN
+    // =====================================================
 
     if (!id || !platillos[id]) {
 
@@ -675,6 +632,10 @@ function mostrarInformacionPlatillo(
     }
 
 
+    // =====================================================
+    // OBTENER PLATILLO
+    // =====================================================
+
     const platillo =
         platillos[id];
 
@@ -690,11 +651,9 @@ function mostrarInformacionPlatillo(
         );
 
 
-    console.log(
-        "Mostrando información:",
-        platillo
-    );
-
+    // =====================================================
+    // MOSTRAR INFORMACIÓN
+    // =====================================================
 
     if (ingredientesVista) {
 
@@ -743,28 +702,30 @@ function mostrarInformacionPlatillo(
 
 function obtenerUbicacion() {
 
-    if (!navigator.geolocation) {
-
-        mostrarMensaje(
-            "Tu navegador no permite obtener ubicación.",
-            "red"
-        );
-
-        return;
-
-    }
-
-
     const btn =
         document.getElementById(
             "btnUbicacion"
         );
 
 
+    if (!navigator.geolocation) {
+
+        mostrarEstado(
+            "Tu navegador no permite obtener la ubicación.",
+            true
+        );
+
+
+        return;
+
+    }
+
+
     if (btn) {
 
         btn.disabled =
             true;
+
 
         btn.innerHTML = `
             <i class="material-icons left">
@@ -776,9 +737,9 @@ function obtenerUbicacion() {
     }
 
 
-    mostrarMensaje(
-        "Obteniendo ubicación...",
-        "blue"
+    mostrarEstado(
+        "Solicitando tu ubicación...",
+        false
     );
 
 
@@ -807,28 +768,7 @@ function obtenerUbicacion() {
 
 
             // =================================================
-            // CAMPOS DEL HTML PRINCIPAL
-            // =================================================
-
-            const direccion =
-                document.getElementById(
-                    "title"
-                );
-
-
-            if (direccion) {
-
-                direccion.value =
-                    "Lat: " +
-                    latitud.toFixed(6) +
-                    ", Lon: " +
-                    longitud.toFixed(6);
-
-            }
-
-
-            // =================================================
-            // CAMPOS OCULTOS SI EXISTEN
+            // INPUTS OCULTOS
             // =================================================
 
             const txtLatitud =
@@ -860,17 +800,74 @@ function obtenerUbicacion() {
 
 
             // =================================================
-            // MOSTRAR MAPA
+            // COORDENADAS VISIBLES
             // =================================================
 
-            mostrarMapaUbicacion(
-                latitud,
-                longitud
-            );
+            const latitudVista =
+                document.getElementById(
+                    "latitudVista"
+                );
+
+
+            const longitudVista =
+                document.getElementById(
+                    "longitudVista"
+                );
+
+
+            if (latitudVista) {
+
+                latitudVista.textContent =
+                    latitud.toFixed(6);
+
+            }
+
+
+            if (longitudVista) {
+
+                longitudVista.textContent =
+                    longitud.toFixed(6);
+
+            }
 
 
             // =================================================
-            // OBTENER DIRECCIÓN REAL
+            // MAPA
+            // =================================================
+
+            if (map) {
+
+                map.setView(
+                    [
+                        latitud,
+                        longitud
+                    ],
+                    17
+                );
+
+            }
+
+
+            if (marcador) {
+
+                marcador.setLatLng([
+                    latitud,
+                    longitud
+                ]);
+
+
+                marcador.bindPopup(
+                    "Tu ubicación"
+                );
+
+
+                marcador.openPopup();
+
+            }
+
+
+            // =================================================
+            // DIRECCIÓN
             // =================================================
 
             obtenerDireccion(
@@ -878,24 +875,23 @@ function obtenerUbicacion() {
                 longitud
             );
 
-
         },
 
         function (error) {
 
             console.error(
-                "Error de ubicación:",
+                "Error de geolocalización:",
                 error
             );
 
 
             let mensaje =
-                "No se pudo obtener la ubicación.";
+                "No se pudo obtener tu ubicación.";
 
 
             switch (error.code) {
 
-                case 1:
+                case error.PERMISSION_DENIED:
 
                     mensaje =
                         "Permiso de ubicación denegado.";
@@ -903,27 +899,27 @@ function obtenerUbicacion() {
                     break;
 
 
-                case 2:
+                case error.POSITION_UNAVAILABLE:
 
                     mensaje =
-                        "Ubicación no disponible.";
+                        "La ubicación no está disponible.";
 
                     break;
 
 
-                case 3:
+                case error.TIMEOUT:
 
                     mensaje =
-                        "Tiempo agotado.";
+                        "Se agotó el tiempo para obtener la ubicación.";
 
                     break;
 
             }
 
 
-            mostrarMensaje(
+            mostrarEstado(
                 mensaje,
-                "red"
+                true
             );
 
 
@@ -932,16 +928,9 @@ function obtenerUbicacion() {
         },
 
         {
-
-            enableHighAccuracy:
-                true,
-
-            timeout:
-                20000,
-
-            maximumAge:
-                0
-
+            enableHighAccuracy: true,
+            timeout: 20000,
+            maximumAge: 0
         }
 
     );
@@ -950,139 +939,7 @@ function obtenerUbicacion() {
 
 
 // =========================================================
-// MOSTRAR UBICACIÓN EN MAPA
-// =========================================================
-
-function mostrarMapaUbicacion(
-    latitud,
-    longitud
-) {
-
-    const mapaElemento =
-        document.getElementById(
-            "mapa"
-        );
-
-
-    if (!mapaElemento) {
-        return;
-    }
-
-
-    // =====================================================
-    // SI LEAFLET NO EXISTE
-    // =====================================================
-
-    if (typeof L === "undefined") {
-
-        mapaElemento.style.display =
-            "block";
-
-
-        mapaElemento.innerHTML = `
-
-            <div style="
-                background:#eeeeee;
-                padding:25px;
-                text-align:center;
-                border-radius:10px;
-            ">
-
-                <i
-                    class="material-icons"
-                    style="font-size:40px;"
-                >
-                    location_on
-                </i>
-
-                <br>
-
-                <strong>
-                    Ubicación obtenida
-                </strong>
-
-                <br><br>
-
-                Latitud:
-                ${latitud.toFixed(6)}
-
-                <br>
-
-                Longitud:
-                ${longitud.toFixed(6)}
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    // =====================================================
-    // CREAR MAPA SI NO EXISTE
-    // =====================================================
-
-    if (!map) {
-
-        iniciarMapa();
-
-    }
-
-
-    if (!map) {
-        return;
-    }
-
-
-    // =====================================================
-    // MOVER MAPA
-    // =====================================================
-
-    map.setView(
-        [
-            latitud,
-            longitud
-        ],
-        17
-    );
-
-
-    // =====================================================
-    // MOVER MARCADOR
-    // =====================================================
-
-    if (!marcador) {
-
-        marcador =
-            L.marker([
-                latitud,
-                longitud
-            ]).addTo(map);
-
-    } else {
-
-        marcador.setLatLng([
-            latitud,
-            longitud
-        ]);
-
-    }
-
-
-    marcador.bindPopup(
-        "Tu ubicación"
-    );
-
-
-    marcador.openPopup();
-
-}
-
-
-// =========================================================
-// OBTENER DIRECCIÓN CON OPENSTREETMAP
+// OBTENER DIRECCIÓN
 // =========================================================
 
 async function obtenerDireccion(
@@ -1096,13 +953,12 @@ async function obtenerDireccion(
         );
 
 
-    if (!direccion) {
-        return;
+    if (direccion) {
+
+        direccion.value =
+            "Buscando dirección...";
+
     }
-
-
-    direccion.value =
-        "Buscando dirección...";
 
 
     actualizarMaterialize();
@@ -1136,7 +992,7 @@ async function obtenerDireccion(
         if (!respuesta.ok) {
 
             throw new Error(
-                "No se pudo obtener la dirección."
+                "No se pudo consultar la dirección."
             );
 
         }
@@ -1153,6 +1009,8 @@ async function obtenerDireccion(
         const calle =
             address.road ||
             address.pedestrian ||
+            address.footway ||
+            address.path ||
             "";
 
 
@@ -1164,6 +1022,7 @@ async function obtenerDireccion(
         const colonia =
             address.suburb ||
             address.neighbourhood ||
+            address.quarter ||
             "";
 
 
@@ -1171,6 +1030,7 @@ async function obtenerDireccion(
             address.city ||
             address.town ||
             address.village ||
+            address.municipality ||
             "";
 
 
@@ -1252,16 +1112,25 @@ async function obtenerDireccion(
         }
 
 
-        direccion.value =
-            direccionFinal;
+        if (direccion) {
+
+            direccion.value =
+                direccionFinal;
+
+        }
 
 
         actualizarMaterialize();
 
 
-        mostrarMensaje(
-            "Ubicación obtenida correctamente.",
-            "green"
+        mostrarEstado(
+            "✓ Ubicación encontrada correctamente.",
+            false
+        );
+
+
+        restaurarBotonUbicacion(
+            true
         );
 
 
@@ -1272,14 +1141,10 @@ async function obtenerDireccion(
                 direccionFinal
             );
 
+
             marcador.openPopup();
 
         }
-
-
-        restaurarBotonUbicacion(
-            true
-        );
 
     }
 
@@ -1291,18 +1156,22 @@ async function obtenerDireccion(
         );
 
 
-        direccion.value =
-            latitud +
-            ", " +
-            longitud;
+        if (direccion) {
+
+            direccion.value =
+                latitud +
+                ", " +
+                longitud;
+
+        }
 
 
         actualizarMaterialize();
 
 
-        mostrarMensaje(
-            "Ubicación obtenida, pero no se encontró la dirección.",
-            "orange"
+        mostrarEstado(
+            "Ubicación obtenida, pero no se pudo encontrar la dirección.",
+            true
         );
 
 
@@ -1314,7 +1183,7 @@ async function obtenerDireccion(
 
 
 // =========================================================
-// INICIAR CÁMARA
+// CÁMARA
 // =========================================================
 
 async function iniciarCamara() {
@@ -1337,6 +1206,7 @@ async function iniciarCamara() {
             "No se encontraron los elementos de cámara."
         );
 
+
         return;
 
     }
@@ -1347,10 +1217,20 @@ async function iniciarCamara() {
         !navigator.mediaDevices.getUserMedia
     ) {
 
-        mostrarMensaje(
+        mostrarEstado(
             "Tu navegador no permite utilizar la cámara.",
-            "red"
+            true
         );
+
+
+        return;
+
+    }
+
+
+    // Si ya existe una cámara activa
+
+    if (streamCamara) {
 
         return;
 
@@ -1362,11 +1242,11 @@ async function iniciarCamara() {
         streamCamara =
             await navigator.mediaDevices.getUserMedia({
 
-                video:
-                    true,
+                video: {
+                    facingMode: "environment"
+                },
 
-                audio:
-                    false
+                audio: false
 
             });
 
@@ -1379,8 +1259,14 @@ async function iniciarCamara() {
             "block";
 
 
+        mostrarEstado(
+            "Cámara activada. Puedes tomar la foto.",
+            false
+        );
+
+
         console.log(
-            "Cámara encendida."
+            "Cámara iniciada correctamente."
         );
 
     }
@@ -1388,14 +1274,14 @@ async function iniciarCamara() {
     catch (error) {
 
         console.error(
-            "Error de cámara:",
+            "Error iniciando cámara:",
             error
         );
 
 
-        mostrarMensaje(
+        mostrarEstado(
             "No se pudo abrir la cámara. Revisa los permisos.",
-            "red"
+            true
         );
 
     }
@@ -1427,13 +1313,18 @@ function tomarFoto() {
         );
 
 
-    const contenedor =
+    const contenedorPreview =
         document.getElementById(
             "contenedorPreview"
         );
 
 
     if (!video || !canvas) {
+
+        console.error(
+            "No se encontraron video o canvas."
+        );
+
 
         return;
 
@@ -1445,15 +1336,20 @@ function tomarFoto() {
         video.videoHeight === 0
     ) {
 
-        mostrarMensaje(
+        mostrarEstado(
             "La cámara todavía no está lista.",
-            "orange"
+            true
         );
+
 
         return;
 
     }
 
+
+    // =====================================================
+    // TAMAÑO
+    // =====================================================
 
     canvas.width =
         video.videoWidth;
@@ -1463,8 +1359,14 @@ function tomarFoto() {
         video.videoHeight;
 
 
+    // =====================================================
+    // CAPTURAR
+    // =====================================================
+
     const contexto =
-        canvas.getContext("2d");
+        canvas.getContext(
+            "2d"
+        );
 
 
     contexto.drawImage(
@@ -1476,12 +1378,20 @@ function tomarFoto() {
     );
 
 
+    // =====================================================
+    // COMPRIMIR IMAGEN
+    // =====================================================
+
     fotoDataURL =
         canvas.toDataURL(
             "image/jpeg",
             0.7
         );
 
+
+    // =====================================================
+    // MOSTRAR PREVIEW
+    // =====================================================
 
     if (preview) {
 
@@ -1491,20 +1401,29 @@ function tomarFoto() {
     }
 
 
-    if (contenedor) {
+    if (contenedorPreview) {
 
-        contenedor.style.display =
+        contenedorPreview.style.display =
             "block";
 
     }
 
 
+    // =====================================================
+    // DETENER CÁMARA
+    // =====================================================
+
     detenerCamara();
 
 
-    mostrarMensaje(
-        "Foto tomada correctamente.",
-        "green"
+    mostrarEstado(
+        "✓ Foto capturada correctamente.",
+        false
+    );
+
+
+    console.log(
+        "Foto capturada."
     );
 
 }
@@ -1571,15 +1490,28 @@ function detenerCamara() {
 
 function guardarPedido() {
 
+    console.log(
+        "================================="
+    );
+
+
+    console.log(
+        "INTENTANDO GUARDAR PEDIDO"
+    );
+
+
+    console.log(
+        "================================="
+    );
+
+
+    // =====================================================
+    // OBTENER CAMPOS
+    // =====================================================
+
     const lista =
         document.getElementById(
             "listaPlatillos"
-        );
-
-
-    const direccion =
-        document.getElementById(
-            "title"
         );
 
 
@@ -1589,42 +1521,39 @@ function guardarPedido() {
         );
 
 
+    const direccion =
+        document.getElementById(
+            "title"
+        );
+
+
+    const latitud =
+        document.getElementById(
+            "txtLatitud"
+        );
+
+
+    const longitud =
+        document.getElementById(
+            "txtLongitud"
+        );
+
+
     // =====================================================
     // VALIDAR PLATILLO
     // =====================================================
 
     if (!lista || !lista.value) {
 
-        mostrarMensaje(
+        mostrarEstado(
             "Selecciona un platillo.",
-            "orange"
-        );
-
-        return;
-
-    }
-
-
-    // =====================================================
-    // VALIDAR DIRECCIÓN
-    // =====================================================
-
-    if (
-        !direccion ||
-        !direccion.value.trim()
-    ) {
-
-        mostrarMensaje(
-            "Ingresa una dirección.",
-            "orange"
+            true
         );
 
 
-        if (direccion) {
-
-            direccion.focus();
-
-        }
+        alert(
+            "Selecciona un platillo."
+        );
 
 
         return;
@@ -1641,9 +1570,14 @@ function guardarPedido() {
         !usuario.value.trim()
     ) {
 
-        mostrarMensaje(
-            "Ingresa el usuario.",
-            "orange"
+        mostrarEstado(
+            "Ingresa tu usuario.",
+            true
+        );
+
+
+        alert(
+            "Ingresa tu usuario."
         );
 
 
@@ -1660,15 +1594,52 @@ function guardarPedido() {
 
 
     // =====================================================
+    // VALIDAR DIRECCIÓN
+    // =====================================================
+
+    if (
+        !direccion ||
+        !direccion.value.trim()
+    ) {
+
+        mostrarEstado(
+            "Ingresa u obtén tu dirección.",
+            true
+        );
+
+
+        alert(
+            "Ingresa u obtén tu dirección."
+        );
+
+
+        if (direccion) {
+
+            direccion.focus();
+
+        }
+
+
+        return;
+
+    }
+
+
+    // =====================================================
     // FIREBASE
     // =====================================================
 
     if (typeof db === "undefined") {
 
-        mostrarMensaje(
-            "Firebase no está disponible.",
-            "red"
+        console.error(
+            "Firebase / db no está disponible."
         );
+
+
+        alert(
+            "Firebase no está disponible."
+        );
+
 
         return;
 
@@ -1687,15 +1658,25 @@ function guardarPedido() {
 
     if (!platillo) {
 
-        mostrarMensaje(
-            "No se encontró el platillo.",
-            "red"
+        console.error(
+            "No existe el platillo:",
+            lista.value
         );
+
+
+        alert(
+            "No se encontró la información del platillo."
+        );
+
 
         return;
 
     }
 
+
+    // =====================================================
+    // PRECIO
+    // =====================================================
 
     const precio =
         parseFloat(
@@ -1704,7 +1685,7 @@ function guardarPedido() {
 
 
     // =====================================================
-    // PEDIDO
+    // CREAR PEDIDO
     // =====================================================
 
     const pedido = {
@@ -1723,24 +1704,46 @@ function guardarPedido() {
         precio:
             precio,
 
+        usuario:
+            usuario.value.trim(),
+
         direccion:
             direccion.value.trim(),
 
-        usuario:
-            usuario.value.trim(),
+        latitud:
+            latitud &&
+            latitud.value
+                ? parseFloat(
+                    latitud.value
+                )
+                : null,
+
+        longitud:
+            longitud &&
+            longitud.value
+                ? parseFloat(
+                    longitud.value
+                )
+                : null,
 
         foto:
             fotoDataURL ||
             null,
 
         fecha:
-            new Date()
+            new Date().toISOString()
 
     };
 
 
+    console.log(
+        "Pedido que se enviará a Firebase:",
+        pedido
+    );
+
+
     // =====================================================
-    // BOTÓN GUARDAR
+    // BOTÓN
     // =====================================================
 
     const btn =
@@ -1766,139 +1769,207 @@ function guardarPedido() {
 
 
     // =====================================================
-    // GUARDAR FIREBASE
+    // GUARDAR EN FIREBASE
     // =====================================================
 
     db.collection("pedidos")
         .add(pedido)
 
-        .then(function (docRef) {
+        .then(
+            function (docRef) {
 
-            console.log(
-                "Pedido guardado:",
-                docRef.id
-            );
-
-
-            mostrarMensaje(
-                "Pedido guardado correctamente.",
-                "green"
-            );
+                console.log(
+                    "================================="
+                );
 
 
-            // =================================================
-            // GUARDAR PARA INDEX
-            // =================================================
-
-            const platilloParaIndex = {
-
-                id:
-                    "pedido_" +
-                    docRef.id,
-
-                nombre:
-                    platillo.nombre ||
-                    "Sin nombre",
-
-                ingredientes:
-                    platillo.ingredientes ||
-                    "Sin ingredientes",
-
-                precio:
-                    precio,
-
-                foto:
-                    platillo.foto ||
-                    "",
-
-                pedidoId:
-                    docRef.id,
-
-                cliente:
-                    usuario.value.trim(),
-
-                direccion:
-                    direccion.value.trim(),
-
-                fecha:
-                    new Date().toISOString()
-
-            };
+                console.log(
+                    "PEDIDO GUARDADO CORRECTAMENTE"
+                );
 
 
-            localStorage.setItem(
-                "nuevoPlatilloIndex",
-                JSON.stringify(
-                    platilloParaIndex
-                )
-            );
+                console.log(
+                    "ID:",
+                    docRef.id
+                );
 
 
-            // =================================================
-            // LIMPIAR
-            // =================================================
-
-            setTimeout(
-                function () {
-
-                    limpiarPedido();
+                console.log(
+                    "================================="
+                );
 
 
-                    // =================================================
-                    // REGRESAR AL INDEX
-                    // =================================================
+                // =================================================
+                // PREPARAR INFORMACIÓN PARA INDEX
+                // =================================================
 
-                    window.location.href =
-                        "../index.html";
+                const platilloParaIndex = {
 
-                },
-                1000
-            );
+                    id:
+                        "pedido_" +
+                        docRef.id,
 
-        })
+                    nombre:
+                        platillo.nombre ||
+                        "Sin nombre",
 
-        .catch(function (error) {
+                    ingredientes:
+                        platillo.ingredientes ||
+                        "Sin ingredientes",
 
-            console.error(
-                "Error guardando pedido:",
-                error
-            );
+                    precio:
+                        precio,
+
+                    foto:
+                        platillo.foto ||
+                        "",
+
+                    pedidoId:
+                        docRef.id,
+
+                    cliente:
+                        usuario.value.trim(),
+
+                    usuario:
+                        usuario.value.trim(),
+
+                    direccion:
+                        direccion.value.trim(),
+
+                    latitud:
+                        pedido.latitud,
+
+                    longitud:
+                        pedido.longitud,
+
+                    fecha:
+                        pedido.fecha
+
+                };
 
 
-            mostrarMensaje(
-                "Ocurrió un error al guardar el pedido.",
-                "red"
-            );
+                // =================================================
+                // LOCAL STORAGE
+                // =================================================
 
-        })
-
-        .finally(function () {
-
-            if (btn) {
-
-                btn.disabled =
-                    false;
+                localStorage.setItem(
+                    "nuevoPlatilloIndex",
+                    JSON.stringify(
+                        platilloParaIndex
+                    )
+                );
 
 
-                btn.innerHTML = `
-                    <i class="material-icons left">
-                        save
-                    </i>
-                    Guardar
-                `;
+                console.log(
+                    "Pedido preparado para index.html."
+                );
+
+
+                mostrarEstado(
+                    "✓ Pedido guardado correctamente.",
+                    false
+                );
+
+
+                // =================================================
+                // REGRESAR AL INDEX
+                // =================================================
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "../index.html";
+
+                    },
+                    700
+                );
 
             }
+        )
 
-        });
+        .catch(
+            function (error) {
+
+                console.error(
+                    "================================="
+                );
+
+
+                console.error(
+                    "ERROR AL GUARDAR PEDIDO"
+                );
+
+
+                console.error(
+                    error
+                );
+
+
+                console.error(
+                    "Código:",
+                    error.code
+                );
+
+
+                console.error(
+                    "Mensaje:",
+                    error.message
+                );
+
+
+                console.error(
+                    "================================="
+                );
+
+
+                alert(
+                    "Error al guardar el pedido:\n\n" +
+                    error.message
+                );
+
+
+                mostrarEstado(
+                    "Error al guardar el pedido.",
+                    true
+                );
+
+            }
+        )
+
+        .finally(
+            function () {
+
+                if (btn) {
+
+                    btn.disabled =
+                        false;
+
+
+                    btn.innerHTML = `
+                        <i class="material-icons left">
+                            save
+                        </i>
+                        Guardar pedido
+                    `;
+
+                }
+
+            }
+        );
 
 }
 
 
 // =========================================================
-// CANCELAR / LIMPIAR
+// LIMPIAR PEDIDO
 // =========================================================
 
 function limpiarPedido() {
+
+    // =====================================================
+    // DETENER CÁMARA
+    // =====================================================
 
     detenerCamara();
 
@@ -1907,15 +1978,13 @@ function limpiarPedido() {
         null;
 
 
+    // =====================================================
+    // CAMPOS
+    // =====================================================
+
     const lista =
         document.getElementById(
             "listaPlatillos"
-        );
-
-
-    const direccion =
-        document.getElementById(
-            "title"
         );
 
 
@@ -1925,9 +1994,47 @@ function limpiarPedido() {
         );
 
 
+    const direccion =
+        document.getElementById(
+            "title"
+        );
+
+
+    const ingredientes =
+        document.getElementById(
+            "txtIngredientes"
+        );
+
+
+    const costo =
+        document.getElementById(
+            "txtCosto"
+        );
+
+
+    const latitud =
+        document.getElementById(
+            "txtLatitud"
+        );
+
+
+    const longitud =
+        document.getElementById(
+            "txtLongitud"
+        );
+
+
     if (lista) {
 
         lista.value =
+            "";
+
+    }
+
+
+    if (usuario) {
+
+        usuario.value =
             "";
 
     }
@@ -1941,10 +2048,98 @@ function limpiarPedido() {
     }
 
 
-    if (usuario) {
+    if (ingredientes) {
 
-        usuario.value =
+        ingredientes.value =
             "";
+
+    }
+
+
+    if (costo) {
+
+        costo.value =
+            "$0.00 MXN";
+
+    }
+
+
+    if (latitud) {
+
+        latitud.value =
+            "";
+
+    }
+
+
+    if (longitud) {
+
+        longitud.value =
+            "";
+
+    }
+
+
+    // =====================================================
+    // INFORMACIÓN VISUAL
+    // =====================================================
+
+    const ingredientesVista =
+        document.getElementById(
+            "ingredientesVista"
+        );
+
+
+    const costoVista =
+        document.getElementById(
+            "costoVista"
+        );
+
+
+    if (ingredientesVista) {
+
+        ingredientesVista.textContent =
+            "Selecciona un platillo";
+
+    }
+
+
+    if (costoVista) {
+
+        costoVista.textContent =
+            "$0.00 MXN";
+
+    }
+
+
+    // =====================================================
+    // COORDENADAS
+    // =====================================================
+
+    const latitudVista =
+        document.getElementById(
+            "latitudVista"
+        );
+
+
+    const longitudVista =
+        document.getElementById(
+            "longitudVista"
+        );
+
+
+    if (latitudVista) {
+
+        latitudVista.textContent =
+            "No disponible";
+
+    }
+
+
+    if (longitudVista) {
+
+        longitudVista.textContent =
+            "No disponible";
 
     }
 
@@ -1985,23 +2180,42 @@ function limpiarPedido() {
     // MAPA
     // =====================================================
 
-    const mapa =
-        document.getElementById(
-            "mapa"
+    const posicionInicial = [
+        19.4326,
+        -99.1332
+    ];
+
+
+    if (map) {
+
+        map.setView(
+            posicionInicial,
+            12
         );
-
-
-    if (mapa) {
-
-        mapa.style.display =
-            "none";
 
     }
 
 
-    mostrarMensaje(
-        "Pedido cancelado.",
-        "red"
+    if (marcador) {
+
+        marcador.setLatLng(
+            posicionInicial
+        );
+
+
+        marcador.bindPopup(
+            "Ubicación inicial"
+        );
+
+    }
+
+
+    actualizarMaterialize();
+
+
+    mostrarEstado(
+        "",
+        false
     );
 
 }
@@ -2056,39 +2270,40 @@ function restaurarBotonUbicacion(
 
 
 // =========================================================
-// MENSAJES
+// MOSTRAR ESTADO
 // =========================================================
 
-function mostrarMensaje(
+function mostrarEstado(
     mensaje,
-    clase
+    error
 ) {
 
-    if (
-        typeof M !== "undefined" &&
-        M.toast
-    ) {
+    const elemento =
+        document.getElementById(
+            "estadoUbicacion"
+        );
 
-        M.toast({
 
-            html:
-                mensaje,
+    if (!elemento) {
+        return;
+    }
 
-            classes:
-                clase
 
-        });
+    elemento.textContent =
+        mensaje;
+
+
+    if (error) {
+
+        elemento.className =
+            "red-text";
 
     }
 
     else {
 
-        console.log(
-            "[" +
-            clase +
-            "] " +
-            mensaje
-        );
+        elemento.className =
+            "green-text";
 
     }
 
@@ -2096,7 +2311,7 @@ function mostrarMensaje(
 
 
 // =========================================================
-// MATERIALIZE OPCIONAL
+// ACTUALIZAR MATERIALIZE
 // =========================================================
 
 function actualizarMaterialize() {
