@@ -81,24 +81,14 @@
 
 
     <!-- =========================================
-         LEAFLET CSS
-    ========================================== -->
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
-
-
-    <!-- =========================================
-         ESTILOS
+         ESTILOS DE CÁMARA
     ========================================== -->
 
     <style>
 
         .side-form {
 
-            width: 420px;
+            width: 400px;
 
             max-width: 100%;
 
@@ -212,74 +202,6 @@
         }
 
 
-        /* =========================================
-           MAPA
-        ========================================== */
-
-        #map {
-
-            width: 100%;
-
-            height: 300px;
-
-            border-radius: 12px;
-
-            margin-top: 15px;
-
-        }
-
-
-        /* =========================================
-           FORMULARIO PEDIDO
-        ========================================== */
-
-        .pedido-section {
-
-            margin-top: 30px;
-
-            margin-bottom: 30px;
-
-        }
-
-
-        .pedido-card {
-
-            padding: 20px;
-
-            border-radius: 12px;
-
-        }
-
-
-        .pedido-info {
-
-            padding: 10px 0;
-
-        }
-
-
-        .pedido-info strong {
-
-            display: block;
-
-            margin-bottom: 5px;
-
-        }
-
-
-        #estadoUbicacion {
-
-            margin-top: 10px;
-
-            min-height: 20px;
-
-        }
-
-
-        /* =========================================
-           RESPONSIVE
-        ========================================== */
-
         @media only screen and (max-width: 600px) {
 
             .side-form {
@@ -312,13 +234,6 @@
                 min-height: 220px;
 
                 aspect-ratio: 4 / 3;
-
-            }
-
-
-            #map {
-
-                height: 250px;
 
             }
 
@@ -490,15 +405,10 @@
 
 
     <!-- =========================================
-         CONTENIDO PRINCIPAL
+         TÍTULO
     ========================================== -->
 
-    <main class="container">
-
-
-        <!-- =====================================
-             TÍTULO
-        ====================================== -->
+    <div class="container">
 
         <h4 class="center grey-text text-darken-2">
 
@@ -514,314 +424,15 @@
         </p>
 
 
-
         <!-- =====================================
-             PLATILLOS
+             AQUÍ APARECEN LOS PLATILLOS
         ====================================== -->
 
         <div class="recipes">
 
         </div>
 
-
-
-        <!-- =====================================
-             FORMULARIO DE PEDIDO
-        ====================================== -->
-
-        <section class="pedido-section">
-
-            <div class="card-panel white pedido-card">
-
-                <h5 class="center">
-
-                    Realizar pedido
-
-                </h5>
-
-
-                <div class="divider"></div>
-
-                <br>
-
-
-                <!-- =================================
-                     SELECCIONAR PLATILLO
-                ================================== -->
-
-                <div class="input-field">
-
-                    <select id="listaplatillos">
-
-                        <option
-                            value=""
-                            selected
-                        >
-
-                            -- Selecciona un platillo --
-
-                        </option>
-
-                    </select>
-
-                    <label>
-
-                        Platillo
-
-                    </label>
-
-                </div>
-
-
-
-                <!-- =================================
-                     INGREDIENTES
-                ================================== -->
-
-                <div class="pedido-info">
-
-                    <strong>
-
-                        Ingredientes
-
-                    </strong>
-
-                    <span
-                        id="ingredientesVista"
-                        class="grey-text"
-                    >
-
-                        Selecciona un platillo
-
-                    </span>
-
-                </div>
-
-
-
-                <!-- =================================
-                     COSTO
-                ================================== -->
-
-                <div class="pedido-info">
-
-                    <strong>
-
-                        Costo
-
-                    </strong>
-
-                    <span id="costoVista">
-
-                        $0.00 MXN
-
-                    </span>
-
-                </div>
-
-
-
-                <!-- =================================
-                     CAMPOS OCULTOS / REFERENCIA
-                ================================== -->
-
-                <input
-                    type="hidden"
-                    id="txtIngredientes"
-                    value=""
-                >
-
-                <input
-                    type="hidden"
-                    id="txtCosto"
-                    value="$0.00 MXN"
-                >
-
-
-
-                <!-- =================================
-                     NOMBRE DEL CLIENTE
-                ================================== -->
-
-                <div class="input-field">
-
-                    <input
-                        id="txtNombre"
-                        type="text"
-                        class="validate"
-                    >
-
-                    <label for="txtNombre">
-
-                        Nombre del cliente
-
-                    </label>
-
-                </div>
-
-
-
-                <!-- =================================
-                     DIRECCIÓN
-                ================================== -->
-
-                <div class="input-field">
-
-                    <input
-                        id="txtDireccion"
-                        type="text"
-                        class="validate"
-                    >
-
-                    <label for="txtDireccion">
-
-                        Dirección de entrega
-
-                    </label>
-
-                </div>
-
-
-
-                <!-- =================================
-                     UBICACIÓN
-                ================================== -->
-
-                <div class="center">
-
-                    <button
-                        id="btnUbicacion"
-                        type="button"
-                        class="btn blue waves-effect waves-light"
-                    >
-
-                        <i class="material-icons left">
-
-                            location_on
-
-                        </i>
-
-                        Obtener ubicación
-
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="estadoUbicacion"
-                    class="center"
-                ></div>
-
-
-
-                <!-- =================================
-                     COORDENADAS
-                ================================== -->
-
-                <div class="row">
-
-                    <div class="input-field col s6">
-
-                        <input
-                            id="txtLatitud"
-                            type="text"
-                            readonly
-                        >
-
-                        <label for="txtLatitud">
-
-                            Latitud
-
-                        </label>
-
-                    </div>
-
-
-                    <div class="input-field col s6">
-
-                        <input
-                            id="txtLongitud"
-                            type="text"
-                            readonly
-                        >
-
-                        <label for="txtLongitud">
-
-                            Longitud
-
-                        </label>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================
-                     MAPA
-                ================================== -->
-
-                <div id="map"></div>
-
-
-
-                <!-- =================================
-                     BOTONES PEDIDO
-                ================================== -->
-
-                <div class="row">
-
-                    <div class="col s12 m6">
-
-                        <button
-                            id="btnGuardar"
-                            type="button"
-                            class="btn green waves-effect waves-light"
-                            style="width:100%;"
-                        >
-
-                            <i class="material-icons left">
-
-                                save
-
-                            </i>
-
-                            Guardar pedido
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="col s12 m6">
-
-                        <button
-                            id="btnCancelar"
-                            type="button"
-                            class="btn grey waves-effect waves-light"
-                            style="width:100%;"
-                        >
-
-                            <i class="material-icons left">
-
-                                clear
-
-                            </i>
-
-                            Cancelar
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
+    </div>
 
 
 
@@ -873,8 +484,6 @@
 
             <div class="divider"></div>
 
-            <br>
-
 
             <!-- =====================================
                  NOMBRE
@@ -899,7 +508,6 @@
             </div>
 
 
-
             <!-- =====================================
                  INGREDIENTES
             ====================================== -->
@@ -921,7 +529,6 @@
                 </label>
 
             </div>
-
 
 
             <!-- =====================================
@@ -949,9 +556,8 @@
             </div>
 
 
-
             <!-- =====================================
-                 FOTO OCULTA
+                 FOTO
             ====================================== -->
 
             <input
@@ -1014,9 +620,7 @@
             <br>
 
 
-            <!-- =====================================
-                 SELECCIONAR IMAGEN
-            ====================================== -->
+            <!-- SELECCIONAR IMAGEN -->
 
             <label for="btnFoto">
 
@@ -1033,10 +637,7 @@
             >
 
 
-
-            <!-- =====================================
-                 BOTONES CÁMARA
-            ====================================== -->
+            <!-- BOTONES -->
 
             <div class="camera-buttons">
 
@@ -1058,7 +659,6 @@
                 </button>
 
 
-
                 <button
                     id="btnCapturar"
                     type="button"
@@ -1074,7 +674,6 @@
                     Capturar
 
                 </button>
-
 
 
                 <button
@@ -1096,10 +695,7 @@
             </div>
 
 
-
-            <!-- =====================================
-                 ESTADO CÁMARA
-            ====================================== -->
+            <!-- ESTADO -->
 
             <div
                 id="cameraStatus"
@@ -1111,21 +707,17 @@
             </div>
 
 
-
-            <!-- =====================================
-                 ERROR CÁMARA
-            ====================================== -->
+            <!-- ERROR -->
 
             <div
                 id="cameraError"
                 class="center red-text"
-            ></div>
+            >
+
+            </div>
 
 
-
-            <!-- =====================================
-                 VIDEO
-            ====================================== -->
+            <!-- VIDEO -->
 
             <div
                 id="Camera"
@@ -1146,21 +738,17 @@
             </div>
 
 
-
-            <!-- =====================================
-                 CANVAS
-            ====================================== -->
+            <!-- CANVAS -->
 
             <canvas
                 id="Canvas"
                 style="display:none;"
-            ></canvas>
+            >
+
+            </canvas>
 
 
-
-            <!-- =====================================
-                 FOTO
-            ====================================== -->
+            <!-- FOTO -->
 
             <div
                 id="Salida"
@@ -1198,16 +786,6 @@
 
     <script
         src="https://www.gstatic.com/firebasejs/6.0.1/firebase-storage.js">
-    </script>
-
-
-
-    <!-- =========================================
-         LEAFLET JS
-    ========================================== -->
-
-    <script
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
     </script>
 
 
