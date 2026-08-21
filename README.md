@@ -23,7 +23,7 @@ mediante dispositivos móviles.
 
 **Proyecto académico**
 
-**Martínez Merlín Luis Fernando**  
+**Lopez Flores Gael**  
 **Sistemas Computacionales**  
 **Programación Avanzada**  
 **ISC181**  
