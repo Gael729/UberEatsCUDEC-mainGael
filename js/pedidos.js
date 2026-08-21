@@ -1,6 +1,7 @@
 // =========================================================
-// PEDIDOS.JS - MECHE
+// PEDIDOS.JS - DITS / MECHE
 // =========================================================
+
 
 // =========================================================
 // VARIABLES
@@ -21,7 +22,7 @@ let fotoDataURL = null;
 document.addEventListener("DOMContentLoaded", function () {
 
     console.log("=================================");
-    console.log("MECHE - PEDIDOS.JS");
+    console.log("DITS - PEDIDOS.JS");
     console.log("=================================");
 
 
@@ -29,9 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // MENÚ LATERAL
     // =====================================================
 
-    const menus =
-        document.querySelectorAll(".sidenav");
-
+    const menus = document.querySelectorAll(".sidenav");
 
     if (typeof M !== "undefined") {
 
@@ -63,10 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =====================================================
 
     const lista =
-        document.getElementById(
-            "listaPlatillos"
-        );
-
+        document.getElementById("listaPlatillos");
 
     if (lista) {
 
@@ -94,10 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =====================================================
 
     const btnUbicacion =
-        document.getElementById(
-            "btnUbicacion"
-        );
-
+        document.getElementById("btnUbicacion");
 
     if (btnUbicacion) {
 
@@ -114,10 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =====================================================
 
     const btnCancelar =
-        document.getElementById(
-            "btnCancelar"
-        );
-
+        document.getElementById("btnCancelar");
 
     if (btnCancelar) {
 
@@ -134,10 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =====================================================
 
     const btnGuardar =
-        document.getElementById(
-            "btnGuardar"
-        );
-
+        document.getElementById("btnGuardar");
 
     if (btnGuardar) {
 
@@ -154,10 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =====================================================
 
     const btnCamara =
-        document.getElementById(
-            "btnCamara"
-        );
-
+        document.getElementById("btnCamara");
 
     if (btnCamara) {
 
@@ -174,10 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =====================================================
 
     const btnCapturar =
-        document.getElementById(
-            "btnCapturar"
-        );
-
+        document.getElementById("btnCapturar");
 
     if (btnCapturar) {
 
@@ -203,9 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function iniciarMapa() {
 
     const mapaElemento =
-        document.getElementById(
-            "map"
-        );
+        document.getElementById("map");
 
 
     if (!mapaElemento) {
@@ -224,6 +203,7 @@ function iniciarMapa() {
         console.error(
             "Leaflet no está cargado."
         );
+
 
         mapaElemento.innerHTML = `
             <div style="
@@ -254,12 +234,10 @@ function iniciarMapa() {
     ];
 
 
-    map =
-        L.map("map")
-        .setView(
-            posicionInicial,
-            12
-        );
+    map = L.map("map").setView(
+        posicionInicial,
+        12
+    );
 
 
     // =====================================================
@@ -343,7 +321,6 @@ function cargarPlatillos() {
             "No existe #listaPlatillos."
         );
 
-
         return;
 
     }
@@ -353,161 +330,153 @@ function cargarPlatillos() {
     // LEER FIREBASE
     // =====================================================
 
-    db.collection("platillos")
-        .onSnapshot(
+    db.collection("platillos").onSnapshot(
 
-            function (coleccion) {
+        function (coleccion) {
 
-                console.log(
-                    "Platillos recibidos:",
-                    coleccion.size
-                );
-
-
-                // Limpiar
-
-                select.innerHTML = "";
+            console.log(
+                "Platillos recibidos:",
+                coleccion.size
+            );
 
 
-                // Opción inicial
-
-                const opcionInicial =
-                    document.createElement(
-                        "option"
-                    );
+            select.innerHTML = "";
 
 
-                opcionInicial.value =
-                    "";
+            // =================================================
+            // OPCIÓN INICIAL
+            // =================================================
+
+            const opcionInicial =
+                document.createElement("option");
 
 
-                opcionInicial.textContent =
-                    "-- Selecciona un platillo --";
+            opcionInicial.value = "";
 
 
-                opcionInicial.selected =
-                    true;
+            opcionInicial.textContent =
+                "-- Selecciona un platillo --";
+
+
+            opcionInicial.selected = true;
+
+
+            select.appendChild(
+                opcionInicial
+            );
+
+
+            // =================================================
+            // REINICIAR MEMORIA
+            // =================================================
+
+            platillos = {};
+
+
+            // =================================================
+            // SIN PLATILLOS
+            // =================================================
+
+            if (coleccion.empty) {
+
+                const opcionVacia =
+                    document.createElement("option");
+
+
+                opcionVacia.disabled = true;
+
+
+                opcionVacia.textContent =
+                    "No hay platillos registrados";
 
 
                 select.appendChild(
-                    opcionInicial
+                    opcionVacia
                 );
 
 
-                // Reiniciar memoria
-
-                platillos = {};
-
-
-                // =================================================
-                // SIN PLATILLOS
-                // =================================================
-
-                if (coleccion.empty) {
-
-                    const opcionVacia =
-                        document.createElement(
-                            "option"
-                        );
-
-
-                    opcionVacia.disabled =
-                        true;
-
-
-                    opcionVacia.textContent =
-                        "No hay platillos registrados";
-
-
-                    select.appendChild(
-                        opcionVacia
-                    );
-
-
-                    return;
-
-                }
-
-
-                // =================================================
-                // RECORRER PLATILLOS
-                // =================================================
-
-                coleccion.forEach(
-                    function (documento) {
-
-                        const datos =
-                            documento.data();
-
-
-                        const id =
-                            documento.id;
-
-
-                        platillos[id] =
-                            datos;
-
-
-                        const option =
-                            document.createElement(
-                                "option"
-                            );
-
-
-                        option.value =
-                            id;
-
-
-                        const precio =
-                            parseFloat(
-                                datos.precio || 0
-                            );
-
-
-                        option.textContent =
-                            (datos.nombre ||
-                                "Platillo sin nombre") +
-                            " - $" +
-                            precio.toFixed(2);
-
-
-                        select.appendChild(
-                            option
-                        );
-
-
-                        console.log(
-                            "Platillo:",
-                            id,
-                            datos
-                        );
-
-                    }
-                );
-
-
-                console.log(
-                    "Platillos cargados:",
-                    coleccion.size
-                );
-
-            },
-
-            function (error) {
-
-                console.error(
-                    "Error leyendo platillos:",
-                    error
-                );
-
-
-                mostrarErrorPlatillos(
-                    "Error al cargar los platillos."
-                );
+                return;
 
             }
 
-        );
+
+            // =================================================
+            // RECORRER PLATILLOS
+            // =================================================
+
+            coleccion.forEach(
+                function (documento) {
+
+                    const datos =
+                        documento.data();
+
+
+                    const id =
+                        documento.id;
+
+
+                    platillos[id] =
+                        datos;
+
+
+                    const option =
+                        document.createElement("option");
+
+
+                    option.value =
+                        id;
+
+
+                    const precio =
+                        parseFloat(
+                            datos.precio || 0
+                        );
+
+
+                    option.textContent =
+                        (datos.nombre ||
+                            "Platillo sin nombre") +
+                        " - $" +
+                        precio.toFixed(2);
+
+
+                    select.appendChild(
+                        option
+                    );
+
+
+                    console.log(
+                        "Platillo:",
+                        id,
+                        datos
+                    );
+
+                }
+            );
+
+
+            console.log(
+                "Platillos cargados:",
+                coleccion.size
+            );
+
+        },
+
+        function (error) {
+
+            console.error(
+                "Error leyendo platillos:",
+                error
+            );
+
+
+            mostrarErrorPlatillos(
+                "Error al cargar los platillos."
+            );
+
+        }
+
+    );
 
 }
 
@@ -516,9 +485,7 @@ function cargarPlatillos() {
 // MOSTRAR ERROR DE PLATILLOS
 // =========================================================
 
-function mostrarErrorPlatillos(
-    mensaje
-) {
+function mostrarErrorPlatillos(mensaje) {
 
     const select =
         document.getElementById(
@@ -535,13 +502,10 @@ function mostrarErrorPlatillos(
 
 
     const option =
-        document.createElement(
-            "option"
-        );
+        document.createElement("option");
 
 
-    option.value =
-        "";
+    option.value = "";
 
 
     option.textContent =
@@ -559,9 +523,7 @@ function mostrarErrorPlatillos(
 // MOSTRAR INFORMACIÓN DEL PLATILLO
 // =========================================================
 
-function mostrarInformacionPlatillo(
-    id
-) {
+function mostrarInformacionPlatillo(id) {
 
     const ingredientesVista =
         document.getElementById(
@@ -611,8 +573,7 @@ function mostrarInformacionPlatillo(
 
         if (ingredientesInput) {
 
-            ingredientesInput.value =
-                "";
+            ingredientesInput.value = "";
 
         }
 
@@ -715,7 +676,6 @@ function obtenerUbicacion() {
             true
         );
 
-
         return;
 
     }
@@ -723,8 +683,7 @@ function obtenerUbicacion() {
 
     if (btn) {
 
-        btn.disabled =
-            true;
+        btn.disabled = true;
 
 
         btn.innerHTML = `
@@ -867,7 +826,7 @@ function obtenerUbicacion() {
 
 
             // =================================================
-            // DIRECCIÓN
+            // OBTENER DIRECCIÓN
             // =================================================
 
             obtenerDireccion(
@@ -947,9 +906,12 @@ async function obtenerDireccion(
     longitud
 ) {
 
+    // IMPORTANTE:
+    // En tu HTML el campo correcto es #txtDireccion
+
     const direccion =
         document.getElementById(
-            "title"
+            "txtDireccion"
         );
 
 
@@ -1044,8 +1006,7 @@ async function obtenerDireccion(
             "";
 
 
-        let direccionFinal =
-            "";
+        let direccionFinal = "";
 
 
         if (calle) {
@@ -1129,9 +1090,7 @@ async function obtenerDireccion(
         );
 
 
-        restaurarBotonUbicacion(
-            true
-        );
+        restaurarBotonUbicacion(true);
 
 
         if (marcador) {
@@ -1228,8 +1187,6 @@ async function iniciarCamara() {
     }
 
 
-    // Si ya existe una cámara activa
-
     if (streamCamara) {
 
         return;
@@ -1253,6 +1210,18 @@ async function iniciarCamara() {
 
         video.srcObject =
             streamCamara;
+
+
+        video.setAttribute(
+            "playsinline",
+            ""
+        );
+
+
+        video.muted = true;
+
+
+        await video.play();
 
 
         contenedor.style.display =
@@ -1348,7 +1317,7 @@ function tomarFoto() {
 
 
     // =====================================================
-    // TAMAÑO
+    // TAMAÑO DEL CANVAS
     // =====================================================
 
     canvas.width =
@@ -1364,9 +1333,7 @@ function tomarFoto() {
     // =====================================================
 
     const contexto =
-        canvas.getContext(
-            "2d"
-        );
+        canvas.getContext("2d");
 
 
     contexto.drawImage(
@@ -1379,7 +1346,7 @@ function tomarFoto() {
 
 
     // =====================================================
-    // COMPRIMIR IMAGEN
+    // COMPRIMIR
     // =====================================================
 
     fotoDataURL =
@@ -1390,7 +1357,7 @@ function tomarFoto() {
 
 
     // =====================================================
-    // MOSTRAR PREVIEW
+    // PREVIEW
     // =====================================================
 
     if (preview) {
@@ -1494,11 +1461,9 @@ function guardarPedido() {
         "================================="
     );
 
-
     console.log(
         "INTENTANDO GUARDAR PEDIDO"
     );
-
 
     console.log(
         "================================="
@@ -1506,7 +1471,7 @@ function guardarPedido() {
 
 
     // =====================================================
-    // OBTENER CAMPOS
+    // CAMPOS DEL HTML
     // =====================================================
 
     const lista =
@@ -1515,15 +1480,21 @@ function guardarPedido() {
         );
 
 
-    const usuario =
+    // CORREGIDO:
+    // Tu HTML utiliza txtNombre
+
+    const nombre =
         document.getElementById(
-            "usuario"
+            "txtNombre"
         );
 
 
+    // CORREGIDO:
+    // Tu HTML utiliza txtDireccion
+
     const direccion =
         document.getElementById(
-            "title"
+            "txtDireccion"
         );
 
 
@@ -1562,28 +1533,28 @@ function guardarPedido() {
 
 
     // =====================================================
-    // VALIDAR USUARIO
+    // VALIDAR NOMBRE
     // =====================================================
 
     if (
-        !usuario ||
-        !usuario.value.trim()
+        !nombre ||
+        !nombre.value.trim()
     ) {
 
         mostrarEstado(
-            "Ingresa tu usuario.",
+            "Ingresa tu nombre.",
             true
         );
 
 
         alert(
-            "Ingresa tu usuario."
+            "Ingresa tu nombre."
         );
 
 
-        if (usuario) {
+        if (nombre) {
 
-            usuario.focus();
+            nombre.focus();
 
         }
 
@@ -1704,8 +1675,14 @@ function guardarPedido() {
         precio:
             precio,
 
+        // CORREGIDO
+        // Antes se buscaba "usuario"
+        nombre:
+            nombre.value.trim(),
+
+        // También guardamos usuario por compatibilidad
         usuario:
-            usuario.value.trim(),
+            nombre.value.trim(),
 
         direccion:
             direccion.value.trim(),
@@ -1827,11 +1804,12 @@ function guardarPedido() {
                     pedidoId:
                         docRef.id,
 
+                    // Nombre del cliente
                     cliente:
-                        usuario.value.trim(),
+                        nombre.value.trim(),
 
                     usuario:
-                        usuario.value.trim(),
+                        nombre.value.trim(),
 
                     direccion:
                         direccion.value.trim(),
@@ -1988,15 +1966,15 @@ function limpiarPedido() {
         );
 
 
-    const usuario =
+    const nombre =
         document.getElementById(
-            "usuario"
+            "txtNombre"
         );
 
 
     const direccion =
         document.getElementById(
-            "title"
+            "txtDireccion"
         );
 
 
@@ -2032,9 +2010,9 @@ function limpiarPedido() {
     }
 
 
-    if (usuario) {
+    if (nombre) {
 
-        usuario.value =
+        nombre.value =
             "";
 
     }
@@ -2261,7 +2239,7 @@ function restaurarBotonUbicacion(
             <i class="material-icons left">
                 location_on
             </i>
-            Ubicación
+            Obtener ubicación
         `;
 
     }
