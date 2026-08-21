@@ -44,6 +44,15 @@
 
 
     <!-- =====================================================
+         LEAFLET CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+
+    <!-- =====================================================
          DISEÑO DE PEDIDOS
     ====================================================== -->
 
@@ -1068,12 +1077,12 @@
 
                 <input
                     type="text"
-                    id="usuario"
+                    id="txtNombre"
                     name="usuario"
                     required>
 
 
-                <label for="usuario">
+                <label for="txtNombre">
                     Usuario
                 </label>
 
@@ -1093,14 +1102,14 @@
 
 
                 <textarea
-                    id="title"
+                    id="txtDireccion"
                     name="direccion"
                     class="materialize-textarea"
                     required>
                 </textarea>
 
 
-                <label for="title">
+                <label for="txtDireccion">
                     Dirección
                 </label>
 
@@ -1447,11 +1456,6 @@
     <!-- =====================================================
          LEAFLET
     ====================================================== -->
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
 
     <script
         src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
