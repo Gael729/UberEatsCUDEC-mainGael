@@ -1,180 +1,860 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Meche</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link type="text/css" href="css/materialize.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" href="css/styles.css" rel="stylesheet">
-    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <meta
+        http-equiv="X-UA-Compatible"
+        content="ie=edge"
+    >
+
+    <title>MECHE</title>
+
+
+    <!-- =========================================
+         MATERIALIZE CSS
+    ========================================== -->
+
+    <link
+        type="text/css"
+        href="css/materialize.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================================
+         MATERIAL ICONS
+    ========================================== -->
+
+    <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================================
+         CSS PROPIO
+    ========================================== -->
+
+    <link
+        type="text/css"
+        href="css/styles.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================================
+         PWA
+    ========================================== -->
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+    <meta
+        name="theme-color"
+        content="#4dc7e4"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="MECHE"
+    >
+
+
+    <!-- =========================================
+         ESTILOS DE CÁMARA
+    ========================================== -->
+
+    <style>
+
+        .side-form {
+
+            width: 400px;
+
+            max-width: 100%;
+
+        }
+
+
+        .camera-section {
+
+            padding: 10px 20px 30px;
+
+        }
+
+
+        .camera-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            margin-top: 15px;
+
+        }
+
+
+        .camera-buttons button {
+
+            flex: 1 1 120px;
+
+            min-width: 110px;
+
+        }
+
+
+        .image-input {
+
+            width: 100%;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        #Video {
+
+            display: block;
+
+            width: 100%;
+
+            max-width: 420px;
+
+            min-height: 220px;
+
+            margin: 15px auto;
+
+            border-radius: 12px;
+
+            background: #000;
+
+            object-fit: cover;
+
+        }
+
+
+        #foto {
+
+            display: block;
+
+            width: 100%;
+
+            max-width: 420px;
+
+            height: auto;
+
+            margin: 15px auto;
+
+            border-radius: 12px;
+
+            object-fit: cover;
+
+        }
+
+
+        #cameraStatus {
+
+            margin-top: 10px;
+
+            font-size: 14px;
+
+        }
+
+
+        #cameraError {
+
+            margin-top: 10px;
+
+            font-size: 14px;
+
+        }
+
+
+        #btnAgregarPlatillo {
+
+            width: 100%;
+
+            height: 45px;
+
+        }
+
+
+        @media only screen and (max-width: 600px) {
+
+            .side-form {
+
+                width: 100%;
+
+            }
+
+
+            .camera-buttons {
+
+                flex-direction: column;
+
+            }
+
+
+            .camera-buttons button {
+
+                width: 100%;
+
+                height: 44px;
+
+            }
+
+
+            #Video {
+
+                width: 100%;
+
+                min-height: 220px;
+
+                aspect-ratio: 4 / 3;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body class="grey lighten-4">
 
-<nav class="z-depth-0">
-    <div class="nav-wrapper container">
-        <a href="/">MECHE</a>
-        <span class="right grey-text text-darken-1">
-            <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
-        </span>
+
+    <!-- =========================================
+         MENÚ SUPERIOR
+    ========================================== -->
+
+    <nav class="z-depth-0">
+
+        <div class="nav-wrapper container">
+
+
+            <a
+                href="index.html"
+                class="brand-logo"
+            >
+
+                MECHE
+
+            </a>
+
+
+            <span class="right">
+
+                <i
+                    class="material-icons sidenav-trigger"
+                    data-target="side-menu"
+                    style="cursor:pointer;"
+                >
+
+                    menu
+
+                </i>
+
+            </span>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================================
+         MENÚ LATERAL
+    ========================================== -->
+
+    <ul
+        id="side-menu"
+        class="sidenav side-menu"
+    >
+
+        <li>
+
+            <a class="subheader">
+
+                MECHE
+
+            </a>
+
+        </li>
+
+
+        <!-- INICIO -->
+
+        <li>
+
+            <a
+                href="index.html"
+                class="waves-effect"
+            >
+
+                <i class="material-icons">
+
+                    home
+
+                </i>
+
+                Inicio
+
+            </a>
+
+        </li>
+
+
+        <!-- PEDIDOS -->
+
+        <li>
+
+            <a
+                href="pages/pedidos.html"
+                class="waves-effect"
+            >
+
+                <i class="material-icons">
+
+                    shopping_cart
+
+                </i>
+
+                Pedidos
+
+            </a>
+
+        </li>
+
+
+        <!-- ACERCA -->
+
+        <li>
+
+            <a
+                href="pages/about.html"
+                class="waves-effect"
+            >
+
+                <i class="material-icons">
+
+                    info
+
+                </i>
+
+                Acerca
+
+            </a>
+
+        </li>
+
+
+        <!-- CONTACTO -->
+
+        <li>
+
+            <a
+                href="pages/contact.html"
+                class="waves-effect"
+            >
+
+                <i class="material-icons">
+
+                    mail_outline
+
+                </i>
+
+                Contacto
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <div class="divider"></div>
+
+        </li>
+
+    </ul>
+
+
+
+    <!-- =========================================
+         TÍTULO
+    ========================================== -->
+
+    <div class="container">
+
+        <h4 class="center grey-text text-darken-2">
+
+            Platillos
+
+        </h4>
+
+
+        <p class="center grey-text">
+
+            Descubre nuestros platillos disponibles
+
+        </p>
+
+
+        <!-- =====================================
+             AQUÍ APARECEN LOS PLATILLOS
+        ====================================== -->
+
+        <div class="recipes">
+
+        </div>
+
     </div>
-</nav>
 
-<ul id="side-menu" class="sidenav side-menu">
 
-    <li>
-        <a class="subheader">
-            MECHE
+
+    <!-- =========================================
+         BOTÓN +
+    ========================================== -->
+
+    <div class="fixed-action-btn">
+
+        <a
+            class="btn-floating btn-large red sidenav-trigger"
+            data-target="side-form"
+        >
+
+            <i class="material-icons">
+
+                add
+
+            </i>
+
         </a>
-    </li>
-
-    <li>
-        <a href="index.html" class="waves-effect">
-            <i class="material-icons">home</i>
-            Inicio
-        </a>
-    </li>
-
-    <li>
-        <a href="./pages/pedidos.html" class="waves-effect">
-            <i class="material-icons">shopping_cart</i>
-            Pedidos
-        </a>
-    </li>
-
-    <li>
-        <div class="divider"></div>
-    </li>
-
-    <li>
-        <a href="pages/about.html" class="waves-effect">
-            Acerca
-        </a>
-    </li>
-
-    <li>
-        <a href="pages/contact.html" class="waves-effect">
-            <i class="material-icons">mail_outline</i>
-            Contacto
-        </a>
-    </li>
-
-</ul>
-
-<div class="container">
-
-    <h4 class="center grey-text text-darken-2">
-        Platillos
-    </h4>
-
-    <div class="recipes">
 
     </div>
 
-</div>
-
-<div class="fixed-action-btn">
-
-    <a class="btn-floating btn-large red sidenav-trigger"
-       data-target="side-form">
-
-        <i class="material-icons">
-            add
-        </i>
-
-    </a>
-
-</div>
 
 
-<div id="side-form" class="sidenav">
+    <!-- =========================================
+         FORMULARIO NUEVO PLATILLO
+    ========================================== -->
 
-    <form id="formPlatillo" class="add-recipe container section">
-
-        <h5 class="center">
-            Nuevo Platillo
-        </h5>
-
-        <div class="divider"></div>
+    <div
+        id="side-form"
+        class="sidenav side-form"
+    >
 
 
-        <div class="input-field">
+        <form
+            id="formPlatillo"
+            class="add-recipe container section"
+        >
+
+
+            <h5 class="center">
+
+                Nuevo Platillo
+
+            </h5>
+
+
+            <div class="divider"></div>
+
+
+            <!-- =====================================
+                 NOMBRE
+            ====================================== -->
+
+            <div class="input-field">
+
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    class="validate"
+                    required
+                >
+
+                <label for="title">
+
+                    Nombre del platillo
+
+                </label>
+
+            </div>
+
+
+            <!-- =====================================
+                 INGREDIENTES
+            ====================================== -->
+
+            <div class="input-field">
+
+                <input
+                    id="ingredients"
+                    name="ingredients"
+                    type="text"
+                    class="validate"
+                    required
+                >
+
+                <label for="ingredients">
+
+                    Ingredientes
+
+                </label>
+
+            </div>
+
+
+            <!-- =====================================
+                 PRECIO
+            ====================================== -->
+
+            <div class="input-field">
+
+                <input
+                    id="price"
+                    name="price"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    class="validate"
+                    required
+                >
+
+                <label for="price">
+
+                    Precio
+
+                </label>
+
+            </div>
+
+
+            <!-- =====================================
+                 FOTO
+            ====================================== -->
 
             <input
-                id="title"
-                name="title"
-                type="text"
-                required>
+                id="fotoInput"
+                type="hidden"
+                value=""
+            >
 
-            <label for="title">
-                Nombre del platillo
+
+            <!-- =====================================
+                 BOTÓN AGREGAR
+            ====================================== -->
+
+            <div class="center">
+
+                <button
+                    id="btnAgregarPlatillo"
+                    type="submit"
+                    class="btn green waves-effect waves-light"
+                >
+
+                    <i class="material-icons left">
+
+                        add
+
+                    </i>
+
+                    Agregar Platillo
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+
+        <!-- =========================================
+             CÁMARA
+        ========================================== -->
+
+        <div class="camera-section">
+
+
+            <h6 class="center">
+
+                <i class="material-icons">
+
+                    camera_alt
+
+                </i>
+
+                Foto del platillo
+
+            </h6>
+
+
+            <div class="divider"></div>
+
+            <br>
+
+
+            <!-- SELECCIONAR IMAGEN -->
+
+            <label for="btnFoto">
+
+                Seleccionar imagen
+
             </label>
 
-        </div>
-
-
-        <div class="input-field">
 
             <input
-                id="ingredients"
-                name="ingredients"
-                type="text"
-                required>
+                type="file"
+                id="btnFoto"
+                class="image-input"
+                accept="image/*"
+            >
 
-            <label for="ingredients">
-                Ingredientes
-            </label>
+
+            <!-- BOTONES -->
+
+            <div class="camera-buttons">
+
+
+                <button
+                    id="btnCamara"
+                    type="button"
+                    class="btn green waves-effect waves-light"
+                >
+
+                    <i class="material-icons left">
+
+                        camera_alt
+
+                    </i>
+
+                    Usar cámara
+
+                </button>
+
+
+                <button
+                    id="btnCapturar"
+                    type="button"
+                    class="btn blue waves-effect waves-light"
+                >
+
+                    <i class="material-icons left">
+
+                        photo_camera
+
+                    </i>
+
+                    Capturar
+
+                </button>
+
+
+                <button
+                    id="btnLimpiar"
+                    type="button"
+                    class="btn red waves-effect waves-light"
+                >
+
+                    <i class="material-icons left">
+
+                        delete
+
+                    </i>
+
+                    Limpiar
+
+                </button>
+
+            </div>
+
+
+            <!-- ESTADO -->
+
+            <div
+                id="cameraStatus"
+                class="center grey-text"
+            >
+
+                Cámara lista para tomar una foto.
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                id="cameraError"
+                class="center red-text"
+            >
+
+            </div>
+
+
+            <!-- VIDEO -->
+
+            <div
+                id="Camera"
+                class="center"
+            >
+
+                <video
+                    id="Video"
+                    autoplay
+                    playsinline
+                    muted
+                >
+
+                    Video no disponible
+
+                </video>
+
+            </div>
+
+
+            <!-- CANVAS -->
+
+            <canvas
+                id="Canvas"
+                style="display:none;"
+            >
+
+            </canvas>
+
+
+            <!-- FOTO -->
+
+            <div
+                id="Salida"
+                class="center"
+            >
+
+                <img
+                    id="foto"
+                    src=""
+                    alt="Foto del platillo"
+                    style="display:none;"
+                >
+
+            </div>
 
         </div>
 
-
-        <div class="input-field">
-
-            <input
-                id="price"
-                name="price"
-                type="number"
-                required>
-
-            <label for="price">
-                Precio
-            </label>
-
-        </div>
+    </div>
 
 
-        <div class="center">
 
-            <button
-                id="btnAgregarPlatillo"
-                type="submit"
-                class="btn green waves-effect waves-light">
+    <!-- =========================================
+         FIREBASE
+    ========================================== -->
 
-                Agregar Platillo
-
-            </button>
-
-        </div>
-
-    </form>
-
-</div>
+    <script
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
+    </script>
 
 
-<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+    <script
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
+    </script>
 
-<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-storage.js">
+    </script>
 
-<script src="../js/firebase.js"></script>
-<script src="../js/pedidos.js"></script>
-<script src="../js/index.js"></script>
-<script src="../js/db.js"></script>
+
+
+    <!-- =========================================
+         MATERIALIZE JS
+    ========================================== -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+    </script>
+
+
+
+    <!-- =========================================
+         FIREBASE DEL PROYECTO
+    ========================================== -->
+
+    <script src="js/firebase.js"></script>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT PRINCIPAL
+    ========================================== -->
+
+    <script src="js/index.js"></script>
+
+
+
+    <!-- =========================================
+         BASE DE DATOS
+    ========================================== -->
+
+    <script src="js/db.js"></script>
+
+
+
+    <!-- =========================================
+         SERVICE WORKER
+    ========================================== -->
+
+    <script>
+
+        if ("serviceWorker" in navigator) {
+
+            navigator.serviceWorker.register("sw.js")
+
+                .then(function () {
+
+                    console.log(
+                        "Service Worker registrado correctamente"
+                    );
+
+                })
+
+                .catch(function (error) {
+
+                    console.error(
+                        "Error al registrar Service Worker:",
+                        error
+                    );
+
+                });
+
+        }
+
+    </script>
+
 
 </body>
 

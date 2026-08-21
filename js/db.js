@@ -1,242 +1,534 @@
-const formularioAgregar = document.querySelector("#formPlatillo");
-const contenedorPlatillos = document.querySelector(".recipes");
+// ==========================================
+// DITS / MECHE - DB.JS
+// ==========================================
 
-function mostrarPlatillos(data, id) {
+
+// ==========================================
+// CONTENEDOR DE PLATILLOS
+// ==========================================
+
+const contenedorPlatillos =
+    document.querySelector(".recipes");
+
+
+// ==========================================
+// MOSTRAR PLATILLO
+// ==========================================
+
+function mostrarPlatillo(data, id) {
 
     if (!contenedorPlatillos) {
-        console.error("No se encontró .recipes");
         return;
     }
 
-    const tarjeta = document.createElement("div");
 
-    tarjeta.className = "card recipe";
-    tarjeta.id = id;
+    const tarjeta =
+        document.createElement("div");
+
+
+    tarjeta.className =
+        "card recipe";
+
+
+    tarjeta.id =
+        id;
+
 
     tarjeta.innerHTML = `
+
         <div class="card-content">
 
             <span class="card-title">
-                ${data.nombre}
+                ${escapeHTML(
+                    data.nombre || "Sin nombre"
+                )}
             </span>
 
+
             <p>
-                <strong>Ingredientes:</strong>
-                ${data.ingredientes}
+
+                <strong>
+                    Ingredientes:
+                </strong>
+
+                ${escapeHTML(
+                    data.ingredientes ||
+                    "No especificados"
+                )}
+
             </p>
+
 
             <p class="green-text text-darken-2">
-                <strong>Precio:</strong>
-                $${data.precio}
+
+                <strong>
+                    Precio:
+                </strong>
+
+                $${Number(
+                    data.precio || 0
+                ).toFixed(2)} MXN
+
             </p>
 
-            <button 
-                class="btn-floating red right"
-                onclick="eliminarPlatillo('${id}')">
-                <i class="material-icons">delete</i>
-            </button>
+
+            <div
+                class="right-align"
+                style="margin-top:15px;"
+            >
+
+                <button
+                    type="button"
+                    class="
+                        btn
+                        red
+                        waves-effect
+                        waves-light
+                        btn-eliminar-platillo
+                    "
+                    data-id="${id}"
+                >
+
+                    <i class="material-icons left">
+                        delete
+                    </i>
+
+                    Eliminar
+
+                </button>
+
+            </div>
 
         </div>
+
     `;
 
-    contenedorPlatillos.appendChild(tarjeta);
+
+    contenedorPlatillos.appendChild(
+        tarjeta
+    );
+
 }
 
-db.collection("platillos").onSnapshot((snapshot) => {
 
-    snapshot.docChanges().forEach((change) => {
 
-        if (change.type === "added") {
-
-            mostrarPlatillos(
-                change.doc.data(),
-                change.doc.id
-            );
-
-        }
-
-        if (change.type === "modified") {
-
-            actualizarPlatillo(
-                change.doc.data(),
-                change.doc.id
-            );
-
-        }
-
-        if (change.type === "removed") {
-
-            const elemento =
-                document.getElementById(change.doc.id);
-
-            if (elemento) {
-                elemento.remove();
-            }
-
-        }
-
-    });
-
-}, (error) => {
-
-    console.error("Error Firebase:", error);
-
-});
+// ==========================================
+// ACTUALIZAR PLATILLO
+// ==========================================
 
 function actualizarPlatillo(data, id) {
 
-    const elemento = document.getElementById(id);
+    const elemento =
+        document.getElementById(id);
+
 
     if (!elemento) {
+
+        // Si no existe, lo creamos
+
+        mostrarPlatillo(
+            data,
+            id
+        );
+
         return;
+
     }
 
+
     elemento.innerHTML = `
+
         <div class="card-content">
 
             <span class="card-title">
-                ${data.nombre}
+
+                ${escapeHTML(
+                    data.nombre ||
+                    "Sin nombre"
+                )}
+
             </span>
 
+
             <p>
-                <strong>Ingredientes:</strong>
-                ${data.ingredientes}
+
+                <strong>
+                    Ingredientes:
+                </strong>
+
+                ${escapeHTML(
+                    data.ingredientes ||
+                    "No especificados"
+                )}
+
             </p>
+
 
             <p class="green-text text-darken-2">
-                <strong>Precio:</strong>
-                $${data.precio}
+
+                <strong>
+                    Precio:
+                </strong>
+
+                $${Number(
+                    data.precio || 0
+                ).toFixed(2)} MXN
+
             </p>
 
-            <button 
-                class="btn-floating red right"
-                onclick="eliminarPlatillo('${id}')">
-                <i class="material-icons">delete</i>
-            </button>
+
+            <div
+                class="right-align"
+                style="margin-top:15px;"
+            >
+
+                <button
+                    type="button"
+                    class="
+                        btn
+                        red
+                        waves-effect
+                        waves-light
+                        btn-eliminar-platillo
+                    "
+                    data-id="${id}"
+                >
+
+                    <i class="material-icons left">
+                        delete
+                    </i>
+
+                    Eliminar
+
+                </button>
+
+            </div>
 
         </div>
+
     `;
+
 }
+
+
+
+// ==========================================
+// FIRESTORE
+// ==========================================
+
+if (typeof db !== "undefined") {
+
+    db.collection("platillos")
+        .onSnapshot(
+
+            function (snapshot) {
+
+                console.log(
+                    "Platillos actualizados:",
+                    snapshot.size
+                );
+
+
+                snapshot.docChanges()
+                    .forEach(
+
+                        function (change) {
+
+                            // ==========================
+                            // AGREGADO
+                            // ==========================
+
+                            if (
+                                change.type ===
+                                "added"
+                            ) {
+
+                                mostrarPlatillo(
+
+                                    change.doc.data(),
+
+                                    change.doc.id
+
+                                );
+
+                            }
+
+
+                            // ==========================
+                            // MODIFICADO
+                            // ==========================
+
+                            if (
+                                change.type ===
+                                "modified"
+                            ) {
+
+                                actualizarPlatillo(
+
+                                    change.doc.data(),
+
+                                    change.doc.id
+
+                                );
+
+                            }
+
+
+                            // ==========================
+                            // ELIMINADO
+                            // ==========================
+
+                            if (
+                                change.type ===
+                                "removed"
+                            ) {
+
+                                const elemento =
+                                    document.getElementById(
+                                        change.doc.id
+                                    );
+
+
+                                if (elemento) {
+
+                                    elemento.remove();
+
+                                }
+
+                            }
+
+                        }
+
+                    );
+
+            },
+
+
+            function (error) {
+
+                console.error(
+                    "Error Firebase:",
+                    error
+                );
+
+
+                if (
+                    typeof M !== "undefined"
+                ) {
+
+                    M.toast({
+
+                        html:
+                            "Error al cargar los platillos",
+
+                        classes:
+                            "red"
+
+                    });
+
+                }
+
+            }
+
+        );
+
+}
+
+
+else {
+
+    console.error(
+        "ERROR: db no está disponible"
+    );
+
+}
+
+
+
+// ==========================================
+// ELIMINAR PLATILLO
+// ==========================================
 
 function eliminarPlatillo(id) {
 
-    const confirmar = confirm(
-        "¿Quieres eliminar este platillo?"
-    );
+    if (!id) {
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+            "¿Quieres eliminar este platillo?"
+        );
+
 
     if (!confirmar) {
+
         return;
+
     }
+
+
+    if (typeof db === "undefined") {
+
+        alert(
+            "Firebase no está disponible"
+        );
+
+        return;
+
+    }
+
 
     db.collection("platillos")
         .doc(id)
         .delete()
 
-        .then(() => {
+        .then(
 
-            M.toast({
-                html: "Platillo eliminado",
-                classes: "red"
-            });
+            function () {
 
-        })
+                console.log(
+                    "Platillo eliminado:",
+                    id
+                );
 
-        .catch((error) => {
 
-            console.error(
-                "Error al eliminar:",
-                error
-            );
+                if (
+                    typeof M !== "undefined"
+                ) {
 
-            M.toast({
-                html: "Error al eliminar el platillo",
-                classes: "red"
-            });
+                    M.toast({
 
-        });
+                        html:
+                            "Platillo eliminado correctamente",
 
-}
+                        classes:
+                            "red"
 
-if (formularioAgregar) {
-
-    formularioAgregar.addEventListener("submit", (e) => {
-
-        e.preventDefault();
-
-        const nombre =
-            formularioAgregar.title.value.trim();
-
-        const ingredientes =
-            formularioAgregar.ingredients.value.trim();
-
-        const precio =
-            formularioAgregar.price.value.trim();
-
-        if (
-            nombre === "" ||
-            ingredientes === "" ||
-            precio === ""
-        ) {
-
-            M.toast({
-                html: "Completa todos los campos",
-                classes: "orange"
-            });
-
-            return;
-        }
-
-        const platillo = {
-
-            nombre: nombre,
-            ingredientes: ingredientes,
-            precio: Number(precio)
-
-        };
-
-        db.collection("platillos")
-            .add(platillo)
-
-            .then(() => {
-
-                formularioAgregar.reset();
-
-                M.updateTextFields();
-
-                // CERRAR FORMULARIO
-
-                const sidenav =
-                    document.querySelector("#side-form");
-
-                if (sidenav) {
-
-                    const instancia =
-                        M.Sidenav.getInstance(sidenav);
-
-                    if (instancia) {
-                        instancia.close();
-                    }
+                    });
 
                 }
 
-                M.toast({
-                    html: "Platillo agregado",
-                    classes: "green"
-                });
+            }
 
-            })
+        )
 
-            .catch((err) => {
+        .catch(
 
-                console.error(err);
+            function (error) {
 
-                M.toast({
-                    html: "Error al guardar el platillo",
-                    classes: "red"
-                });
+                console.error(
+                    "Error al eliminar:",
+                    error
+                );
 
-            });
 
-    });
+                if (
+                    typeof M !== "undefined"
+                ) {
+
+                    M.toast({
+
+                        html:
+                            "Error al eliminar el platillo",
+
+                        classes:
+                            "red"
+
+                    });
+
+                }
+
+            }
+
+        );
+
+}
+
+
+
+// ==========================================
+// BOTÓN ELIMINAR
+// ==========================================
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+        const boton =
+            event.target.closest(
+                ".btn-eliminar-platillo"
+            );
+
+
+        if (!boton) {
+
+            return;
+
+        }
+
+
+        const id =
+            boton.getAttribute(
+                "data-id"
+            );
+
+
+        if (id) {
+
+            eliminarPlatillo(id);
+
+        }
+
+    }
+);
+
+
+
+// ==========================================
+// ESCAPAR HTML
+// ==========================================
+
+function escapeHTML(texto) {
+
+    if (
+        texto === null ||
+        texto === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(texto)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }

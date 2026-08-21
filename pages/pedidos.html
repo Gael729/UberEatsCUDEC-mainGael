@@ -1,124 +1,1473 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>MECHE</title>
-  <!-- materialize icons, css & js -->
-  <link type="text/css" href="../css/materialize.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" href="../css/styles.css" rel="stylesheet">
-  <script type="text/javascript" src="../js/materialize.min.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin="">
-  </script>
-  
-  <style>
-    #mapa { height: 180px; }
-    /* Estilo opcional para que el video de la cámara encaje bien */
-    #videoCamara {
-      width: 100%;
-      max-width: 320px;
-      border-radius: 8px;
-      background-color: #000;
-    }
-    #fotoPreview {
-      max-width: 100%;
-      max-height: 200px;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
-  </style>
-  <link rel="manifest" href="manifest.json">
 
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="NinjaFood">
-  <meta name="apple-mobile-web-app-title" content="NinjaFood">
-  <meta name="theme-color" content="#c53df3">
-  <meta name="msapplication-navbutton-color" content="#c53df3">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge">
+
+    <title>MECHE - Realizar pedido</title>
+
+
+    <!-- =====================================================
+         MATERIALIZE CSS LOCAL
+    ====================================================== -->
+
+    <link
+        type="text/css"
+        href="../css/materialize.min.css"
+        rel="stylesheet">
+
+
+    <!-- =====================================================
+         MATERIAL ICONS
+    ====================================================== -->
+
+    <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+
+
+    <!-- =====================================================
+         CSS DEL PROYECTO
+    ====================================================== -->
+
+    <link
+        type="text/css"
+        href="../css/styles.css"
+        rel="stylesheet">
+
+
+    <!-- =====================================================
+         DISEÑO DE PEDIDOS
+    ====================================================== -->
+
+    <style>
+
+        :root {
+
+            --naranja: #ed8b00;
+            --naranja-oscuro: #d97700;
+            --naranja-claro: #fff3df;
+
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #fff8ed 0%,
+                    #f5f5f5 100%
+                );
+
+        }
+
+
+        /* =================================================
+           NAVBAR
+        ================================================= */
+
+        nav {
+
+            background: white !important;
+
+            border-bottom:
+                1px solid #eeeeee;
+
+        }
+
+
+        nav a {
+
+            color: var(--naranja);
+
+            font-weight: 700;
+
+        }
+
+
+        nav .sidenav-trigger {
+
+            color: var(--naranja);
+
+            cursor: pointer;
+
+        }
+
+
+        /* =================================================
+           CONTENEDOR
+        ================================================= */
+
+        .pedidos-container {
+
+            width: 92%;
+
+            max-width: 900px;
+
+            margin:
+                35px auto
+                60px;
+
+        }
+
+
+        /* =================================================
+           ENCABEZADO
+        ================================================= */
+
+        .pedidos-header {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .header-icon {
+
+            width: 75px;
+
+            height: 75px;
+
+            margin:
+                0 auto 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                var(--naranja-claro);
+
+            color:
+                var(--naranja);
+
+        }
+
+
+        .header-icon i {
+
+            font-size: 40px;
+
+        }
+
+
+        .pedidos-header h4 {
+
+            margin:
+                0 0 8px;
+
+            font-weight: 700;
+
+            color: #333;
+
+        }
+
+
+        .pedidos-header p {
+
+            margin: 0;
+
+            color: #777;
+
+        }
+
+
+        /* =================================================
+           TARJETAS
+        ================================================= */
+
+        .pedido-card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 8px 30px
+                rgba(0, 0, 0, 0.07);
+
+            border:
+                1px solid #eeeeee;
+
+        }
+
+
+        /* =================================================
+           TITULOS
+        ================================================= */
+
+        .section-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 19px;
+
+            font-weight: 700;
+
+            margin-bottom: 25px;
+
+            color: #333;
+
+        }
+
+
+        .section-title i {
+
+            color:
+                var(--naranja);
+
+            font-size: 26px;
+
+        }
+
+
+        /* =================================================
+           SELECT
+        ================================================= */
+
+        #listaPlatillos {
+
+            width: 100%;
+
+            height: 48px;
+
+            border:
+                1px solid #dddddd;
+
+            border-radius: 10px;
+
+            padding:
+                0 12px;
+
+            background: white;
+
+            font-size: 16px;
+
+            outline: none;
+
+        }
+
+
+        #listaPlatillos:focus {
+
+            border-color:
+                var(--naranja);
+
+        }
+
+
+        /* =================================================
+           INPUTS
+        ================================================= */
+
+        .input-field {
+
+            margin-top: 25px;
+
+        }
+
+
+        .input-field .prefix {
+
+            color: #999;
+
+        }
+
+
+        .input-field input:focus,
+        .input-field textarea:focus {
+
+            border-bottom:
+                1px solid var(--naranja) !important;
+
+            box-shadow:
+                0 1px 0 0 var(--naranja) !important;
+
+        }
+
+
+        .input-field input:focus + label,
+        .input-field textarea:focus + label {
+
+            color:
+                var(--naranja) !important;
+
+        }
+
+
+        #txtDireccion {
+
+            min-height: 100px;
+
+        }
+
+
+        /* =================================================
+           INFORMACIÓN PLATILLO
+        ================================================= */
+
+        .platillo-info {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .info-box {
+
+            background:
+                var(--naranja-claro);
+
+            border-radius: 12px;
+
+            padding: 16px;
+
+            border:
+                1px solid #ffe1b5;
+
+        }
+
+
+        .info-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            font-size: 13px;
+
+            color: #888;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .info-title i {
+
+            color:
+                var(--naranja);
+
+            font-size: 20px;
+
+        }
+
+
+        .info-value {
+
+            font-size: 17px;
+
+            font-weight: 600;
+
+            color: #333;
+
+        }
+
+
+        /* =================================================
+           BOTONES
+        ================================================= */
+
+        .pedido-buttons {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-top: 30px;
+
+        }
+
+
+        .pedido-buttons button {
+
+            border-radius: 10px;
+
+            min-height: 45px;
+
+        }
+
+
+        #btnGuardar {
+
+            background:
+                var(--naranja) !important;
+
+        }
+
+
+        #btnGuardar:hover {
+
+            background:
+                var(--naranja-oscuro) !important;
+
+        }
+
+
+        #btnCancelar {
+
+            background:
+                #eeeeee !important;
+
+            color:
+                #555 !important;
+
+        }
+
+
+        #btnUbicacion {
+
+            background:
+                #2196F3 !important;
+
+        }
+
+
+        #btnCamara {
+
+            background:
+                #00897b !important;
+
+            border-radius: 10px;
+
+        }
+
+
+        #btnCapturar {
+
+            background:
+                #fb8c00 !important;
+
+            border-radius: 10px;
+
+        }
+
+
+        /* =================================================
+           CÁMARA
+        ================================================= */
+
+        .camara-container {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+        }
+
+
+        #contenedorCamara {
+
+            margin-top: 20px;
+
+            text-align: center;
+
+        }
+
+
+        #videoCamara {
+
+            width: 100%;
+
+            max-width: 400px;
+
+            background: #000;
+
+            border-radius: 15px;
+
+            margin-top: 15px;
+
+        }
+
+
+        #canvasFoto {
+
+            display: none;
+
+        }
+
+
+        #contenedorPreview {
+
+            margin-top: 20px;
+
+            text-align: center;
+
+        }
+
+
+        #fotoPreview {
+
+            max-width: 100%;
+
+            max-height: 250px;
+
+            border-radius: 15px;
+
+            margin-top: 10px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,0.15);
+
+        }
+
+
+        /* =================================================
+           MAPA
+        ================================================= */
+
+        .map-container {
+
+            padding-bottom: 20px;
+
+        }
+
+
+        #map {
+
+            width: 100%;
+
+            height: 380px;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            border:
+                1px solid #dddddd;
+
+        }
+
+
+        .map-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 13px;
+
+            color: #777;
+
+            font-size: 13px;
+
+        }
+
+
+        .map-info i {
+
+            color:
+                var(--naranja);
+
+            font-size: 19px;
+
+        }
+
+
+        /* =================================================
+           COORDENADAS
+        ================================================= */
+
+        .coordenadas {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+        }
+
+
+        .coordenada {
+
+            background:
+                #f8f8f8;
+
+            padding:
+                10px 12px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            color: #777;
+
+        }
+
+
+        /* =================================================
+           ESTADO
+        ================================================= */
+
+        #estadoUbicacion {
+
+            margin-top: 12px;
+
+            font-size: 14px;
+
+            text-align: center;
+
+            min-height: 20px;
+
+        }
+
+
+        /* =================================================
+           MENU LATERAL
+        ================================================= */
+
+        .sidenav {
+
+            background: white;
+
+        }
+
+
+        .sidenav .subheader {
+
+            color:
+                var(--naranja);
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+        }
+
+
+        .sidenav li > a {
+
+            color: #555;
+
+        }
+
+
+        .sidenav li > a i {
+
+            color:
+                var(--naranja);
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media only screen and (max-width: 600px) {
+
+            .pedidos-container {
+
+                width: 94%;
+
+                margin-top: 22px;
+
+            }
+
+
+            .pedido-card {
+
+                padding: 20px;
+
+                border-radius: 15px;
+
+            }
+
+
+            .pedidos-header h4 {
+
+                font-size: 25px;
+
+            }
+
+
+            .platillo-info {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .pedido-buttons {
+
+                flex-direction: column;
+
+            }
+
+
+            .pedido-buttons button {
+
+                width: 100%;
+
+            }
+
+
+            #map {
+
+                height: 300px;
+
+            }
+
+
+            .coordenadas {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+    </style>
+
 </head>
-<body class="grey lighten-4">
 
-  <!-- Menu superior -->
-  <nav class="z-depth-0">
-    <div class="nav-wrapper container">
-      <a href="../">MECHE</a>
-      <span class="right grey-text text-darken-1">
-        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
-      </span>
-    </div>
-  </nav>
 
-  <!-- Menu lateral -->
-  <ul id="side-menu" class="sidenav side-menu">
-    <li><a class="subheader"></a></li>
-    <li><a href="/" class="waves-effect">Inicio</a></li>
-    <li><a href="about.html" class="waves-effect">Acerca</a></li>
-    <li><a href="pedidos.html" class="waves-effect">Pedidos</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="contact.html" class="waves-effect">
-      <i class="material-icons">mail_outline</i>Contacto</a></li>
-  </ul>
+<body>
 
-  <!-- content -->
-  <div class="container grey-text">
-    <h5 class="Left">Platillos</h5>
 
-    <div class="recipes container grey-text text-darken-1">
-      <label for="platillos">Selecciona un platillo:</label>
-      <select id="listaPlatillos" name="platillos" class="browser-default">
-      </select>
-    </div>
+    <!-- =====================================================
+         MENÚ SUPERIOR
+    ====================================================== -->
 
-    <h5 class="Left">Direccion</h5>
-    <input placeholder="Direccion" id="title" type="text" class="validate">
-    
-    <h5 class="Left">usuario</h5>
-    <input placeholder="usuario" id="usuario" type="text" class="validate">
+    <nav class="z-depth-0">
 
-    <!-- Sección de Visor de Cámara / Vista previa de Imagen -->
-    <div class="center-align" style="margin-top: 15px;">
-      <div id="contenedorCamara" style="display: none;">
-        <video id="videoCamara" autoplay playsinline></video>
-        <br>
-        <button id="btnCapturar" class="btn-small orange waves-effect waves-light" style="margin-top: 8px;">
-          <i class="material-icons left">camera</i>Capturar
-        </button>
-      </div>
+        <div class="nav-wrapper container">
 
-      <canvas id="canvasFoto" style="display: none;"></canvas>
-      
-      <div id="contenedorPreview" style="display: none;">
-        <h6>Foto capturada:</h6>
-        <img id="fotoPreview" src="" alt="Foto de pedido">
-      </div>
-    </div>
+            <a href="../index.html">
+                MECHE
+            </a>
 
-    <!-- Botones de Acción -->
-    <div class="input-field center" style="margin-top: 20px;">
-      <button id="btnCancelar" class="btn-small red">Cancelar</button>
-      <button id="btnGuardar" class="btn-small">Guardar</button>
-      <button id="btnUbicacion" class="btn-small">Ubicación</button>
-      <!-- Nuevo Botón de Cámara -->
-      <button id="btnCamara" class="btn-small teal">
-        <i class="material-icons left">photo_camera</i>Cámara
-      </button>
-    </div>
-  </div>
 
-  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
+            <span class="right">
 
-  <script src="../js/firebase.js"></script>
-  <script src="../js/pedidos.js"></script>
+                <i
+                    class="material-icons sidenav-trigger"
+                    data-target="side-menu">
+
+                    menu
+
+                </i>
+
+            </span>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MENÚ LATERAL
+    ====================================================== -->
+
+    <ul
+        id="side-menu"
+        class="sidenav">
+
+
+        <li>
+
+            <a class="subheader">
+                MECHE
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="../index.html"
+                class="waves-effect">
+
+                <i class="material-icons">
+                    home
+                </i>
+
+                Inicio
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="pedidos.html"
+                class="waves-effect">
+
+                <i class="material-icons">
+                    shopping_cart
+                </i>
+
+                Pedidos
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="about.html"
+                class="waves-effect">
+
+                Acerca
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <div class="divider"></div>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="contact.html"
+                class="waves-effect">
+
+                <i class="material-icons">
+                    mail_outline
+                </i>
+
+                Contacto
+
+            </a>
+
+        </li>
+
+    </ul>
+
+
+
+    <!-- =====================================================
+         CONTENIDO
+    ====================================================== -->
+
+    <main class="pedidos-container">
+
+
+        <!-- ENCABEZADO -->
+
+        <header class="pedidos-header">
+
+
+            <div class="header-icon">
+
+                <i class="material-icons">
+                    restaurant
+                </i>
+
+            </div>
+
+
+            <h4>
+                Realizar pedido
+            </h4>
+
+
+            <p>
+                Selecciona tu platillo y proporciona tus datos
+                de entrega.
+            </p>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             DATOS DEL PEDIDO
+        ================================================== -->
+
+        <section class="pedido-card">
+
+
+            <div class="section-title">
+
+                <i class="material-icons">
+                    shopping_cart
+                </i>
+
+                Datos del pedido
+
+            </div>
+
+
+
+            <!-- PLATILLO -->
+
+            <div class="input-field">
+
+
+                <label
+                    for="listaPlatillos"
+                    class="active">
+
+                    Platillo
+
+                </label>
+
+
+                <select
+                    id="listaPlatillos"
+                    name="platillo"
+                    class="browser-default">
+
+
+                    <option
+                        value=""
+                        selected>
+
+                        -- Selecciona un platillo --
+
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- INFORMACIÓN DEL PLATILLO -->
+
+            <div class="platillo-info">
+
+
+                <div class="info-box">
+
+
+                    <div class="info-title">
+
+                        <i class="material-icons">
+                            restaurant
+                        </i>
+
+                        Ingredientes
+
+                    </div>
+
+
+                    <div
+                        id="ingredientesVista"
+                        class="info-value">
+
+                        Selecciona un platillo
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="info-box">
+
+
+                    <div class="info-title">
+
+                        <i class="material-icons">
+                            attach_money
+                        </i>
+
+                        Costo
+
+                    </div>
+
+
+                    <div
+                        id="costoVista"
+                        class="info-value">
+
+                        $0.00 MXN
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- USUARIO -->
+
+            <div class="input-field">
+
+
+                <i class="material-icons prefix">
+                    person
+                </i>
+
+
+                <input
+                    type="text"
+                    id="usuario"
+                    name="usuario"
+                    required>
+
+
+                <label for="usuario">
+                    Usuario
+                </label>
+
+
+            </div>
+
+
+
+            <!-- DIRECCIÓN -->
+
+            <div class="input-field">
+
+
+                <i class="material-icons prefix">
+                    home
+                </i>
+
+
+                <textarea
+                    id="title"
+                    name="direccion"
+                    class="materialize-textarea"
+                    required>
+                </textarea>
+
+
+                <label for="title">
+                    Dirección
+                </label>
+
+
+            </div>
+
+
+
+            <!-- INGREDIENTES -->
+
+            <div class="input-field">
+
+
+                <i class="material-icons prefix">
+                    restaurant
+                </i>
+
+
+                <textarea
+                    id="txtIngredientes"
+                    class="materialize-textarea"
+                    readonly>
+                </textarea>
+
+
+                <label
+                    for="txtIngredientes"
+                    class="active">
+
+                    Ingredientes del platillo
+
+                </label>
+
+
+            </div>
+
+
+
+            <!-- COSTO -->
+
+            <div class="input-field">
+
+
+                <i class="material-icons prefix">
+                    attach_money
+                </i>
+
+
+                <input
+                    type="text"
+                    id="txtCosto"
+                    value="$0.00 MXN"
+                    readonly>
+
+
+                <label
+                    for="txtCosto"
+                    class="active">
+
+                    Costo del platillo
+
+                </label>
+
+
+            </div>
+
+
+
+            <!-- COORDENADAS -->
+
+            <input
+                type="hidden"
+                id="txtLatitud">
+
+
+            <input
+                type="hidden"
+                id="txtLongitud">
+
+
+
+            <!-- ESTADO -->
+
+            <div
+                id="estadoUbicacion"
+                class="grey-text">
+            </div>
+
+
+
+            <!-- =================================================
+                 CÁMARA
+            ================================================== -->
+
+            <div class="camara-container">
+
+
+                <button
+                    id="btnCamara"
+                    type="button"
+                    class="btn waves-effect waves-light">
+
+                    <i class="material-icons left">
+                        photo_camera
+                    </i>
+
+                    Cámara
+
+                </button>
+
+
+
+                <div
+                    id="contenedorCamara"
+                    style="display:none;">
+
+
+                    <video
+                        id="videoCamara"
+                        autoplay
+                        playsinline>
+                    </video>
+
+
+                    <br>
+
+
+                    <button
+                        id="btnCapturar"
+                        type="button"
+                        class="btn waves-effect waves-light"
+                        style="margin-top:10px;">
+
+                        <i class="material-icons left">
+                            camera
+                        </i>
+
+                        Tomar foto
+
+                    </button>
+
+
+                </div>
+
+
+
+                <canvas
+                    id="canvasFoto">
+                </canvas>
+
+
+
+                <div
+                    id="contenedorPreview"
+                    style="display:none;">
+
+
+                    <h6>
+                        Foto capturada:
+                    </h6>
+
+
+                    <img
+                        id="fotoPreview"
+                        src=""
+                        alt="Foto del pedido">
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BOTONES
+            ================================================== -->
+
+            <div class="pedido-buttons">
+
+
+                <button
+                    id="btnUbicacion"
+                    type="button"
+                    class="btn waves-effect waves-light">
+
+                    <i class="material-icons left">
+                        location_on
+                    </i>
+
+                    Ubicación
+
+                </button>
+
+
+
+                <button
+                    id="btnCancelar"
+                    type="button"
+                    class="btn waves-effect waves-light">
+
+                    <i class="material-icons left">
+                        close
+                    </i>
+
+                    Cancelar
+
+                </button>
+
+
+
+                <button
+                    id="btnGuardar"
+                    type="button"
+                    class="btn waves-effect waves-light">
+
+                    <i class="material-icons left">
+                        save
+                    </i>
+
+                    Guardar pedido
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             MAPA
+        ================================================== -->
+
+        <section class="pedido-card map-container">
+
+
+            <div class="section-title">
+
+                <i class="material-icons">
+                    map
+                </i>
+
+                Ubicación de entrega
+
+            </div>
+
+
+            <div id="map"></div>
+
+
+            <div class="map-info">
+
+                <i class="material-icons">
+                    info_outline
+                </i>
+
+                Pulsa "Ubicación" para localizar
+                automáticamente tu posición.
+
+            </div>
+
+
+            <div class="coordenadas">
+
+
+                <div class="coordenada">
+
+                    <strong>
+                        Latitud:
+                    </strong>
+
+
+                    <span id="latitudVista">
+                        No disponible
+                    </span>
+
+                </div>
+
+
+
+                <div class="coordenada">
+
+                    <strong>
+                        Longitud:
+                    </strong>
+
+
+                    <span id="longitudVista">
+                        No disponible
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FIREBASE
+    ====================================================== -->
+
+    <script
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
+    </script>
+
+
+    <script
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
+    </script>
+
+
+
+    <!-- =====================================================
+         MATERIALIZE LOCAL
+    ====================================================== -->
+
+    <script
+        src="../js/materialize.min.js">
+    </script>
+
+
+
+    <!-- =====================================================
+         FIREBASE DEL PROYECTO
+    ====================================================== -->
+
+    <script
+        src="../js/firebase.js">
+    </script>
+
+
+
+    <!-- =====================================================
+         LEAFLET
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+
+
+    <!-- =====================================================
+         PEDIDOS JS
+    ====================================================== -->
+
+    <script
+        src="../js/pedidos.js">
+    </script>
+
 
 </body>
+
 </html>
