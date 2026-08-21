@@ -18,9 +18,9 @@
     <title>MECHE</title>
 
 
-    <!-- =========================================
-         MATERIALIZE CSS
-    ========================================== -->
+    <!-- =====================================================
+         MATERIALIZE
+    ====================================================== -->
 
     <link
         type="text/css"
@@ -28,20 +28,25 @@
         rel="stylesheet"
     >
 
-
-    <!-- =========================================
-         MATERIAL ICONS
-    ========================================== -->
-
     <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"
     >
 
 
-    <!-- =========================================
+    <!-- =====================================================
+         LEAFLET
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+
+    <!-- =====================================================
          CSS PROPIO
-    ========================================== -->
+    ====================================================== -->
 
     <link
         type="text/css"
@@ -50,9 +55,9 @@
     >
 
 
-    <!-- =========================================
+    <!-- =====================================================
          PWA
-    ========================================== -->
+    ====================================================== -->
 
     <link
         rel="manifest"
@@ -80,37 +85,493 @@
     >
 
 
-    <!-- =========================================
-         ESTILOS DE CÁMARA
-    ========================================== -->
+    <!-- =====================================================
+         DISEÑO
+    ====================================================== -->
 
     <style>
 
-        .side-form {
+        /* =================================================
+           GENERAL
+        ================================================= */
 
-            width: 400px;
+        body {
 
-            max-width: 100%;
+            background:
+                linear-gradient(
+                    180deg,
+                    #f4fbfd 0%,
+                    #f7f7f7 45%,
+                    #eeeeee 100%
+                );
+
+            min-height: 100vh;
 
         }
 
 
+        main {
+
+            padding-bottom: 80px;
+
+        }
+
+
+        /* =================================================
+           NAVBAR
+        ================================================= */
+
+        nav {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4dc7e4,
+                    #26a6c5
+                ) !important;
+
+            height: 70px;
+
+            line-height: 70px;
+
+        }
+
+
+        nav .nav-wrapper {
+
+            height: 70px;
+
+        }
+
+
+        .brand-logo {
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            font-size: 26px !important;
+
+        }
+
+
+        .menu-button {
+
+            font-size: 30px;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s ease;
+
+        }
+
+
+        .menu-button:hover {
+
+            transform:
+                scale(1.08);
+
+        }
+
+
+        /* =================================================
+           ENCABEZADO
+        ================================================= */
+
+        .hero {
+
+            text-align: center;
+
+            padding:
+                35px 15px
+                25px;
+
+        }
+
+
+        .hero-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            margin:
+                0 auto 15px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4dc7e4,
+                    #26a6c5
+                );
+
+            color: white;
+
+            box-shadow:
+                0 8px 20px
+                rgba(38,166,197,.25);
+
+        }
+
+
+        .hero-icon i {
+
+            font-size: 38px;
+
+        }
+
+
+        .hero h4 {
+
+            margin:
+                0 0 8px;
+
+            font-weight: 800;
+
+            color: #263238;
+
+        }
+
+
+        .hero p {
+
+            margin: 0;
+
+            color: #78909c;
+
+            font-size: 16px;
+
+        }
+
+
+        /* =================================================
+           CONTENEDOR DE PLATILLOS
+        ================================================= */
+
+        .recipes {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        280px,
+                        1fr
+                    )
+                );
+
+            gap: 20px;
+
+            margin-top: 15px;
+
+        }
+
+
+        /* =================================================
+           TARJETAS
+        ================================================= */
+
+        .recipes .card-panel {
+
+            margin: 0;
+
+            border-radius: 18px;
+
+            padding: 20px;
+
+            border:
+                1px solid
+                rgba(0,0,0,.05);
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,.07);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+
+            overflow: hidden;
+
+        }
+
+
+        .recipes .card-panel:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                0 14px 30px
+                rgba(0,0,0,.12);
+
+        }
+
+
+        .recipe-title {
+
+            color: #263238;
+
+            font-weight: 800;
+
+        }
+
+
+        .recipe-price {
+
+            color: #26a6c5;
+
+            font-size: 18px;
+
+        }
+
+
+        /* =================================================
+           BOTONES
+        ================================================= */
+
+        .btn {
+
+            border-radius: 10px;
+
+            text-transform: none;
+
+            font-weight: 600;
+
+            box-shadow: none;
+
+        }
+
+
+        .btn:hover {
+
+            box-shadow:
+                0 5px 15px
+                rgba(0,0,0,.12);
+
+        }
+
+
+        /* =================================================
+           BOTÓN FLOTANTE
+        ================================================= */
+
+        .fixed-action-btn {
+
+            bottom: 25px;
+
+            right: 25px;
+
+        }
+
+
+        .fixed-action-btn .btn-floating {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef5350,
+                    #e53935
+                );
+
+            box-shadow:
+                0 7px 20px
+                rgba(229,57,53,.35);
+
+        }
+
+
+        /* =================================================
+           MENÚ LATERAL
+        ================================================= */
+
+        .side-menu {
+
+            width: 310px;
+
+            background:
+                #ffffff;
+
+        }
+
+
+        .side-menu .subheader {
+
+            height: 100px;
+
+            line-height: 100px;
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+            color: #26a6c5;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e8faff,
+                    #ffffff
+                );
+
+        }
+
+
+        .side-menu li > a {
+
+            border-radius: 10px;
+
+            margin:
+                5px 10px;
+
+            color: #455a64;
+
+            transition:
+                background .2s ease;
+
+        }
+
+
+        .side-menu li > a:hover {
+
+            background:
+                #e8faff;
+
+        }
+
+
+        .side-menu li > a i {
+
+            color: #26a6c5;
+
+        }
+
+
+        /* =================================================
+           FORMULARIO LATERAL
+        ================================================= */
+
+        .side-form {
+
+            width: 430px;
+
+            max-width: 100%;
+
+            background:
+                #ffffff;
+
+        }
+
+
+        .form-header {
+
+            padding:
+                20px
+                20px
+                10px;
+
+        }
+
+
+        .form-header h5 {
+
+            margin: 0;
+
+            font-weight: 800;
+
+            color: #263238;
+
+        }
+
+
+        .form-subtitle {
+
+            color: #90a4ae;
+
+            font-size: 14px;
+
+        }
+
+
+        .input-field {
+
+            margin-top: 25px;
+
+        }
+
+
+        .input-field input:focus {
+
+            border-bottom:
+                2px solid #4dc7e4 !important;
+
+            box-shadow:
+                0 1px 0 0 #4dc7e4 !important;
+
+        }
+
+
+        .input-field input:focus + label {
+
+            color: #26a6c5 !important;
+
+        }
+
+
+        /* =================================================
+           CÁMARA
+        ================================================= */
+
         .camera-section {
 
-            padding: 10px 20px 30px;
+            padding:
+                20px;
+
+        }
+
+
+        .camera-title {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: #37474f;
 
         }
 
 
         .camera-buttons {
 
-            display: flex;
+            display: grid;
 
-            gap: 10px;
+            grid-template-columns:
+                repeat(
+                    3,
+                    1fr
+                );
 
-            justify-content: center;
-
-            flex-wrap: wrap;
+            gap: 8px;
 
             margin-top: 15px;
 
@@ -119,9 +580,12 @@
 
         .camera-buttons button {
 
-            flex: 1 1 120px;
+            width: 100%;
 
-            min-width: 110px;
+            min-height: 45px;
+
+            padding:
+                0 8px;
 
         }
 
@@ -130,7 +594,19 @@
 
             width: 100%;
 
-            margin-bottom: 10px;
+            margin:
+                12px 0;
+
+            padding: 8px;
+
+            border:
+                1px dashed
+                #b0bec5;
+
+            border-radius: 10px;
+
+            background:
+                #fafafa;
 
         }
 
@@ -145,13 +621,19 @@
 
             min-height: 220px;
 
-            margin: 15px auto;
+            margin:
+                18px auto;
 
-            border-radius: 12px;
+            border-radius: 16px;
 
-            background: #000;
+            background:
+                #101010;
 
             object-fit: cover;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,.15);
 
         }
 
@@ -166,18 +648,23 @@
 
             height: auto;
 
-            margin: 15px auto;
+            margin:
+                18px auto;
 
-            border-radius: 12px;
+            border-radius: 16px;
 
             object-fit: cover;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,.12);
 
         }
 
 
         #cameraStatus {
 
-            margin-top: 10px;
+            margin-top: 12px;
 
             font-size: 14px;
 
@@ -186,23 +673,176 @@
 
         #cameraError {
 
-            margin-top: 10px;
+            margin-top: 8px;
 
             font-size: 14px;
 
         }
 
 
-        #btnAgregarPlatillo {
+        /* =================================================
+           PEDIDOS
+        ================================================= */
 
-            width: 100%;
+        .pedido-section {
 
-            height: 45px;
+            margin:
+                40px 0;
 
         }
 
 
-        @media only screen and (max-width: 600px) {
+        .pedido-card {
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            border:
+                1px solid
+                rgba(0,0,0,.05);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,.08);
+
+        }
+
+
+        .pedido-card h5 {
+
+            font-weight: 800;
+
+            color: #263238;
+
+        }
+
+
+        .pedido-info {
+
+            background:
+                #f7fbfc;
+
+            border-radius: 12px;
+
+            padding: 14px;
+
+            margin:
+                12px 0;
+
+            border-left:
+                4px solid #4dc7e4;
+
+        }
+
+
+        .pedido-info strong {
+
+            display: block;
+
+            color: #546e7a;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .pedido-info span {
+
+            color: #263238;
+
+        }
+
+
+        /* =================================================
+           MAPA
+        ================================================= */
+
+        #map {
+
+            width: 100%;
+
+            height: 320px;
+
+            margin:
+                20px 0;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,.1);
+
+        }
+
+
+        #estadoUbicacion {
+
+            min-height: 22px;
+
+            margin:
+                10px 0;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =================================================
+           SELECT
+        ================================================= */
+
+        .select-wrapper input.select-dropdown {
+
+            border-radius: 8px;
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media only screen and (max-width: 700px) {
+
+            .container {
+
+                width: 92%;
+
+            }
+
+
+            .brand-logo {
+
+                font-size: 22px !important;
+
+            }
+
+
+            .hero {
+
+                padding-top: 25px;
+
+            }
+
+
+            .hero h4 {
+
+                font-size: 27px;
+
+            }
+
+
+            .recipes {
+
+                grid-template-columns: 1fr;
+
+                gap: 15px;
+
+            }
+
 
             .side-form {
 
@@ -213,27 +853,62 @@
 
             .camera-buttons {
 
-                flex-direction: column;
+                grid-template-columns: 1fr;
 
             }
 
 
             .camera-buttons button {
 
-                width: 100%;
-
-                height: 44px;
+                height: 45px;
 
             }
 
 
-            #Video {
+            .pedido-card {
 
-                width: 100%;
+                padding: 18px;
 
-                min-height: 220px;
+            }
 
-                aspect-ratio: 4 / 3;
+
+            #map {
+
+                height: 260px;
+
+            }
+
+        }
+
+
+        @media only screen and (max-width: 400px) {
+
+            .hero-icon {
+
+                width: 60px;
+
+                height: 60px;
+
+            }
+
+
+            .hero-icon i {
+
+                font-size: 32px;
+
+            }
+
+
+            .hero h4 {
+
+                font-size: 24px;
+
+            }
+
+
+            .recipes .card-panel {
+
+                padding: 15px;
 
             }
 
@@ -244,17 +919,16 @@
 </head>
 
 
-<body class="grey lighten-4">
+<body>
 
 
-    <!-- =========================================
-         MENÚ SUPERIOR
-    ========================================== -->
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
     <nav class="z-depth-0">
 
         <div class="nav-wrapper container">
-
 
             <a
                 href="index.html"
@@ -269,9 +943,8 @@
             <span class="right">
 
                 <i
-                    class="material-icons sidenav-trigger"
+                    class="material-icons sidenav-trigger menu-button"
                     data-target="side-menu"
-                    style="cursor:pointer;"
                 >
 
                     menu
@@ -286,9 +959,9 @@
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
          MENÚ LATERAL
-    ========================================== -->
+    ====================================================== -->
 
     <ul
         id="side-menu"
@@ -305,8 +978,6 @@
 
         </li>
 
-
-        <!-- INICIO -->
 
         <li>
 
@@ -328,8 +999,6 @@
         </li>
 
 
-        <!-- PEDIDOS -->
-
         <li>
 
             <a
@@ -350,8 +1019,6 @@
         </li>
 
 
-        <!-- ACERCA -->
-
         <li>
 
             <a
@@ -371,8 +1038,6 @@
 
         </li>
 
-
-        <!-- CONTACTO -->
 
         <li>
 
@@ -404,41 +1069,349 @@
 
 
 
-    <!-- =========================================
-         TÍTULO
-    ========================================== -->
+    <!-- =====================================================
+         CONTENIDO
+    ====================================================== -->
 
-    <div class="container">
-
-        <h4 class="center grey-text text-darken-2">
-
-            Platillos
-
-        </h4>
+    <main>
 
 
-        <p class="center grey-text">
+        <!-- =================================================
+             HERO
+        ================================================== -->
 
-            Descubre nuestros platillos disponibles
+        <section class="hero container">
 
-        </p>
+            <div class="hero-icon">
 
+                <i class="material-icons">
 
-        <!-- =====================================
-             AQUÍ APARECEN LOS PLATILLOS
-        ====================================== -->
+                    restaurant
 
-        <div class="recipes">
+                </i>
 
-        </div>
-
-    </div>
-
+            </div>
 
 
-    <!-- =========================================
-         BOTÓN +
-    ========================================== -->
+            <h4>
+
+                Platillos
+
+            </h4>
+
+
+            <p>
+
+                Descubre nuestros platillos disponibles
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LISTA DE PLATILLOS
+        ================================================== -->
+
+        <section class="container">
+
+            <div class="recipes">
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PEDIDO
+        ================================================== -->
+
+        <section class="pedido-section container">
+
+            <div class="card-panel white pedido-card">
+
+                <h5 class="center">
+
+                    Realizar pedido
+
+                </h5>
+
+
+                <p class="center grey-text">
+
+                    Selecciona tu platillo y proporciona
+                    los datos de entrega.
+
+                </p>
+
+
+                <div class="divider"></div>
+
+                <br>
+
+
+                <!-- PLATILLO -->
+
+                <div class="input-field">
+
+                    <select id="listaplatillos">
+
+                        <option
+                            value=""
+                            selected
+                        >
+
+                            -- Selecciona un platillo --
+
+                        </option>
+
+                    </select>
+
+                    <label>
+
+                        Platillo
+
+                    </label>
+
+                </div>
+
+
+
+                <!-- INGREDIENTES -->
+
+                <div class="pedido-info">
+
+                    <strong>
+
+                        Ingredientes
+
+                    </strong>
+
+                    <span id="ingredientesVista">
+
+                        Selecciona un platillo
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- COSTO -->
+
+                <div class="pedido-info">
+
+                    <strong>
+
+                        Costo
+
+                    </strong>
+
+                    <span id="costoVista">
+
+                        $0.00 MXN
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- CAMPOS OCULTOS -->
+
+                <input
+                    type="hidden"
+                    id="txtIngredientes"
+                    value=""
+                >
+
+                <input
+                    type="hidden"
+                    id="txtCosto"
+                    value="$0.00 MXN"
+                >
+
+
+
+                <!-- NOMBRE -->
+
+                <div class="input-field">
+
+                    <input
+                        id="txtNombre"
+                        type="text"
+                        class="validate"
+                    >
+
+                    <label for="txtNombre">
+
+                        Nombre del cliente
+
+                    </label>
+
+                </div>
+
+
+
+                <!-- DIRECCIÓN -->
+
+                <div class="input-field">
+
+                    <input
+                        id="txtDireccion"
+                        type="text"
+                        class="validate"
+                    >
+
+                    <label for="txtDireccion">
+
+                        Dirección de entrega
+
+                    </label>
+
+                </div>
+
+
+
+                <!-- UBICACIÓN -->
+
+                <div class="center">
+
+                    <button
+                        id="btnUbicacion"
+                        type="button"
+                        class="btn blue waves-effect waves-light"
+                    >
+
+                        <i class="material-icons left">
+
+                            location_on
+
+                        </i>
+
+                        Obtener ubicación
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="estadoUbicacion"
+                    class="center"
+                ></div>
+
+
+
+                <!-- COORDENADAS -->
+
+                <div class="row">
+
+                    <div class="input-field col s12 m6">
+
+                        <input
+                            id="txtLatitud"
+                            type="text"
+                            readonly
+                        >
+
+                        <label for="txtLatitud">
+
+                            Latitud
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="input-field col s12 m6">
+
+                        <input
+                            id="txtLongitud"
+                            type="text"
+                            readonly
+                        >
+
+                        <label for="txtLongitud">
+
+                            Longitud
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MAPA -->
+
+                <div id="map"></div>
+
+
+
+                <!-- BOTONES -->
+
+                <div class="row">
+
+                    <div class="col s12 m6">
+
+                        <button
+                            id="btnGuardar"
+                            type="button"
+                            class="btn green waves-effect waves-light"
+                            style="width:100%;"
+                        >
+
+                            <i class="material-icons left">
+
+                                save
+
+                            </i>
+
+                            Guardar pedido
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="col s12 m6">
+
+                        <button
+                            id="btnCancelar"
+                            type="button"
+                            class="btn grey waves-effect waves-light"
+                            style="width:100%;"
+                        >
+
+                            <i class="material-icons left">
+
+                                clear
+
+                            </i>
+
+                            Cancelar
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         BOTÓN AGREGAR
+    ====================================================== -->
 
     <div class="fixed-action-btn">
 
@@ -459,15 +1432,14 @@
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
          FORMULARIO NUEVO PLATILLO
-    ========================================== -->
+    ====================================================== -->
 
     <div
         id="side-form"
         class="sidenav side-form"
     >
-
 
         <form
             id="formPlatillo"
@@ -475,19 +1447,29 @@
         >
 
 
-            <h5 class="center">
+            <div class="form-header center">
 
-                Nuevo Platillo
+                <h5>
 
-            </h5>
+                    Nuevo Platillo
+
+                </h5>
+
+
+                <p class="form-subtitle">
+
+                    Agrega un platillo al menú
+
+                </p>
+
+            </div>
 
 
             <div class="divider"></div>
 
 
-            <!-- =====================================
-                 NOMBRE
-            ====================================== -->
+
+            <!-- NOMBRE -->
 
             <div class="input-field">
 
@@ -508,9 +1490,8 @@
             </div>
 
 
-            <!-- =====================================
-                 INGREDIENTES
-            ====================================== -->
+
+            <!-- INGREDIENTES -->
 
             <div class="input-field">
 
@@ -531,9 +1512,8 @@
             </div>
 
 
-            <!-- =====================================
-                 PRECIO
-            ====================================== -->
+
+            <!-- PRECIO -->
 
             <div class="input-field">
 
@@ -556,9 +1536,8 @@
             </div>
 
 
-            <!-- =====================================
-                 FOTO
-            ====================================== -->
+
+            <!-- FOTO -->
 
             <input
                 id="fotoInput"
@@ -567,9 +1546,8 @@
             >
 
 
-            <!-- =====================================
-                 BOTÓN AGREGAR
-            ====================================== -->
+
+            <!-- AGREGAR -->
 
             <div class="center">
 
@@ -595,14 +1573,14 @@
 
 
 
-        <!-- =========================================
+        <!-- =================================================
              CÁMARA
-        ========================================== -->
+        ================================================== -->
 
         <div class="camera-section">
 
 
-            <h6 class="center">
+            <div class="camera-title">
 
                 <i class="material-icons">
 
@@ -612,15 +1590,16 @@
 
                 Foto del platillo
 
-            </h6>
+            </div>
 
 
             <div class="divider"></div>
 
+
             <br>
 
 
-            <!-- SELECCIONAR IMAGEN -->
+            <!-- SELECCIONAR -->
 
             <label for="btnFoto">
 
@@ -635,6 +1614,7 @@
                 class="image-input"
                 accept="image/*"
             >
+
 
 
             <!-- BOTONES -->
@@ -654,7 +1634,7 @@
 
                     </i>
 
-                    Usar cámara
+                    Cámara
 
                 </button>
 
@@ -695,6 +1675,7 @@
             </div>
 
 
+
             <!-- ESTADO -->
 
             <div
@@ -707,14 +1688,14 @@
             </div>
 
 
+
             <!-- ERROR -->
 
             <div
                 id="cameraError"
                 class="center red-text"
-            >
+            ></div>
 
-            </div>
 
 
             <!-- VIDEO -->
@@ -738,14 +1719,14 @@
             </div>
 
 
+
             <!-- CANVAS -->
 
             <canvas
                 id="Canvas"
                 style="display:none;"
-            >
+            ></canvas>
 
-            </canvas>
 
 
             <!-- FOTO -->
@@ -770,9 +1751,9 @@
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
          FIREBASE
-    ========================================== -->
+    ====================================================== -->
 
     <script
         src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
@@ -790,9 +1771,19 @@
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
+         LEAFLET JS
+    ====================================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+
+
+    <!-- =====================================================
          MATERIALIZE JS
-    ========================================== -->
+    ====================================================== -->
 
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
@@ -800,33 +1791,33 @@
 
 
 
-    <!-- =========================================
-         FIREBASE DEL PROYECTO
-    ========================================== -->
+    <!-- =====================================================
+         FIREBASE
+    ====================================================== -->
 
     <script src="js/firebase.js"></script>
 
 
 
-    <!-- =========================================
-         JAVASCRIPT PRINCIPAL
-    ========================================== -->
+    <!-- =====================================================
+         INDEX JS
+    ====================================================== -->
 
     <script src="js/index.js"></script>
 
 
 
-    <!-- =========================================
-         BASE DE DATOS
-    ========================================== -->
+    <!-- =====================================================
+         DB JS
+    ====================================================== -->
 
     <script src="js/db.js"></script>
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
          SERVICE WORKER
-    ========================================== -->
+    ====================================================== -->
 
     <script>
 
@@ -854,7 +1845,6 @@
         }
 
     </script>
-
 
 </body>
 
